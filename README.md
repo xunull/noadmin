@@ -1,0 +1,2 @@
+# noadmin
+node admin 
