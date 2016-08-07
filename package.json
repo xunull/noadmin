@@ -1,0 +1,28 @@
+{
+  "name": "noadmin",
+  "version": "0.0.1",
+  "description": "node admin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xunull/noadmin.git"
+  },
+  "author": "xunull",
+  "license": "Apache License",
+  "bugs": {
+    "url": "https://github.com/xunull/noadmin/issues"
+  },
+  "homepage": "https://github.com/xunull/noadmin#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chart.js": "^2.2.1",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "helmet": "^2.1.2",
+    "lodash": "^4.14.1",
+    "log4js": "^0.6.38"
+  }
+}
