@@ -7,6 +7,23 @@ exports.index = function(req, res, next) {
     });
 };
 
-exports.login = function(req, res, next) {
-    res.render('login');
+exports.signin = function(req, res, next) {
+    res.render('signin');
+};
+
+exports.userSignin = function(req, res, next) {
+
+    var username = req.body.username;
+    var password = req.body.password;
+    console.log(username);
+    console.log(password);
+};
+
+exports.signup = function(req, res, next) {
+    res.render('signup');
+    res.render('signin');
+};
+
+exports.userSignup = function(req, res, next) {
+    res.render('signin');
 };

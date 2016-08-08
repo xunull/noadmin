@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>login</title>
+    <title>signin</title>
     <link rel="stylesheet" href="/libs/normalize-css/normalize.css" charset="utf-8">
     <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
     <link rel="stylesheet" href="/public/css/site.css" charset="utf-8">
@@ -19,18 +19,18 @@
                     <div class="form-group">
                         <label for="inputemail" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputemail" placeholder="Email">
+                            <input type="email" class="form-control" id="username" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputpassword" class="col-sm-2 control-label">Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inputpassword" placeholder="Password">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-9">
-                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                            <button id='signin' type="submit" class="btn btn-primary btn-block">Sign in</button>
                         </div>
                     </div>
                 </form>
@@ -44,7 +44,24 @@
 <script>
     $(function() {
         console.log($(window).height());
+
+        $('#signin').click(function(){
+            $.ajax({
+              url:'signin',
+              type:'post',
+              data:{
+                username:$("#username").val(),
+                password:$("#password").val()
+              },
+              dataType:'json',
+              success:function(data){
+
+              },
+              error:function(data){
+
+              }
+            })
+        });
     });
 </script>
-
 </html>
