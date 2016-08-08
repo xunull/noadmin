@@ -6,7 +6,7 @@ var home = require('./controllers/home');
 var router = express.Router();
 
 router.get('/', home.index);
+router.get('/login',home.login);
 
-router.get('/productSearch',home.productSearch);
 
 module.exports = router;

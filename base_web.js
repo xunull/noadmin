@@ -14,16 +14,18 @@ var app = express();
 // 本系统的资源
 var publicDir = path.join(__dirname, 'public');
 // 第三方的资源
-var staticDir = path.join(__dirname, 'libs');
+var staticDir = path.join(__dirname, 'bower_components');
 // 打包后的文件目录
 var distDir = path.join(__dirname, 'dist');
 
 // express.static 是 express 唯一一个内置的中间件
 // public 是挂载路径,是对外界生效的, 不是指本地public的意思,本地的这个public 是在上面语句中指定的
 // 这个方法可以多次调用, 查找是按照添加的顺序查找
-app.use('/public', express.static(staticDir));
+app.use('/public', express.static(publicDir));
 // 有些资源需要打包后使用
 app.use('/dist', express.static(distDir));
+
+app.use('/libs',express.static(staticDir));
 
 app.use(bodyParser.json({
     limit: '1mb'

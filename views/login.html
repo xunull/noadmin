@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>login</title>
+    <link rel="stylesheet" href="/libs/normalize-css/normalize.css" charset="utf-8">
+    <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/public/css/site.css" charset="utf-8">
+</head>
+
+<body>
+    <div class="login-body">
+        <div class="container">
+            <div class='login-box'>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputemail" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inputemail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputpassword" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inputpassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-9">
+                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="/libs/jquery/dist/jquery.min.js" charset="utf-8"></script>
+<script src="/libs/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+<script>
+    $(function() {
+        console.log($(window).height());
+    });
+</script>
+
+</html>

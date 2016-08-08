@@ -1,11 +1,12 @@
-var config = require('../config');
+var config = global.thisapp.config;
+var logger = global.thisapp.logger;
 
 exports.index = function(req, res, next) {
-  res.render('index', {
+    res.render('index', {
 
-  });
+    });
 };
 
-exports.productSearch = function(req,res,next) {
-  res.render('product');
+exports.login = function(req, res, next) {
+    res.render('login');
 };
