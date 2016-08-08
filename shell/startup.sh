@@ -24,4 +24,16 @@ else
   printf "redis 已运行\n"
 fi
 
-printf "相关服务都已经正常运行\n"
+printf "相关服务已经正常运行\n"
+
+nodestat=`lsof -i:5000`
+if [[ $nodestat =~ 'node' ]]
+then
+  printf "app 服务已启动\n"
+else
+  printf "app 服务未启动\n"
+  (node ../index.js)
+  printf "app 服务已启动\n"
+fi
+
+printf "app 开始工作...\n"

@@ -8,11 +8,11 @@ var redis = require('redis'),
 var logger = global.thisapp.logger;
 
 client.auth(redis_password,function(){
-	console.log('redis 登录成功');
+  logger.info('redis 登录成功');
 });
 
 client.on('ready',function(){
-	console.log('redis ready');
+	logger.info('redis ready');
 });
 
 client.on('connect',function(){
@@ -24,7 +24,7 @@ client.on('reconnecting',function(){
 });
 
 client.on('error',function(){
-	console.log('redis 发生了错误');
+	logger.info('redis 发生了错误');
 });
 
 client.on('end',function(){
