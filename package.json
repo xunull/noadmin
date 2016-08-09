@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/xunull/noadmin#readme",
   "dependencies": {
+    "babel-core": "^6.13.2",
     "body-parser": "^1.15.2",
     "chart.js": "^2.2.1",
     "colors": "^1.1.2",

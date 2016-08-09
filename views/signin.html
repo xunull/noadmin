@@ -15,53 +15,139 @@
     <div class="login-body">
         <div class="container">
             <div class='login-box'>
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="inputemail" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="username" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputpassword" class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-9">
-                            <button id='signin' type="submit" class="btn btn-primary btn-block">Sign in</button>
-                        </div>
-                    </div>
-                </form>
+
             </div>
         </div>
     </div>
-
 </body>
 <script src="/libs/jquery/dist/jquery.min.js" charset="utf-8"></script>
 <script src="/libs/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+<script src="/libs/react/react.js" charset="utf-8"></script>
+<script src="/libs/react/react-dom.js" charset="utf-8"></script>
+<script src="/libs/babel.js" charset="utf-8"></script>
+<script type="text/babel">
+
+  var SignUpForm = React.createClass({
+    signUp:function(event){
+
+      event.preventDefault();
+      $.ajax({
+        url:'signup',
+        type:'post',
+        data:{
+          username:$('#username').val(),
+          password:$("#password").val()
+        },
+        dataType:'json',
+        success:function(data){
+
+        },
+        error:function(data){
+
+        }
+      })
+    },
+    render:function(){
+      return (
+        <form className="form-horizontal">
+            <div className="form-group">
+                <label htmlFor="inputemail" className="col-sm-2 control-label">Email</label>
+                <div className="col-sm-9">
+                    <input type="email" className="form-control" id="username" placeholder="Email"/>
+                </div>
+            </div>
+            <div className="form-group">
+                <label htmlFor="inputpassword" className="col-sm-2 control-label">Password</label>
+                <div className="col-sm-9">
+                    <input type="password" className="form-control" id="password" placeholder="Password"/>
+                </div>
+            </div>
+            <div className="form-group">
+                <div className="col-sm-offset-2 col-sm-9">
+                    <button id='signup' onClick={this.signUp} type="submit" className="btn btn-primary btn-block">Sign up</button>
+                </div>
+            </div>
+        </form>
+      )
+    }
+  });
+  
+  var SignInForm = React.createClass({
+      handleSignUp:function(event){
+        ReactDOM.render(
+          <SignUpForm />,
+          // document.getElementsByClassName('login-box')
+          $(".login-box")[0]
+        );
+      },
+      render: function() {
+        return(
+          <form className="form-horizontal">
+              <div className="form-group">
+                  <label htmlFor="inputemail" className="col-sm-2 control-label">Email</label>
+                  <div className="col-sm-9">
+                      <input type="email" className="form-control" id="username" placeholder="Email"/>
+                  </div>
+              </div>
+              <div className="form-group">
+                  <label htmlFor="inputpassword" className="col-sm-2 control-label">Password</label>
+                  <div className="col-sm-9">
+                      <input type="password" className="form-control" id="password" placeholder="Password"/>
+                  </div>
+              </div>
+              <div className="form-group">
+                  <div className="col-sm-offset-2 col-sm-9">
+                      <button id='signin' type="submit" className="btn btn-primary btn-block">Sign in</button>
+                  </div>
+              </div>
+              <div className="form-group">
+                  <div className='row signin-footer'>
+                    <div className="col-sm-offset-2 col-sm-9">
+                      <div className="col-sm-offset-2 col-sm-4">
+                        <span><a>忘记密码</a></span>
+                      </div>
+                      <div className="col-sm-offset-1 col-sm-4">
+                        <span><a href='#' onClick={this.handleSignUp}>注册新用户</a></span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </form>
+        );
+      }
+  });
+
+  $(function(){
+    ReactDOM.render(
+      <SignInForm />,
+      // document.getElementsByClassName('login-box')
+      $(".login-box")[0]
+    );
+  });
+</script>
 <script>
+
     $(function() {
-        console.log($(window).height());
+        // console.log($(window).height());
 
-        $('#signin').click(function(){
+        $('#signin').click(function() {
             $.ajax({
-              url:'signin',
-              type:'post',
-              data:{
-                username:$("#username").val(),
-                password:$("#password").val()
-              },
-              dataType:'json',
-              success:function(data){
+                url: 'signin',
+                type: 'post',
+                data: {
+                    username: $("#username").val(),
+                    password: $("#password").val()
+                },
+                dataType: 'json',
+                success: function(data) {
 
-              },
-              error:function(data){
+                },
+                error: function(data) {
 
-              }
+                }
             })
         });
     });
 </script>
+
 </html>

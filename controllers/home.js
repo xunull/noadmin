@@ -1,5 +1,6 @@
 var config = global.thisapp.config;
 var logger = global.thisapp.logger;
+var User = require('../dao').User;
 
 exports.index = function(req, res, next) {
     res.render('index', {
@@ -25,5 +26,14 @@ exports.signup = function(req, res, next) {
 };
 
 exports.userSignup = function(req, res, next) {
-    res.render('signin');
+    console.log(req.body.username);
+    console.log(req.body.password);
+    User.save(req.body.username,req.body.password,function(){
+        if(err){
+
+        } else {
+          logger.info('用户存储成功');
+        }
+    });
+    next();
 };
