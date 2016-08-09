@@ -1,4 +1,5 @@
 var config = {
+    hostname:'127.0.0.1',
     debug: true,
     port: 5000,
     mongodb: 'mongodb://127.0.0.1/noadmin',

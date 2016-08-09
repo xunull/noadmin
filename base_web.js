@@ -14,7 +14,7 @@ var permission = require('./middlewares/permission');
 
 var app = express();
 
-// 这个抱错了没有输出
+// 这个报错了没有输出
 app.use(session({
   secret: config.session_secret,
   store: new RedisStore({
@@ -25,6 +25,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+app.use(require('cookie-parser')(config.session_secret));
 
 // 本系统的资源
 var publicDir = path.join(__dirname, 'public');
@@ -62,10 +63,11 @@ _.extend(app.locals, {
     config: config
 });
 
+// 中间件添加的顺序就是中间件执行的顺序
+
 app.use(permission.userRequired);
 // router
 app.use('/', app_router);
-
 
 app.use(function(err, req, res, next) {
   logger.error(err.stack);
@@ -75,7 +77,6 @@ app.use(function(err, req, res, next) {
 var server = app.listen(config.port, function() {
     logger.info('listening on port', config.port);
     logger.info('You can debug your app with http://' + config.hostname + ':' + config.port);
-    logger.info('');
 });
 
 exports.app = app;
