@@ -10,6 +10,7 @@ var RedisStore = require('connect-redis')(session);
 var config = require('./config');
 var logger = require('./common/logger');
 var app_router = require('./app_router');
+var permission = require('./middlewares/permission');
 
 var app = express();
 
@@ -61,8 +62,15 @@ _.extend(app.locals, {
     config: config
 });
 
+app.use(permission.userRequired);
 // router
 app.use('/', app_router);
+
+
+app.use(function(err, req, res, next) {
+  logger.error(err.stack);
+  res.status(500).send('Something error!');
+});
 
 var server = app.listen(config.port, function() {
     logger.info('listening on port', config.port);
