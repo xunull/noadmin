@@ -24,6 +24,6 @@ var UserSchema = new Schema({
 });
 
 UserSchema.index({loginname: 1}, {unique: true});
-UserSchema.index({email: 1}, {unique: true});
+// UserSchema.index({email: 1}, {unique: true});
 
 mongoose.model('User', UserSchema);

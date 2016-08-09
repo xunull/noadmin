@@ -9,7 +9,13 @@ exports.getUserByLoginName = function(loginname, callback) {
     // 主要是为了大小写的忽略
     User.findOne({
         'loginname': new RegExp('^' + loginname + '$', 'i')
-    }, callback);
+    }, function(err,user){
+      if(err) {
+        callback(err);
+      } else {
+        callback(null,user);
+      }
+    });
 };
 
 exports.save = function(username, password, callback) {

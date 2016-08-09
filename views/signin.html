@@ -71,7 +71,7 @@
       )
     }
   });
-  
+
   var SignInForm = React.createClass({
       handleSignUp:function(event){
         ReactDOM.render(
@@ -79,6 +79,29 @@
           // document.getElementsByClassName('login-box')
           $(".login-box")[0]
         );
+      },
+      signIn:function(event) {
+        event.preventDefault();
+        $.ajax({
+          url: 'signin',
+          type: 'post',
+          data: {
+              username: $("#username").val(),
+              password: $("#password").val()
+          },
+          dataType: 'json',
+          success: function(data) {
+            if(data.res_code=200) {
+                // 跳转到主页
+                window.location.href='http://'+location.host+'/';
+            } else {
+
+            }
+          },
+          error: function(data) {
+
+          }
+        });
       },
       render: function() {
         return(
@@ -97,7 +120,7 @@
               </div>
               <div className="form-group">
                   <div className="col-sm-offset-2 col-sm-9">
-                      <button id='signin' type="submit" className="btn btn-primary btn-block">Sign in</button>
+                      <button onClick={this.signIn} id='signin' type="submit" className="btn btn-primary btn-block">Sign in</button>
                   </div>
               </div>
               <div className="form-group">
@@ -129,24 +152,6 @@
 
     $(function() {
         // console.log($(window).height());
-
-        $('#signin').click(function() {
-            $.ajax({
-                url: 'signin',
-                type: 'post',
-                data: {
-                    username: $("#username").val(),
-                    password: $("#password").val()
-                },
-                dataType: 'json',
-                success: function(data) {
-
-                },
-                error: function(data) {
-
-                }
-            })
-        });
     });
 </script>
 

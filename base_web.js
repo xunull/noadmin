@@ -4,12 +4,26 @@ var _ = require('lodash');
 
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 var config = require('./config');
 var logger = require('./common/logger');
 var app_router = require('./app_router');
 
 var app = express();
+
+// 这个抱错了没有输出
+app.use(session({
+  secret: config.session_secret,
+  store: new RedisStore({
+    port: config.redis_port,
+    host: config.redis_host,
+    pass: config.redis_password
+  }),
+  resave: true,
+  saveUninitialized: true,
+}));
 
 // 本系统的资源
 var publicDir = path.join(__dirname, 'public');
