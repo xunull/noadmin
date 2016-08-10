@@ -1,15 +1,20 @@
 var express = require('express');
-
-// controllers
 var home = require('./controllers/home');
+var menu_router = require('./router/menu_router');
+var express_app = global.thisapp.express_app;
+// controllers
 
-var router = express.Router();
+// 默认router
+var default_router = express.Router();
 
-router.get('/', home.index);
-router.get('/signin',home.signin);
-router.get('/signup',home.signup);
+express_app.use('/',default_router);
 
-router.post('/signin',home.userSignin);
-router.post('/signup',home.userSignup);
+default_router.get('/', home.index);
+default_router.get('/signin',home.signin);
+default_router.get('/signup',home.signup);
 
-module.exports = router;
+default_router.post('/signin',home.userSignin);
+default_router.post('/signup',home.userSignup);
+
+// 有关菜单操作的路由
+express_app.use('/menu',menu_router);

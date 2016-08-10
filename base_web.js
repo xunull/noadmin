@@ -12,7 +12,6 @@ var RedisStore = require('connect-redis')(session);
 
 var config = require('./config');
 var logger = require('./common/logger');
-var app_router = require('./app_router');
 var permission = require('./middlewares/permission');
 
 var app = express();
@@ -71,7 +70,10 @@ _.extend(app.locals, {
 
 // app.use(permission.userRequired);
 // router
-app.use('/', app_router);
+// app.use('/', app_router);
+
+global.thisapp.express_app=app;
+require('./app_router');
 
 app.use(function(err, req, res, next) {
   logger.error(err.stack);
