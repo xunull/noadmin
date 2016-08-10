@@ -2,9 +2,12 @@ var express = require('express');
 var path = require('path');
 var _ = require('lodash');
 
-var bodyParser = require('body-parser');
+
 var helmet = require('helmet');
+// expreess 官方的中间件
 var session = require('express-session');
+var bodyParser = require('body-parser');
+
 var RedisStore = require('connect-redis')(session);
 
 var config = require('./config');
@@ -25,6 +28,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+// express 官方的中间件
 app.use(require('cookie-parser')(config.session_secret));
 
 // 本系统的资源
@@ -65,7 +69,7 @@ _.extend(app.locals, {
 
 // 中间件添加的顺序就是中间件执行的顺序
 
-app.use(permission.userRequired);
+// app.use(permission.userRequired);
 // router
 app.use('/', app_router);
 
