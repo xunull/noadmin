@@ -5,13 +5,12 @@ var crypto = require('crypto');
 var logger = global.thisapp.logger;
 
 var User = require('../dao').User;
+var UserMenu = require('../dao').UserMenu;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
 let adminUser = initObj.user_root;
 let adminMenu = initObj.admin_basic_menu;
-
-logger.info(adminUser);
 
 User.getUserByLoginName('admin', function(err, user) {
     if (err) {
@@ -36,4 +35,17 @@ User.getUserByLoginName('admin', function(err, user) {
     }
 });
 
-logger.info(adminMenu);
+UserMenu.getUserMenu('admin',function(err,userMenu){
+  if(err) {
+    logger.info(err);
+  } else {
+    if(null === userMenu) {
+      logger.info('admin userMenu is null');
+      UserMenu.saveUserMenu('admin',adminMenu,function(err){
+
+      });
+    } else {
+      logger.info("admin's userMenu is not null");
+    }
+  }
+});
