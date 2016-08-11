@@ -4,11 +4,11 @@ var logger = global.thisapp.logger;
 exports.getUserMenu = function(username,callback) {
   UserMenu.findOne({
       'username': username
-  }, function(err, user) {
+  }, function(err, userMenu) {
       if (err) {
           callback(err);
       } else {
-          callback(null, user);
+          callback(null, userMenu);
       }
   });
 };

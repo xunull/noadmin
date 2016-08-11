@@ -1,4 +1,5 @@
 var Menu = require('../dao').Menu;
+var UserMenu = require('../dao').UserMenu;
 
 var logger = global.thisapp.logger;
 
@@ -17,9 +18,21 @@ exports.menuPage = function(req, res, next) {
  */
 exports.getUserMenu = function(req, res, next) {
     logger.info('getUserMenu');
-    res.send({
-        username: req.params.username
+    UserMenu.getUserMenu(req.params.username,function(err,userMenu){
+      if(err) {
+        logger.error(err);
+        res.send({
+            username: req.params.username,
+            userMenu:null
+        });
+      } else {
+        res.send({
+            username: req.params.username,
+            userMenu:userMenu.menuObj
+        });
+      }
     });
+
 };
 
 /**
