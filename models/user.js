@@ -9,7 +9,6 @@ var UserSchema = new Schema({
   email: { type: String},
   url: { type: String },
   profile_image_url: {type: String},
-  location: { type: String },
   signature: { type: String },
   profile: { type: String },
   avatar: { type: String },

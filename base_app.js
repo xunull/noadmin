@@ -1,9 +1,15 @@
 var logger = require('./common/logger');
 var config = require('./config');
+var yaml = require('js-yaml');
+var fs = require('fs');
+var path = require('path');
+
+var appConfigYaml = yaml.safeLoad(fs.readFileSync(path.join(__dirname, './properties/app_config.yaml')));
 
 var thisapp={
   logger:logger,
   config:config,
+  appConfigYaml:appConfigYaml
 };
 
 /**

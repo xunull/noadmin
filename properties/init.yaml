@@ -1,0 +1,14 @@
+admin_basic_menu:
+  -
+    name: '菜单设置'
+    level: 1
+    menu_icon: 'fa fa-th'
+  -
+    name: '主机检测'
+    level: 1
+    menu_icon: 'fa fa-th'
+
+user_root:
+  name: 'admin'
+  loginname: 'admin'
+  pass: '123456'
