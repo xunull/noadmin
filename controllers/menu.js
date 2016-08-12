@@ -3,7 +3,6 @@ var UserMenu = require('../dao').UserMenu;
 
 var logger = global.thisapp.logger;
 
-
 /**
  * 设置菜单的页面
  * @return {[type]} [description]
@@ -32,7 +31,6 @@ exports.getUserMenu = function(req, res, next) {
         });
       }
     });
-
 };
 
 /**

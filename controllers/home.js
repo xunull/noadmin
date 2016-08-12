@@ -6,10 +6,10 @@ var logger = global.thisapp.logger;
 exports.index = function(req, res, next) {
     var session = req.session;
     logger.info(session.user);
-    res.render('index', {
+    res.render('mergePage', {
 
     });
-    
+
 };
 
 exports.signin = function(req, res, next) {
