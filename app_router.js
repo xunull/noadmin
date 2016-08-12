@@ -2,10 +2,15 @@ var express = require('express');
 var home = require('./controllers/home');
 var menu_router = require('./router/menu_router');
 var express_app = global.thisapp.express_app;
-// controllers
+var permission = require('./middlewares/permission');
 
 // 默认router
 var default_router = express.Router();
+
+// 中间件添加的顺序就是中间件执行的顺序
+// 先执行对权限的验证
+express_app.use(permission.userRequired);
+
 
 express_app.use('/',default_router);
 

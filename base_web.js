@@ -12,7 +12,7 @@ var RedisStore = require('connect-redis')(session);
 
 var config = require('./config');
 var logger = require('./common/logger');
-var permission = require('./middlewares/permission');
+
 
 var app = express();
 
@@ -66,9 +66,7 @@ _.extend(app.locals, {
     config: config
 });
 
-// 中间件添加的顺序就是中间件执行的顺序
 
-// app.use(permission.userRequired);
 // router
 // app.use('/', app_router);
 
