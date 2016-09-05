@@ -1,10 +1,16 @@
 var logger = global.thisapp.logger;
-
-let whiteList=['/signin'];
+var config = global.thisapp.config;
+let whiteList=['/signin','/login'];
 let blackList=[];
 
-
 exports.userRequired = function(req, res, next) {
+
+    if(!config.permission) {
+      // 没有启用权限验证
+      next();
+      return;
+    }
+
     if (!req.session || !req.session.user) {
 
         if(whiteList.indexOf(req.path) !== -1 ){
@@ -16,6 +22,7 @@ exports.userRequired = function(req, res, next) {
         logger.info('用户没有登录');
         return res.status(403).send('forbidden!');
     } else {
+
     }
     next();
 };

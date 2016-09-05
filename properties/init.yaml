@@ -3,10 +3,28 @@ admin_basic_menu:
     name: '菜单设置'
     level: 1
     menu_icon: 'fa fa-th'
+    sub_menu:
+      -
+        name: '菜单设置'
+        level: 2
+        menu_icon: 'fa fa-th'
+      -
+        name: '权限设置'
+        level: 2
+        menu_icon: 'fa fa-th'
   -
-    name: '主机检测'
+    name: '主机监控'
     level: 1
     menu_icon: 'fa fa-th'
+    sub_menu:
+      -
+        name: '服务器监控'
+        level: 2
+        menu_icon: 'fa fa-th'
+      -
+        name: '程序监控'
+        level: 2
+        menu_icon: 'fa fa-th'
 
 user_root:
   name: 'admin'

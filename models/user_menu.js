@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var UserMenu = new Schema({
     username: {type:String},
-    menuObj:Schema.Types.Mixed
+    menuObj:{}
 });
 
 UserMenu.index({username:1});

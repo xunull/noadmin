@@ -46,6 +46,8 @@ UserMenu.getUserMenu('admin',function(err,userMenu){
       });
     } else {
       logger.info("admin's userMenu is not null");
+      // 点号和[]没有优先级区别
+      // logger.info(userMenu.menuObj[0].sub_menu);
     }
   }
 });
