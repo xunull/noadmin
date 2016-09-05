@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var _ = require('lodash');
-
+var ejs = require('ejs');
 
 var helmet = require('helmet');
 // expreess 官方的中间件
@@ -54,10 +54,15 @@ app.use(bodyParser.urlencoded({
     limit: '1mb'
 }));
 
+if(config.debug) {
+  // 如果是开发模式，就清除掉缓存，暂时这么认为
+  ejs.clearCache();
+}
+
 // 视图目录
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-app.engine('html', require('ejs').__express);
+app.engine('html', ejs.__express);
 
 // 网站安全增强
 app.use(helmet());

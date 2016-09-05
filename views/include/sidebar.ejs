@@ -25,17 +25,16 @@
     </form>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul class="sidebar-menu">
-      <li class="header">功能菜单</li>
+    <div id='sidebarMenu'>
+      <siderbarmenus  :menus="menus">
+      </siderbarmenus>
+    </div>
 
-      <% userMenu.forEach(function(menu){ %>
-        <li class="treeview">
-          <a href="#">
-            <i class="<%=menu.menu_icon%>"></i> <span><%=menu.name%></span>
-          </a>
-        </li>
-      <%  }); %>
-    </ul>
   </section>
   <!-- /.sidebar -->
+  <script type="text/javascript">
+  // 不要转义
+    var sidebarMenu=<%-JSON.stringify(userMenu)%>
+
+  </script>
 </aside>
