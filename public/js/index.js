@@ -54,12 +54,47 @@ var Bar = Vue.extend({
 var App = Vue.extend({
 });
 var router=new VueRouter();
+router.transitionOnLoad=false;
+
+
 router.map({
     '/setting/menu': {
-        component: Bar
+        component: function(resolve){
+          $.ajax({
+            url:'/public/js/components/test2.html',
+            type:'get',
+            dataType:'html',
+            success:function(data){
+              resolve({
+                template:data
+              })
+            },
+            error:function(data){
+
+            }
+          })
+        }
     },
     '/setting/permission': {
-        component: Bar
+        component: function(resolve){
+              $.ajax({
+                url:'/public/js/components/test.html',
+                type:'get',
+                dataType:'html',
+                success:function(data){
+                    console.log('成功了');
+                    console.log(data);
+                    resolve({
+                      template:data
+                    });
+                },
+                error:function(data,err){
+                    console.log('失败了')
+                    console.log(err);
+                    console.table(data);
+                }
+              })
+        }
     }
 });
 
