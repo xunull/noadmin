@@ -36,7 +36,8 @@ var SiderbarSubMenu = Vue.extend({
   `
   <ul class="treeview-menu">
     <li v-for='menu in submenu'>
-      <a href="{{menu.url}}">
+      <!--<a href="{{menu.url}}">-->
+      <a  v-link="{ path: menu.url }">
       <i class="{{menu.menu_icon}}"></i>{{menu.name}}</a></li>
   </ul>
   `
@@ -44,11 +45,34 @@ var SiderbarSubMenu = Vue.extend({
 });
 Vue.component('siderbarsubmenu',SiderbarSubMenu);
 
+
+var Bar = Vue.extend({
+    template: '<p>This is bar!</p>'
+});
+var App = Vue.extend({
+  props:['submenu']
+});
+var router=new VueRouter();
+router.map({
+    '/setting/menu': {
+        component: Bar
+    },
+    '/setting/permission': {
+        component: Bar
+    }
+});
+
+// router.start(App,'#router-view');
+
+router.start(SiderbarMenus,'#sidebarMenu');
+
 $(function(){
+
   var sidebarMenuVue = new Vue({
 			  el: '#sidebarMenu',
 			  data: {
 			  	menus:sidebarMenu
 			  }
 			});
+      
 });

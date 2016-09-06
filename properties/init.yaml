@@ -6,12 +6,12 @@ admin_basic_menu:
     sub_menu:
       -
         name: '菜单设置'
-        url: '#'
+        url: '/setting/menu'
         level: 2
         menu_icon: 'fa fa-th'
       -
         name: '权限设置'
-        url: '#'
+        url: '/setting/permission'
         level: 2
         menu_icon: 'fa fa-th'
   -
@@ -21,14 +21,22 @@ admin_basic_menu:
     sub_menu:
       -
         name: '服务器监控'
-        url: '#'
+        url: '/monitor/server'
         level: 2
         menu_icon: 'fa fa-th'
       -
         name: '程序监控'
-        url: '#'
+        url: '/monitor/program'
         level: 2
         menu_icon: 'fa fa-th'
+
+admin_basic_access_path:
+  -
+    name: '菜单设置'
+    id: 1
+    url: '#'
+    level: 1
+
 
 user_root:
   name: 'admin'

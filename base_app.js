@@ -1,5 +1,5 @@
 var logger = require('./common/logger');
-var config = require('./config');
+var config = require('./config/app.config');
 var yaml = require('js-yaml');
 var fs = require('fs');
 var path = require('path');
