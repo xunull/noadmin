@@ -12,7 +12,7 @@ exports.index = function(req, res, next) {
       if(err) {
         logger.error(err);
       } else {
-        res.render('mergePage.ejs', {userMenu:userMenu.menuObj});
+        res.render('index.ejs', {userMenu:userMenu.menuObj});
       }
     });
 };

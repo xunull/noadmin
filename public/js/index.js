@@ -1,5 +1,7 @@
 var SiderbarMenus = Vue.extend({
-  props:['menus'],
+  data: function () {
+   return { menus: sidebarMenu}
+  },
   template:
     `
     <ul class='sidebar-menu'>
@@ -50,7 +52,6 @@ var Bar = Vue.extend({
     template: '<p>This is bar!</p>'
 });
 var App = Vue.extend({
-  props:['submenu']
 });
 var router=new VueRouter();
 router.map({
@@ -62,17 +63,8 @@ router.map({
     }
 });
 
-// router.start(App,'#router-view');
-
-router.start(SiderbarMenus,'#sidebarMenu');
+router.start(App,'#app');
 
 $(function(){
 
-  var sidebarMenuVue = new Vue({
-			  el: '#sidebarMenu',
-			  data: {
-			  	menus:sidebarMenu
-			  }
-			});
-      
 });

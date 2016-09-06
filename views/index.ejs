@@ -20,6 +20,12 @@
   <link rel="stylesheet" href="/libs/morris.js/morris.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-  <app id='app'></app>
-<div id='app' class="wrapper">
-  <my-header></my-header>
+<%- include('include/something')%>
+  <div class='wrapper'>
+    <div id='app' >
+      <my-header></my-header>
+      <my-sidebar></my-sidebar>
+      <my-content></my-content>
+    </div>
+  </div>
+<%- include('include/footer') %>
