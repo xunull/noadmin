@@ -36,6 +36,7 @@
     "log4js": "^0.6.38",
     "moment": "^2.14.1",
     "mongoose": "^4.5.8",
+    "mongoose-schema-extend": "^0.2.2",
     "node-uuid": "^1.4.7",
     "path-to-regexp": "^1.5.3",
     "pump": "^1.0.1",

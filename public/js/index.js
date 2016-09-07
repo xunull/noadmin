@@ -61,7 +61,7 @@ router.map({
     '/setting/menu': {
         component: function(resolve){
           $.ajax({
-            url:'/public/js/components/test2.html',
+            url:'/public/js/components/setting-menu-page.html',
             type:'get',
             dataType:'html',
             success:function(data){

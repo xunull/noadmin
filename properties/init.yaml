@@ -1,6 +1,6 @@
 admin_basic_menu:
   -
-    name: '菜单设置'
+    name: '系统设置'
     level: 1
     menu_icon: 'fa fa-th'
     sub_menu:
@@ -32,11 +32,43 @@ admin_basic_menu:
 
 admin_basic_access_path:
   -
-    name: '菜单设置'
+    name: '系统设置'
+    path: ''
+    level: 0
+    truth: false
     id: 1
-    url: '#'
-    level: 1
-
+    pid: 0
+  -
+    name: '主机监控'
+    path: ''
+    level: 0
+    truth: false
+    id: 2
+    pid: 0
+  -
+    name: '菜单设置'
+    path: '/setting/menu'
+    level: 0
+    pid: 1
+    truth: true
+  -
+    name: '权限设置'
+    path: '/setting/permission'
+    level: 0
+    pid: 1
+    truth: true
+  -
+    name: '服务器监控'
+    path: '/monitor/server'
+    level: 0
+    pid: 2
+    truth: true
+  -
+    name: '程序监控'
+    path: '/monitor/program'
+    level: 0
+    pid: 2
+    truth: true
 
 user_root:
   name: 'admin'
