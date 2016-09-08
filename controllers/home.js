@@ -3,25 +3,29 @@ var UserMenu = require('../dao').UserMenu;
 var crypto = require('../basic/crypto');
 var config = global.thisapp.config;
 var logger = global.thisapp.logger;
+var my_session = require('../basic/session');
+var ClientObj = require('../basic/client_obj');
 
 
-exports.index = function(req, res, next) {
+exports.index = async function(req, res, next) {
     var session = req.session;
     logger.info(session.user);
     if (!session.user) {
         res.redirect('/signin');
     } else {
-        UserMenu.getUserMenu('admin', function(err, userMenu) {
-            if (err) {
-                logger.error(err);
-            } else {
-                res.render('index.ejs', {
-                    userMenu: userMenu.menuObj
-                });
-            }
+      try {
+        userMenu = await UserMenu.getUserMenu('admin');
+        let clientObj = new ClientObj();
+        clientObj.userMenu=userMenu.menuObj;
+        clientObj.loginUser=session.user;
+        res.render('index.ejs',{
+            clientObj:clientObj
         });
-    }
+      } catch(err) {
+        logger.error(err);
+      }
 
+    }
 };
 
 exports.signin = function(req, res, next) {
@@ -40,7 +44,7 @@ exports.userSignin = function(req, res, next) {
         if (err) {
 
         } else {
-            password=crypto.passwordHmac(password);
+            password = crypto.passwordHmac(password);
             if (password == user.pass) {
                 logger.info('密码验证成功');
                 var session = req.session;

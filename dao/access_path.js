@@ -24,34 +24,6 @@ exports.getAllAccessPath = function(callback) {
     }
 }
 
-exports.getUserPath = function(username, callback) {
-
-    if (undefined === callback) {
-        return new Promise((resolve, reject) => {
-            AccessPath.findOne({
-                'username': username
-            }, function(err, userPath) {
-                if (err) {
-                    // callback(err);
-                    reject(err);
-                } else {
-                    resolve(userPath);
-                    // callback(null, userMenu);
-                }
-            });
-        });
-    } else {
-        AccessPath.findOne({
-            'username': username
-        }, function(err, userPath) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, userPath);
-            }
-        });
-    }
-}
 
 exports.saveAccessPath = function(name, path, level, id, pid, truth) {
 
@@ -63,10 +35,14 @@ exports.saveAccessPath = function(name, path, level, id, pid, truth) {
     accessPath.pid = pid;
     accessPath.truth = truth;
 
-    accessPath.save(function(err, accessPath) {
-        if (err) {
-            logger.error(err);
-        }
-    });
+    return new Promise((resolve, reject) => {
 
+        accessPath.save(function(err, accessPath) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(accessPath);
+            }
+        });
+    });
 }

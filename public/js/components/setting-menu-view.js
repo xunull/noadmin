@@ -15,7 +15,7 @@ var SettingMenuView = Vue.extend({
       type:'post',
       dateType:'json',
       success:function(data){
-        console.log(data);
+        console.table(data);
         return {
           allAccessPath:data
         }

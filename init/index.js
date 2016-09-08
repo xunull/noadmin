@@ -7,6 +7,7 @@ var logger = global.thisapp.logger;
 var User = require('../dao').User;
 var UserMenu = require('../dao').UserMenu;
 var AccessPath = require('../dao').AccessPath;
+var UserAccessPath = require('../dao').UserAccessPath;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
@@ -16,6 +17,7 @@ let amdinBasicPath = initObj.admin_basic_access_path;
 
 logger.info(amdinBasicPath);
 
+// 初始化用户
 User.getUserByLoginName('admin', function(err, user) {
     if (err) {
         logger.info(err);
@@ -39,6 +41,7 @@ User.getUserByLoginName('admin', function(err, user) {
     }
 });
 
+// 初始化用户的菜单
 UserMenu.getUserMenu('admin', function(err, userMenu) {
     if (err) {
         logger.info(err);
@@ -56,39 +59,23 @@ UserMenu.getUserMenu('admin', function(err, userMenu) {
     }
 });
 
+// 初始化admin可以访问的path
 (async function initAdminPath() {
-    let adminPaths = await AccessPath.getUserPath('admin');
+    let adminPaths = await UserAccessPath.getUserPath('admin');
     if (null === adminPaths) {
         logger.info('admin basic access_path is null');
         logger.info('generate admin basic access_path');
 
-        for (var adminPath of amdinBasicPath) {
-            AccessPath.saveAccessPath(adminPath.name, adminPath.path,
+        let adminPathArr = [];
+        for (let adminPath of amdinBasicPath) {
+            let accessPath = await AccessPath.saveAccessPath(adminPath.name, adminPath.path,
                 adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
+            adminPathArr.push(accessPath._id);
         }
 
+        await UserAccessPath.save('admin',adminPathArr);
 
     } else {
         logger.info('admin userMenu is not null');
     }
 })();
-
-// AccessPath.getUserPath('admin', function(err, adminPaths) {
-//     if (err) {
-//         logger.error(err);
-//     } else {
-//         if (null === adminPaths) {
-//             logger.info('admin basic access_path is null');
-//             logger.info('generate admin basic access_path');
-//
-//             for (var adminPath of amdinBasicPath) {
-//                 AccessPath.saveAccessPath(adminPath.name, adminPath.path,
-//                     adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
-//             }
-//
-//
-//         } else {
-//             logger.info('admin userMenu is not null');
-//         }
-//     }
-// });

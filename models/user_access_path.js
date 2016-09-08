@@ -5,8 +5,7 @@ var AccessPath=require('./access_path').schema;
 
 var UserAccessPath = new Schema({
     username: String,
-    access: [AccessPath],
-    level:[Number],
+    paths: [Schema.Types.ObjectId],
 });
 
 UserAccessPath.index({

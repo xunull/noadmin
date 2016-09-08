@@ -1,6 +1,6 @@
 var SiderbarMenus = Vue.extend({
   data: function () {
-   return { menus: sidebarMenu}
+   return { menus: clientObj.userMenu}
   },
   template:
     `

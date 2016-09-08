@@ -2,15 +2,21 @@ var UserMenu =  require('../models').UserMenu;
 var logger = global.thisapp.logger;
 
 exports.getUserMenu = function(username,callback) {
-  UserMenu.findOne({
-      'username': username
-  }, function(err, userMenu) {
-      if (err) {
-          callback(err);
-      } else {
-          callback(null, userMenu);
-      }
+
+  return new Promise((resolve,reject)=>{
+    UserMenu.findOne({
+        'username': username
+    }, function(err, userMenu) {
+        if (err) {
+            // callback(err);
+            reject(err);
+        } else {
+            // callback(null, userMenu);
+            resolve(userMenu);
+        }
+    });
   });
+
 };
 
 exports.saveUserMenu = function(username,menuObj,callback) {
