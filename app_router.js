@@ -22,7 +22,6 @@ default_router.get('/signin',home.signin);
 default_router.get('/signup',home.signup);
 // login 等同于 signin
 default_router.get('/login',home.signin);
-
 default_router.post('/signin',home.userSignin);
 default_router.post('/signup',home.userSignup);
 

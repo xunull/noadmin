@@ -1,6 +1,6 @@
 var logger = global.thisapp.logger;
 var config = global.thisapp.config;
-let whiteList=['/signin','/login'];
+let whiteList=['/signin','/login','/'];
 let blackList=[];
 
 exports.userRequired = function(req, res, next) {
@@ -20,7 +20,7 @@ exports.userRequired = function(req, res, next) {
         }
 
         logger.info('用户没有登录');
-        return res.status(403).send('forbidden!');
+        res.status(403).send('forbidden!');
     } else {
 
     }

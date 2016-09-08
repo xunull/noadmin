@@ -59,21 +59,7 @@ router.transitionOnLoad=false;
 
 router.map({
     '/setting/menu': {
-        component: function(resolve){
-          $.ajax({
-            url:'/public/js/components/setting-menu-page.html',
-            type:'get',
-            dataType:'html',
-            success:function(data){
-              resolve({
-                template:data
-              })
-            },
-            error:function(data){
-
-            }
-          })
-        }
+        component: SettingMenuView
     },
     '/setting/permission': {
         component: function(resolve){

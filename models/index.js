@@ -8,8 +8,6 @@ require('./user_menu');
 require('./access_path');
 require('./user_access_path');
 
-
-
 exports.User = mongoose.model('User');
 exports.Menu = mongoose.model('Menu');
 exports.UserMenu = mongoose.model('UserMenu');

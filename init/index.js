@@ -56,23 +56,39 @@ UserMenu.getUserMenu('admin', function(err, userMenu) {
     }
 });
 
-AccessPath.getUserPath('admin', function(err, adminPaths) {
-    if (err) {
-        logger.error(err);
-    } else {
-        if (null === adminPaths) {
-            logger.info('admin basic access_path is null');
-            logger.info('generate admin basic access_path');
+(async function initAdminPath() {
+    let adminPaths = await AccessPath.getUserPath('admin');
+    if (null === adminPaths) {
+        logger.info('admin basic access_path is null');
+        logger.info('generate admin basic access_path');
 
-            for (var adminPath of amdinBasicPath) {
-                AccessPath.saveAccessPath(adminPath.name, adminPath.path,
-                    adminPath.level, adminPath.id, adminPath.pid,adminPath.truth);
-            }
-
-
-        } else {
-            logger.info('admin userMenu is not null');
+        for (var adminPath of amdinBasicPath) {
+            AccessPath.saveAccessPath(adminPath.name, adminPath.path,
+                adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
         }
-    }
 
-});
+
+    } else {
+        logger.info('admin userMenu is not null');
+    }
+})();
+
+// AccessPath.getUserPath('admin', function(err, adminPaths) {
+//     if (err) {
+//         logger.error(err);
+//     } else {
+//         if (null === adminPaths) {
+//             logger.info('admin basic access_path is null');
+//             logger.info('generate admin basic access_path');
+//
+//             for (var adminPath of amdinBasicPath) {
+//                 AccessPath.saveAccessPath(adminPath.name, adminPath.path,
+//                     adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
+//             }
+//
+//
+//         } else {
+//             logger.info('admin userMenu is not null');
+//         }
+//     }
+// });

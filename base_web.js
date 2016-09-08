@@ -80,6 +80,10 @@ _.extend(app.locals, {
 global.thisapp.express_app=app;
 require('./app_router');
 
+app.get('*', function(req, res){
+    res.status(404).send('您请求的页面没有找到');
+});
+
 app.use(function(err, req, res, next) {
   logger.error(err.stack);
   res.status(500).send('Something error!');

@@ -2,7 +2,6 @@ var MyHeader = Vue.extend({
 
   template:
     `
-  
     <header class="main-header">
       <!-- Logo -->
       <a href="index2.html" class="logo">

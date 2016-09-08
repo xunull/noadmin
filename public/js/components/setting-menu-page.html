@@ -4,19 +4,24 @@
 </div>
 <link rel="stylesheet" href="/libs/zTree/css/metroStyle/metroStyle.css">
 <script src="/libs/zTree/js/jquery.ztree.all.min.js" charset="utf-8"></script>
+<script src="/public/js/components/test.js" charset="utf-8"></script>
 <script type="text/javascript">
 
+    console.log(122348972342398473);
+
     $.ajax({
-      url:''.
+      url:'getAllAccessPath',
       type:'post',
       dateType:'json',
       success:function(data){
 
       },
       error:function(data,error){
-        
+
       }
-    })
+    });
+
+
     function addHoverDom(treeId, treeNode) {};
 
     function removeHoverDom(treeId, treeNode) {
