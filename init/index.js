@@ -4,10 +4,10 @@ var path = require('path');
 var crypto = require('crypto');
 var logger = global.thisapp.logger;
 
-var User = require('../dao').User;
-var UserMenu = require('../dao').UserMenu;
-var AccessPath = require('../dao').AccessPath;
-var UserAccessPath = require('../dao').UserAccessPath;
+var User = require('../back.src/dao').User;
+var UserMenu = require('../back.src/dao').UserMenu;
+var AccessPath = require('../back.src/dao').AccessPath;
+var UserAccessPath = require('../back.src/dao').UserAccessPath;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 

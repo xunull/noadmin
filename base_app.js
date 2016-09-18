@@ -1,4 +1,4 @@
-var logger = require('./common/logger');
+var logger = require('./back.src/common/logger');
 var config = require('./config/app.config');
 var yaml = require('js-yaml');
 var fs = require('fs');
@@ -30,5 +30,5 @@ process.on('uncaughtException',function(err){
   logger.error(err);
 });
 
-var mongoose = require('./common/mongoose');
-var redis = require('./common/redis');
+var mongoose = require('./back.src/common/mongoose');
+var redis = require('./back.src/common/redis');
