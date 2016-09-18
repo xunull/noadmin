@@ -1,8 +1,19 @@
+import Vue from 'vue'
+import App from './App.vue'
+import VueRouter from 'vue-router'
+import SettingMenuView from './components/setting-menu-view.vue'
+
+new Vue({
+  el:'#app',
+  components:{
+    app:App
+  }
+})
+
 Vue.config.devtools = true;
 
 var router=new VueRouter();
 router.transitionOnLoad=false;
-
 
 router.map({
     '/setting/menu': {
@@ -32,7 +43,3 @@ router.map({
 });
 
 router.start(App,'#app');
-
-$(function(){
-
-});

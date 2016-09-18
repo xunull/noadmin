@@ -2,7 +2,7 @@ var redis = require('redis'),
 	redis_port = 12312,
 	redis_host = "127.0.0.1",
 	redis_opts = {},
-	redis_password=123456;
+	redis_password=123456,
 	client = redis.createClient(redis_port,redis_host,redis_opts);
 
 var logger = global.thisapp.logger;

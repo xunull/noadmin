@@ -1,5 +1,4 @@
-var Sidebar = Vue.extend({
-  template:`
+<template lang="html">
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -27,14 +26,22 @@ var Sidebar = Vue.extend({
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <div id='sidebarMenu'>
-        <siderbarmenus>
-        </siderbarmenus>
+        <sidebar-menus>
+        </sidebar-menus>
       </div>
 
     </section>
     <!-- /.sidebar -->
 
   </aside>
-  `
-})
-Vue.component('my-sidebar',Sidebar);
+</template>
+
+<script>
+import SidebarMenus from '../components/sidebar-menu.vue'
+
+export default {
+  components:{
+      SidebarMenus
+  }
+}
+</script>
