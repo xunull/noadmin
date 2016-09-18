@@ -50,24 +50,28 @@ admin_basic_access_path:
     path: '/setting/menu'
     level: 0
     pid: 1
+    id: 3
     truth: true
   -
     name: '权限设置'
     path: '/setting/permission'
     level: 0
     pid: 1
+    id: 4
     truth: true
   -
     name: '服务器监控'
     path: '/monitor/server'
     level: 0
     pid: 2
+    id: 5
     truth: true
   -
     name: '程序监控'
     path: '/monitor/program'
     level: 0
     pid: 2
+    id: 6
     truth: true
 
 user_root:

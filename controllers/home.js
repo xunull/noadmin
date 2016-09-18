@@ -6,10 +6,8 @@ var logger = global.thisapp.logger;
 var my_session = require('../basic/session');
 var ClientObj = require('../basic/client_obj');
 
-
 exports.index = async function(req, res, next) {
     var session = req.session;
-    logger.info(session.user);
     if (!session.user) {
         res.redirect('/signin');
     } else {
@@ -24,7 +22,6 @@ exports.index = async function(req, res, next) {
       } catch(err) {
         logger.error(err);
       }
-
     }
 };
 
@@ -36,8 +33,6 @@ exports.userSignin = function(req, res, next) {
 
     var username = req.body.username;
     var password = req.body.password;
-    console.log(username);
-    console.log(password);
 
     User.getUserByLoginName(req.body.username, function(err, user) {
 

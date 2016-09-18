@@ -1,3 +1,5 @@
+Vue.config.devtools = true;
+
 var SiderbarMenus = Vue.extend({
   data: function () {
    return { menus: clientObj.userMenu}

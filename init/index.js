@@ -15,7 +15,6 @@ let adminUser = initObj.user_root;
 let adminMenu = initObj.admin_basic_menu;
 let amdinBasicPath = initObj.admin_basic_access_path;
 
-logger.info(amdinBasicPath);
 
 // 初始化用户
 User.getUserByLoginName('admin', function(err, user) {
