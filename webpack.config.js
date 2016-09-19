@@ -1,10 +1,11 @@
 module.exports = {
+  watch:true,
   // entry point of our application
   entry: './front.src/public/js/main.js',
   // where to place the compiled bundle
   output: {
-    path: './dist',
-    filename: 'js/build.js'
+    path: './dist/js',
+    filename: 'build.js'
   },
   module: {
     // `loaders` is an array of loaders to use.
@@ -16,8 +17,10 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader:'babel',
-        exclude:/node_modules/
+        // excluding some local linked packages.
+        // for normal use cases only node_modules is needed.
+        exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
+        loader: 'babel'
       }
     ]
   },

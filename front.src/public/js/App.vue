@@ -1,7 +1,9 @@
 <template lang="html">
-  <my-header></my-header>
-  <my-sidebar></my-sidebar>
-  <my-content></my-content>
+  <div>
+    <my-header></my-header>
+    <my-sidebar></my-sidebar>
+    <my-content></my-content>
+  </div>
 </template>
 
 <script>
