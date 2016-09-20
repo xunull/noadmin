@@ -24,16 +24,25 @@ exports.getAllAccessPath = function(callback) {
     }
 }
 
-
-exports.saveAccessPath = function(name, path, level, id, pid, truth) {
+/**
+ * [saveAccessPath description]
+ * @param  {[type]} name      [path 的名称]
+ * @param  {[type]} path      [path 的url]
+ * @param  {[type]} level     [path 的登记]
+ * @param  {[type]} dimension [path 的id]
+ * @param  {[type]} dimension [path 的维度]
+ * @param  {[Boolean]} node      [path 是否是一个节点]
+ * @return {[type]}           [promise 对象]
+ */
+exports.saveAccessPath = function(name, path, level,id, dimension, node) {
 
     let accessPath = new AccessPath();
     accessPath.name = name;
     accessPath.path = path;
     accessPath.level = level;
     accessPath.id = id;
-    accessPath.pid = pid;
-    accessPath.truth = truth;
+    accessPath.dimension=dimension;
+    accessPath.node = node;
 
     return new Promise((resolve, reject) => {
 

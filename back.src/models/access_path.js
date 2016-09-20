@@ -7,10 +7,10 @@ var OperateRecord = require('./operate_record');
 var AccessPath = new Schema(_.assign({
     name: String,
     path: String,
-    level: Number,
-    id: String,
-    pid: String,
-    truth: {
+    level:Number,
+    id:String,
+    dimension:[String],
+    node: {
         type: Boolean,
         default: true
     },

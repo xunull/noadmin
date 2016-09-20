@@ -1,34 +1,36 @@
-admin_basic_menu:
+basic_access_path:
   -
     name: '系统设置'
     level: 1
-    menu_icon: 'fa fa-th'
-    sub_menu:
+    url: ''
+    node: true
+    sub:
       -
         name: '菜单设置'
         url: '/setting/menu'
         level: 2
-        menu_icon: 'fa fa-th'
+        node: false
       -
         name: '权限设置'
         url: '/setting/permission'
         level: 2
-        menu_icon: 'fa fa-th'
+        node: false
   -
     name: '主机监控'
     level: 1
-    menu_icon: 'fa fa-th'
-    sub_menu:
+    url: ''
+    node: true
+    sub:
       -
         name: '服务器监控'
         url: '/monitor/server'
         level: 2
-        menu_icon: 'fa fa-th'
+        node: false
       -
         name: '程序监控'
         url: '/monitor/program'
         level: 2
-        menu_icon: 'fa fa-th'
+        node: false
 
 admin_basic_access_path:
   -

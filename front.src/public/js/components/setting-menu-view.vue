@@ -53,7 +53,9 @@ export default {
 
         }
 
-        function ztree(data) {
+        function ztree(userAccessPath,allAccessPath) {
+          console.log(userAccessPath);
+          console.log(allAccessPath);
             var setting = {
                 check: {
                     // 是否显示checkbox，radio
@@ -76,8 +78,8 @@ export default {
                 },
             };
 
-            $.fn.zTree.init($('#accessPathTree'), setting, data);
-            console.table(data);
+            $.fn.zTree.init($('#accessPathTree'), setting, allAccessPath);
+
         }
 
         var asyncFunc = async function() {
@@ -87,12 +89,11 @@ export default {
             var allAccessPath = await getAllAccessPath().catch(err => {
                 alert(err);
             });
-            ztree(allAccessPath);
-            console.log(userAccessPath);
+            ztree(userAccessPath,allAccessPath);
+
         }
 
         asyncFunc();
-
 
     }
 }
