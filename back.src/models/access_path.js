@@ -20,10 +20,6 @@ AccessPath.index({
     id: 1
 });
 
-AccessPath.index({
-    pid: 1
-});
-
 // console.log(AccessPath);
 
 mongoose.model('AccessPath', AccessPath);

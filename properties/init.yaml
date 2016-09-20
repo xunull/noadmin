@@ -1,80 +1,36 @@
 basic_access_path:
   -
     name: '系统设置'
-    level: 1
+    level: 0
     url: ''
     node: true
     sub:
       -
         name: '菜单设置'
         url: '/setting/menu'
-        level: 2
+        level: 1
         node: false
       -
         name: '权限设置'
         url: '/setting/permission'
-        level: 2
+        level: 1
         node: false
   -
     name: '主机监控'
-    level: 1
+    level: 0
     url: ''
     node: true
     sub:
       -
         name: '服务器监控'
         url: '/monitor/server'
-        level: 2
+        level: 1
         node: false
       -
         name: '程序监控'
         url: '/monitor/program'
-        level: 2
+        level: 1
         node: false
-
-admin_basic_access_path:
-  -
-    name: '系统设置'
-    path: ''
-    level: 0
-    truth: false
-    id: 1
-    pid: 0
-  -
-    name: '主机监控'
-    path: ''
-    level: 0
-    truth: false
-    id: 2
-    pid: 0
-  -
-    name: '菜单设置'
-    path: '/setting/menu'
-    level: 0
-    pid: 1
-    id: 3
-    truth: true
-  -
-    name: '权限设置'
-    path: '/setting/permission'
-    level: 0
-    pid: 1
-    id: 4
-    truth: true
-  -
-    name: '服务器监控'
-    path: '/monitor/server'
-    level: 0
-    pid: 2
-    id: 5
-    truth: true
-  -
-    name: '程序监控'
-    path: '/monitor/program'
-    level: 0
-    pid: 2
-    id: 6
-    truth: true
 
 user_root:
   name: 'admin'

@@ -14,7 +14,6 @@ var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/
 
 let adminUser = initObj.user_root;
 let basicAccessPaths = initObj.basic_access_path;
-let amdinBasicPath = initObj.admin_basic_access_path;
 
 // 初始化用户
 User.getUserByLoginName('admin', function(err, user) {
@@ -47,23 +46,23 @@ User.getUserByLoginName('admin', function(err, user) {
 
     async function generate(tempAccessPath, parentDimension) {
         let dimension = parentDimension;
-        let id=uuid.v4();
+        let id = uuid.v4();
         if (undefined === parentDimension) {
             dimension = [id];
         } else {
             dimension.push(id);
         }
-        tempAccessPath.id=id;
-        tempAccessPath.dimension=dimension;
+        tempAccessPath.id = id;
+        tempAccessPath.dimension = dimension;
         let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.path,
-            tempAccessPath.level, tempAccessPath.id,tempAccessPath.dimension, tempAccessPath.node);
+            tempAccessPath.level, tempAccessPath.id, tempAccessPath.dimension, tempAccessPath.node);
         if (undefined !== tempAccessPath.sub) {
             logger.info(tempAccessPath.name);
             logger.info('有子path');
             // 有下层链接
             for (let subAccessPath of tempAccessPath.sub) {
                 // 复制一个数组，否则这个for 循环内的都是相同的dimension
-                let tempDimension=dimension.concat();
+                let tempDimension = dimension.concat();
                 generate(subAccessPath, tempDimension);
             }
         } else {
@@ -87,8 +86,83 @@ User.getUserByLoginName('admin', function(err, user) {
         console.log(err);
     }
 
-
+    // 暂时在这调用该方法
+    initAdminAccessPath();
 })();
+
+/**
+ * accessPath 排序
+ * @param  {[type]} allAccessPath [该参数为从数据库中查询出来的access path]
+ * @return {[type]}               [description]
+ */
+function accessPathSort(allAccessPath) {
+    let pathSortByLevel = [];
+    for (let tempAccessPath of allAccessPath) {
+        if (undefined === pathSortByLevel[tempAccessPath.level]) {
+            pathSortByLevel[tempAccessPath.level] = [];
+        }
+        pathSortByLevel[tempAccessPath.level].push(tempAccessPath);
+    }
+    let pathSortMap = new Map();
+    pathSortMap.set('name', 'root');
+    pathSortMap.set('children', new Map());
+    logger.info(pathSortByLevel[0]);
+    for (let tempAccessPath of pathSortByLevel[0]) {
+        let tempMap = new Map();
+        tempMap.set('name', tempAccessPath.name);
+        tempMap.set('id', tempAccessPath.id);
+        tempMap.set('children', new Map());
+        pathSortMap.get('children').set(tempAccessPath.id, tempMap);
+        generateMap(tempMap, 1, tempAccessPath.id);
+    }
+
+    function generateMap(parentMap, level, parentId) {
+        if (undefined === pathSortByLevel[level]) {
+            // 已经不存在这个级别了
+        } else {
+            for (let tempAccessPath of pathSortByLevel[level]) {
+                if (parentId === tempAccessPath.dimension[level - 1]) {
+                    let tempMap = new Map();
+                    tempMap.set('name', tempAccessPath.name);
+                    tempMap.set('id', tempAccessPath.id);
+                    tempMap.set('children', new Map());
+                    parentMap.get('children').set(tempAccessPath.id, tempMap);
+                    generateMap(tempMap.get('children'), level + 1, parentId);
+                } else {
+                    logger.info(tempAccessPath.name, '没有父元素');
+                }
+
+            }
+        }
+
+    }
+    logger.info(pathSortMap);
+}
+
+// 初始化admin可以访问的path
+async function initAdminAccessPath() {
+    let adminPaths = await UserAccessPath.getUserPath('admin');
+    if (null === adminPaths) {
+        logger.info('admin basic access_path is null');
+        logger.info('generate admin basic access_path');
+
+        // 默认此时的access path 都是admin可以访问的
+        let allAccessPath = await AccessPath.getAllAccessPath();
+
+        accessPathSort(allAccessPath);
+
+        // let adminPathArr = [];
+        // for (let adminPath of basicAccessPaths) {
+        //     let accessPath = await AccessPath.saveAccessPath(adminPath.name, adminPath.path,
+        //         adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
+        //     adminPathArr.push(accessPath._id);
+        // }
+        // await UserAccessPath.save('admin', adminPathArr);
+
+    } else {
+        logger.info('admin access path has exist');
+    }
+}
 
 // 初始化用户的菜单
 // UserMenu.getUserMenu('admin', function(err, userMenu) {
@@ -107,24 +181,3 @@ User.getUserByLoginName('admin', function(err, user) {
 //         }
 //     }
 // });
-
-// 初始化admin可以访问的path
-// (async function initAdminPath() {
-//     let adminPaths = await UserAccessPath.getUserPath('admin');
-//     if (null === adminPaths) {
-//         logger.info('admin basic access_path is null');
-//         logger.info('generate admin basic access_path');
-//
-//         let adminPathArr = [];
-//         for (let adminPath of amdinBasicPath) {
-//             let accessPath = await AccessPath.saveAccessPath(adminPath.name, adminPath.path,
-//                 adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
-//             adminPathArr.push(accessPath._id);
-//         }
-//
-//         await UserAccessPath.save('admin',adminPathArr);
-//
-//     } else {
-//         logger.info('admin userMenu is not null');
-//     }
-// })();
