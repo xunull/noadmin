@@ -17,57 +17,83 @@
 <script>
 export default {
 
-  ready () {
-    $.ajax({
-      url:'setting/getUserAccessPath',
-      type:'post',
-      dataType:'json',
-      success:function(data){
-        console.log(data);
-      },
-      error:function(data){
-        alert('获取用户访问path出错');
-      }
-    })
+    ready() {
 
-
-    $.ajax({
-        url: 'setting/getAllAccessPath',
-        type: 'post',
-        dataType: 'json',
-        success: function(data) {
-
-          var setting = {
-              check: {
-                  // 是否显示checkbox，radio
-                  enable: true
-              },
-
-              data: {
-                  key: {
-                      // 节点名
-                      name: "name"
-                  },
-                  simpleData: {
-                      idKey: "id",
-                      pIdKey: "pid",
-                      rootPId:0,
-                      // 是否启用简单数据格式
-                      // 简单数据格式不需要对象保持真正的父子嵌套关系
-                      enable: true
-                  }
-              },
-          };
-
-            $.fn.zTree.init($('#accessPathTree'), setting, data);
-
-            console.table(data);
-        },
-        error: function(data, error) {
-            alert('获取全部access path出错');
+        function getUserAccessPath() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'setting/getUserAccessPath',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(data) {
+                        resolve(data);
+                    },
+                    error: function(data, error) {
+                        reject('获取用户访问path出错');
+                    }
+                })
+            })
         }
 
-    });
-  }
+        function getAllAccessPath() {
+
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'setting/getAllAccessPath',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(data) {
+                        resolve(data);
+                    },
+                    error: function(data, error) {
+                        reject('获取全部access path出错');
+                    }
+                });
+            })
+
+        }
+
+        function ztree(data) {
+            var setting = {
+                check: {
+                    // 是否显示checkbox，radio
+                    enable: true
+                },
+
+                data: {
+                    key: {
+                        // 节点名
+                        name: "name"
+                    },
+                    simpleData: {
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPId: 0,
+                        // 是否启用简单数据格式
+                        // 简单数据格式不需要对象保持真正的父子嵌套关系
+                        enable: true
+                    }
+                },
+            };
+
+            $.fn.zTree.init($('#accessPathTree'), setting, data);
+            console.table(data);
+        }
+
+        var asyncFunc = async function() {
+            var userAccessPath = await getUserAccessPath().catch(err => {
+                alert(err);
+            });
+            var allAccessPath = await getAllAccessPath().catch(err => {
+                alert(err);
+            });
+            ztree(allAccessPath);
+            console.log(userAccessPath);
+        }
+
+        asyncFunc();
+
+
+    }
 }
 </script>
