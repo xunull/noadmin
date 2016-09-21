@@ -128,7 +128,7 @@ function accessPathSort(allAccessPath) {
                     parentMap.get('children').set(tempAccessPath.id, tempMap);
                     generateMap(tempMap.get('children'), level + 1, parentId);
                 } else {
-                    logger.info(tempAccessPath.name, '没有父元素');
+
                 }
 
             }
@@ -139,6 +139,7 @@ function accessPathSort(allAccessPath) {
 }
 
 // 初始化admin可以访问的path
+// 暂时认为admin 所有都可以访问
 async function initAdminAccessPath() {
     let adminPaths = await UserAccessPath.getUserPath('admin');
     if (null === adminPaths) {
@@ -163,11 +164,21 @@ async function initAdminAccessPath() {
     }
 }
 
-initAccessPath().then(v => {
-    initAdminAccessPath();
-});
-
 // 初始化用户的菜单
+async function initAdminMenu() {
+    try {
+        let amdinMenu = await UserMenu.getUserMenu('admin');
+        if (null === amdinMenu) {
+            logger.info('admin menu is not exist');
+            logger.info('generate admin menu');
+        } else {
+            logger.info('amdin menu has exist');
+        }
+    } catch (err) {
+        logger.error(err);
+    }
+}
+
 // UserMenu.getUserMenu('admin', function(err, userMenu) {
 //     if (err) {
 //         logger.info(err);
@@ -184,3 +195,9 @@ initAccessPath().then(v => {
 //         }
 //     }
 // });
+
+initAccessPath().then(v => {
+    initAdminAccessPath().then(v => {
+        initAdminMenu();
+    });
+});
