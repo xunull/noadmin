@@ -14,7 +14,8 @@ var config = {
       publicDir:path.resolve(__dirname,'..','front.src/public'),
       otherDir:path.resolve(__dirname,'../bower_components'),
       distDir:path.resolve(__dirname,'../dist')
-    }
+    },
+    logFile:path.resolve(__dirname,'../logs/log.log')
 };
 
 module.exports = config;

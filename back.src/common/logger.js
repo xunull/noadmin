@@ -9,7 +9,7 @@ log4js.configure({
     type: 'console'
   }, {
     type: 'file',
-    filename: 'logs/log.log',
+    filename: config.logFile,
     category: 'noadmin'
   }],
   // 不替换node 自己的console
