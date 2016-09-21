@@ -40,7 +40,7 @@ User.getUserByLoginName('admin', function(err, user) {
     }
 });
 
-(async function initAccessPath() {
+async function initAccessPath() {
 
     let allAccessPath = await AccessPath.getAllAccessPath();
 
@@ -86,9 +86,9 @@ User.getUserByLoginName('admin', function(err, user) {
         console.log(err);
     }
 
-    // 暂时在这调用该方法
-    initAdminAccessPath();
-})();
+}
+
+
 
 /**
  * accessPath 排序
@@ -106,7 +106,6 @@ function accessPathSort(allAccessPath) {
     let pathSortMap = new Map();
     pathSortMap.set('name', 'root');
     pathSortMap.set('children', new Map());
-    logger.info(pathSortByLevel[0]);
     for (let tempAccessPath of pathSortByLevel[0]) {
         let tempMap = new Map();
         tempMap.set('name', tempAccessPath.name);
@@ -163,6 +162,10 @@ async function initAdminAccessPath() {
         logger.info('admin access path has exist');
     }
 }
+
+initAccessPath().then(v => {
+    initAdminAccessPath();
+});
 
 // 初始化用户的菜单
 // UserMenu.getUserMenu('admin', function(err, userMenu) {
