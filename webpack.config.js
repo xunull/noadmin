@@ -24,7 +24,10 @@ module.exports = {
                 "presets": ['es2015', 'stage-0'],
                 "plugins": ['transform-runtime']
             }
-        },
+        },{
+          test: /\.(png|jpg|jpeg|gif)$/,
+          loader: 'url?limit=10000&name=img/[name].[ext]'
+        }
         ]
     }
 }
