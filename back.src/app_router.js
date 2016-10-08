@@ -13,7 +13,6 @@ var default_router = express.Router();
 // 先执行对权限的验证
 express_app.use(permission.userRequired);
 
-
 express_app.use('/',default_router);
 
 default_router.get('/', home.index);

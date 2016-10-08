@@ -36,7 +36,7 @@ exports.cpuUsage = function() {
     totalSysTime = 100 * totalSysTime / total;
     totalIdleTime = 100 * totalIdleTime / total;
 
-    return [totalUserTime.toFixed(2), totalSysTime.toFixed(2), totalIdleTime.toFixed(2)]
+    return {'user': totalUserTime.toFixed(2), 'sys': totalSysTime.toFixed(2), 'idle': totalIdleTime.toFixed(2)}
 }
 
 /**

@@ -74,12 +74,10 @@ global.thisapp.express_app=app;
 
 // 核心系统的router
 require('./app_router');
-
+// 加载相关服务，有些服务并不是依赖于request的
+require('./service');
 // 加载业务逻辑
 require('./business');
-
-// socketio
-var io = require('socket.io')(22111);
 
 /**
  * 全局404
