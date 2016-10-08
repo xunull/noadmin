@@ -8,8 +8,11 @@
 </template>
 
 <script>
+require('../lib/socket.io');
+
 export default {
     ready() {
+      
         $(function() {
 
             var data = [],

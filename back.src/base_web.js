@@ -78,6 +78,9 @@ require('./app_router');
 // 加载业务逻辑
 require('./business');
 
+// socketio
+var io = require('socket.io')(22111);
+
 /**
  * 全局404
  */
