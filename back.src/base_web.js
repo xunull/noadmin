@@ -71,12 +71,23 @@ _.extend(app.locals, {
 // app.use('/', app_router);
 
 global.thisapp.express_app=app;
+
+// 核心系统的router
 require('./app_router');
 
+// 加载业务逻辑
+require('./business');
+
+/**
+ * 全局404
+ */
 app.get('*', function(req, res){
     res.status(404).send('您请求的页面没有找到');
 });
 
+/**
+ * 全局错误处理
+ */
 app.use(function(err, req, res, next) {
   logger.error(err.stack);
   res.status(500).send('Something error!');
@@ -84,7 +95,6 @@ app.use(function(err, req, res, next) {
 
 var server = app.listen(config.port, function() {
     logger.info('listening on port', config.port);
-    logger.info('You can debug your app with http://' + config.hostname + ':' + config.port);
 });
 
 exports.app = app;

@@ -6,7 +6,6 @@ var express_app = global.thisapp.express_app;
 
 var permission = require('./middlewares/permission');
 
-
 // 默认router
 var default_router = express.Router();
 
