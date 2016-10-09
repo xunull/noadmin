@@ -2,76 +2,70 @@
   <div id="content">
 
   <div class="demo-container">
+    <!-- 此div要确保能确定宽度和高度 -->
     <div id="placeholder" class="demo-placeholder"></div>
   </div>
 </div>
 </template>
 
 <script>
-require('../lib/socket.io');
+var serverStatus = require('../lib/serverstatus');
 
 export default {
+
     ready() {
-      
+
         $(function() {
+            var userCpu = [];
+            var sysCpu = [];
+            var memoryUsage = [];
+            serverStatus.statusEmitter.on('status', function(status) {
+                userCpu.push([userCpu.length, status.cpu.user]);
+                sysCpu.push([sysCpu.length, status.cpu.sys]);
+                memoryUsage.push([memoryUsage.length, status.memoryUsage]);
 
-            var data = [],
-                totalPoints = 300;
+            });
 
-            function getRandomData() {
-
-                if (data.length > 0)
-                    data = data.slice(1);
-
-                // Do a random walk
-
-                while (data.length < totalPoints) {
-
-                    var prev = data.length > 0 ? data[data.length - 1] : 50,
-                        y = prev + Math.random() * 10 - 5;
-
-                    if (y < 0) {
-                        y = 0;
-                    } else if (y > 100) {
-                        y = 100;
-                    }
-
-                    data.push(y);
+            serverStatus.statusEmitter.on('initStatus', function(status) {
+                for (let i = 0; i < status.length; i++) {
+                    userCpu.push([i, status[i].cpu.user]);
+                    sysCpu.push([i, status[i].cpu.sys]);
+                    memoryUsage.push([i, status[i].memory]);
                 }
+            });
 
-                // Zip the generated y values with the x values
-
-                var res = [];
-                for (var i = 0; i < data.length; ++i) {
-                    res.push([i, data[i]])
-                }
-
-                return res;
-            }
+            serverStatus.initStatus();
 
             // Set up the control widget
+            var updateInterval = 2000;
 
-            var updateInterval = 30;
-
-            var plot = $.plot("#placeholder", [getRandomData()], {
+            // $.plot($("#placeholder"), data, options);
+            var plot = $.plot("#placeholder", [userCpu, sysCpu, memoryUsage], {
                 series: {
-                    shadowSize: 0 // Drawing is faster without shadows
+                    shadowSize: 0, // Drawing is faster without shadows
+                    lines: {
+                        show: true
+                    },
+                    points: {
+                        show: false
+                    }
                 },
                 yaxis: {
                     min: 0,
                     max: 100
                 },
                 xaxis: {
-                    show: false
+                    show: false,
+                    min: 0,
+                    // 显示两个小时内的服务器状况
+                    max: 3600
                 }
             });
 
             function update() {
-
-                plot.setData([getRandomData()]);
+                plot.setData([userCpu, sysCpu, memoryUsage]);
 
                 // Since the axes don't change, we don't need to call plot.setupGrid()
-
                 plot.draw();
                 setTimeout(update, updateInterval);
             }
