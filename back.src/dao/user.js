@@ -6,16 +6,33 @@ var _ = require('lodash');
 var logger = global.thisapp.logger;
 
 exports.getUserByLoginName = function(loginname, callback) {
-    // 主要是为了大小写的忽略
-    User.findOne({
-        'loginname': new RegExp('^' + loginname + '$', 'i')
-    }, function(err, user) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, user);
-        }
-    });
+
+    if (undefined === callback) {
+        return new Promise((resolve, reject) => {
+            // 主要是为了大小写的忽略
+            User.findOne({
+                'loginname': new RegExp('^' + loginname + '$', 'i')
+            }, function(err, user) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(user);
+                }
+            });
+        });
+    } else {
+        // 主要是为了大小写的忽略
+        User.findOne({
+            'loginname': new RegExp('^' + loginname + '$', 'i')
+        }, function(err, user) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, user);
+            }
+        });
+    }
+
 };
 
 // 直接存储对象，方便使用

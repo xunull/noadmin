@@ -12,6 +12,7 @@ var UserMenu = basicDao.UserMenu;
 var AccessPath = basicDao.AccessPath;
 var UserAccessPath = basicDao.UserAccessPath;
 var Role = basicDao.Role;
+var UserRole = basicDao.UserRole;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
@@ -56,7 +57,6 @@ function initRootRole() {
                         logger.debug('root role 创建成功');
                     }
                 });
-
             } else {
                 logger.debug('root role 已经存在');
             }
@@ -65,6 +65,22 @@ function initRootRole() {
 }
 
 initRootRole();
+
+async function initAdminUserRole() {
+
+    let userRole = await UserRole.getUserRoleByUserName('admin');
+    if (null === userRole) {
+        let user = await User.getUserByLoginName('admin');
+        let rootRole = await Role.getRoleByName('root');
+        let userRole = await UserRole.save(user._id, [rootRole._id]);
+    } else {
+        logger.info('amdin user role has exist');
+        logger.info(userRole);
+    }
+
+}
+
+initAdminUserRole();
 
 async function initAccessPath() {
 
