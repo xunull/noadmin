@@ -12,6 +12,7 @@ var lastTime = 0;
 var lastUsage = [];
 
 /**
+ * TODO 算出来的值好像是不正确的
  * 返回值为数组，第一个值为用户的使用比例，第二个为系统的使用比例，第三个为闲置的比例
  * @return {[type]} [description]
  */
@@ -21,6 +22,7 @@ exports.cpuUsage = function() {
     }
     lastTime = Date.now();
     let cpus = os.cpus();
+    logger.info(cpus);
     let totalUserTime = 0;
     let totalSysTime = 0;
     let totalIdleTime = 0;

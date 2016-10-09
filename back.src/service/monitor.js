@@ -1,5 +1,5 @@
 var monitor = require('../common/monitor');
-
+var logger = global.thisapp.logger;
 var socketio = require('../socket.io');
 var logger = global.thisapp.logger;
 var io = socketio.io;

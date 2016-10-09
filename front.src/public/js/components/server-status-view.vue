@@ -40,7 +40,16 @@ export default {
             var updateInterval = 2000;
 
             // $.plot($("#placeholder"), data, options);
-            var plot = $.plot("#placeholder", [userCpu, sysCpu, memoryUsage], {
+            var plot = $.plot("#placeholder", [{
+                label: 'userCpu',
+                data: userCpu
+            }, {
+                label: 'sysCpu',
+                data: sysCpu
+            }, {
+                label: 'memory',
+                data: memoryUsage
+            }], {
                 series: {
                     shadowSize: 0, // Drawing is faster without shadows
                     lines: {
