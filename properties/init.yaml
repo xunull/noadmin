@@ -2,37 +2,36 @@ basic_access_path:
   -
     name: '系统设置'
     level: 0
-    url: ''
-    node: true
+    uri: null
     sub:
       -
         name: '菜单设置'
-        url: '/setting/menu'
+        uri: '/setting/menu'
         level: 1
-        node: false
       -
         name: '权限设置'
-        url: '/setting/permission'
+        uri: '/setting/permission'
         level: 1
-        node: false
   -
     name: '主机监控'
     level: 0
-    url: ''
-    node: true
+    uri: null
     sub:
       -
         name: '服务器监控'
-        url: '/monitor/server'
+        uri: '/monitor/server'
         level: 1
-        node: false
       -
         name: '程序监控'
-        url: '/monitor/program'
+        uri: '/monitor/program'
         level: 1
-        node: false
 
 user_root:
   name: 'admin'
   loginname: 'admin'
   pass: '123456'
+
+role_root:
+  name: 'root'
+  description: 'root administrator'
+  parent: null

@@ -5,17 +5,24 @@ var crypto = require('crypto');
 var logger = global.thisapp.logger;
 var uuid = require('node-uuid');
 
-var User = require('../back.src/dao').User;
-var UserMenu = require('../back.src/dao').UserMenu;
-var AccessPath = require('../back.src/dao').AccessPath;
-var UserAccessPath = require('../back.src/dao').UserAccessPath;
+var basicDao = require('../back.src/dao');
+
+var User = basicDao.User;
+var UserMenu = basicDao.UserMenu;
+var AccessPath = basicDao.AccessPath;
+var UserAccessPath = basicDao.UserAccessPath;
+var Role = basicDao.Role;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
 let adminUser = initObj.user_root;
 let basicAccessPaths = initObj.basic_access_path;
+let rootRole = initObj.role_root;
 
-// 初始化用户
+/**
+ * 初始化admin用户,如果没有admin会创建出admin用户
+ * @type {[type]}
+ */
 User.getUserByLoginName('admin', function(err, user) {
     if (err) {
         logger.info(err);
@@ -27,18 +34,37 @@ User.getUserByLoginName('admin', function(err, user) {
             adminUser.pass = hmac.digest('hex');
 
             User.saveUser(adminUser, function(err, user) {
-                if (err) {
-
-                } else {
+                if (err) {} else {
                     logger.info('amdin 用户初始化成功');
                 }
             });
         } else {
             // 已存在admin用户
-            logger.info('admin 用户已经存在');
+            logger.debug('admin 用户已经存在');
         }
     }
 });
+
+function initRootRole() {
+    Role.getRoleByName('root', function(err, role) {
+        if (err) {
+            logger.info('root role 查询失败');
+        } else {
+            if (null === role) {
+                Role.save(rootRole.name, rootRole.description, rootRole.parent, (err, role) => {
+                    if (err) {} else {
+                        logger.debug('root role 创建成功');
+                    }
+                });
+
+            } else {
+                logger.debug('root role 已经存在');
+            }
+        }
+    });
+}
+
+initRootRole();
 
 async function initAccessPath() {
 
@@ -48,17 +74,15 @@ async function initAccessPath() {
         let dimension = parentDimension;
         let id = uuid.v4();
         if (undefined === parentDimension) {
-            dimension = [id];
+            // 0 是最上层的根节点
+            dimension = [0, id];
         } else {
             dimension.push(id);
         }
         tempAccessPath.id = id;
         tempAccessPath.dimension = dimension;
-        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.path,
-            tempAccessPath.level, tempAccessPath.id, tempAccessPath.dimension, tempAccessPath.node);
+        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.uri, tempAccessPath.level, tempAccessPath.id, tempAccessPath.dimension, tempAccessPath.node);
         if (undefined !== tempAccessPath.sub) {
-            logger.info(tempAccessPath.name);
-            logger.info('有子path');
             // 有下层链接
             for (let subAccessPath of tempAccessPath.sub) {
                 // 复制一个数组，否则这个for 循环内的都是相同的dimension
@@ -66,7 +90,7 @@ async function initAccessPath() {
                 generate(subAccessPath, tempDimension);
             }
         } else {
-
+            // 此节点下没有子节点
         }
     }
 
@@ -87,8 +111,6 @@ async function initAccessPath() {
     }
 
 }
-
-
 
 /**
  * accessPath 排序
@@ -127,20 +149,21 @@ function accessPathSort(allAccessPath) {
                     tempMap.set('children', new Map());
                     parentMap.get('children').set(tempAccessPath.id, tempMap);
                     generateMap(tempMap.get('children'), level + 1, parentId);
-                } else {
-
-                }
+                } else {}
 
             }
         }
 
     }
-    logger.info(pathSortMap);
+
+    return pathSortMap;
+
 }
 
 // 初始化admin可以访问的path
 // 暂时认为admin 所有都可以访问
 async function initAdminAccessPath() {
+
     let adminPaths = await UserAccessPath.getUserPath('admin');
     if (null === adminPaths) {
         logger.info('admin basic access_path is null');
@@ -149,7 +172,10 @@ async function initAdminAccessPath() {
         // 默认此时的access path 都是admin可以访问的
         let allAccessPath = await AccessPath.getAllAccessPath();
 
-        accessPathSort(allAccessPath);
+        let result = accessPathSort(allAccessPath);
+
+        logger.info(result);
+        UserAccessPath.save('admin', result);
 
         // let adminPathArr = [];
         // for (let adminPath of basicAccessPaths) {

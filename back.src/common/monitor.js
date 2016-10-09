@@ -22,7 +22,7 @@ exports.cpuUsage = function() {
     }
     lastTime = Date.now();
     let cpus = os.cpus();
-    logger.info(cpus);
+
     let totalUserTime = 0;
     let totalSysTime = 0;
     let totalIdleTime = 0;
