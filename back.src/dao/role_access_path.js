@@ -35,7 +35,7 @@ exports.save = async function(roleid, whitelist, blacklist, callback) {
     var roleAccessPath = new RoleAccessPath();
     roleAccessPath.roleid = roleid;
     roleAccessPath.whitelist = whitelist;
-    roleAccessPath.blacklist = whitelist;
+    roleAccessPath.blacklist = blacklist;
 
     if (undefined === callback) {
         return new Promise((resolve, reject) => {

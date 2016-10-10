@@ -31,10 +31,14 @@ let rootRole_yaml = initObj.role_root;
     let rootRole = await initRootRole();
     // 3.初始化root role access path
     let rootRoleAccessPath = await initRootRoleAccessPath(rootRole);
+    // 4.初始化admin用户 角色为root
+    let adminUserRole = await initAdminUserRole(user, rootRole);
+    // 5.初始化access path
+    await initAccessPath();
 })();
 
 /**
- * 初始化admin 用户
+ * 1.初始化admin 用户
  * @return {Promise} [description]
  */
 async function initAdminUser() {
@@ -52,7 +56,7 @@ async function initAdminUser() {
 }
 
 /**
- * 初始化root role
+ * 2.初始化root role
  * @return {Promise} [description]
  */
 async function initRootRole() {
@@ -72,7 +76,7 @@ async function initRootRole() {
 }
 
 /**
- * 初始化root role access path
+ * 3.初始化root role access path
  * 其实这些方法，如果被调用 肯定是 系统没有被初始化，那么一切方法必然是需要运行的
  * 但现在在每个方法中都进行了预查询，也是为了提高程序的准确性
  * @return {Promise} [description]
@@ -91,25 +95,43 @@ async function initRootRoleAccessPath(rootRole) {
 
 }
 
-async function initAdminUserRole() {
-
+/**
+ * 4.初始化admin用户 角色为root
+ * @return {Promise} [description]
+ */
+async function initAdminUserRole(user, rootRole) {
     let userRole = await UserRole.getUserRoleByUserName('admin');
-    if (null === userRole) {
-        let user = await User.getUserByLoginName('admin');
-        let rootRole = await Role.getRoleByName('root');
-        let userRole = await UserRole.save(user._id, [rootRole._id]);
-    } else {
+    if (null !== userRole) {
         logger.info('amdin user role has exist');
-        logger.info(userRole);
+        return userRole;
     }
-
+    userRole = await UserRole.save(user._id, [rootRole._id]);
+    return userRole;
 }
 
-initAdminUserRole();
-
+/**
+ * 5.初始化access path
+ * @return {Promise} [description]
+ */
 async function initAccessPath() {
 
     let allAccessPath = await AccessPath.getAllAccessPath();
+
+    try {
+        if (0 === allAccessPath.length) {
+            logger.info('admin basic access_path is null');
+            logger.info('generate admin basic access_path');
+            for (let tempAccessPath of basicAccessPaths) {
+                generate(tempAccessPath);
+            }
+        } else {
+            // 已经有access path了
+            logger.info('basic access path has exist');
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
 
     async function generate(tempAccessPath, parentDimension) {
         let dimension = parentDimension;
@@ -133,22 +155,6 @@ async function initAccessPath() {
         } else {
             // 此节点下没有子节点
         }
-    }
-
-    try {
-        if (0 === allAccessPath.length) {
-            logger.info('admin basic access_path is null');
-            logger.info('generate admin basic access_path');
-            for (let tempAccessPath of basicAccessPaths) {
-                generate(tempAccessPath);
-            }
-        } else {
-            // 已经有access path了
-            logger.info('basic access path has exist');
-        }
-
-    } catch (err) {
-        console.log(err);
     }
 
 }
@@ -201,36 +207,6 @@ function accessPathSort(allAccessPath) {
 
 }
 
-// 初始化admin可以访问的path
-// 暂时认为admin 所有都可以访问
-async function initAdminAccessPath() {
-
-    let adminPaths = await UserAccessPath.getUserPath('admin');
-    if (null === adminPaths) {
-        logger.info('admin basic access_path is null');
-        logger.info('generate admin basic access_path');
-
-        // 默认此时的access path 都是admin可以访问的
-        let allAccessPath = await AccessPath.getAllAccessPath();
-
-        let result = accessPathSort(allAccessPath);
-
-        logger.info(result);
-        UserAccessPath.save('admin', result);
-
-        // let adminPathArr = [];
-        // for (let adminPath of basicAccessPaths) {
-        //     let accessPath = await AccessPath.saveAccessPath(adminPath.name, adminPath.path,
-        //         adminPath.level, adminPath.id, adminPath.pid, adminPath.truth);
-        //     adminPathArr.push(accessPath._id);
-        // }
-        // await UserAccessPath.save('admin', adminPathArr);
-
-    } else {
-        logger.info('admin access path has exist');
-    }
-}
-
 // 初始化用户的菜单
 async function initAdminMenu() {
     try {
@@ -245,26 +221,3 @@ async function initAdminMenu() {
         logger.error(err);
     }
 }
-
-// UserMenu.getUserMenu('admin', function(err, userMenu) {
-//     if (err) {
-//         logger.info(err);
-//     } else {
-//         if (null === userMenu) {
-//             logger.info('admin userMenu is null');
-//             UserMenu.saveUserMenu('admin', adminMenu, function(err) {
-//
-//             });
-//         } else {
-//             logger.info("admin's userMenu is not null");
-//             // 点号和[]没有优先级区别
-//             // logger.info(userMenu.menuObj[0].sub_menu);
-//         }
-//     }
-// });
-
-initAccessPath().then(v => {
-    initAdminAccessPath().then(v => {
-        initAdminMenu();
-    });
-});
