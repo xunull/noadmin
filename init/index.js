@@ -13,58 +13,83 @@ var AccessPath = basicDao.AccessPath;
 var UserAccessPath = basicDao.UserAccessPath;
 var Role = basicDao.Role;
 var UserRole = basicDao.UserRole;
+var RoleAccessPath = basicDao.RoleAccessPath;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
 let adminUser = initObj.user_root;
 let basicAccessPaths = initObj.basic_access_path;
-let rootRole = initObj.role_root;
+let rootRole_yaml = initObj.role_root;
 
 /**
- * 初始化admin用户,如果没有admin会创建出admin用户
- * @type {[type]}
+ * init 主方法
  */
-User.getUserByLoginName('admin', function(err, user) {
-    if (err) {
-        logger.info(err);
-    } else {
-        if (null === user) {
-            // 没有admin用户
-            let hmac = crypto.createHmac('sha256', global.thisapp.appConfigYaml.pass_salt);
-            hmac.update(adminUser.pass);
-            adminUser.pass = hmac.digest('hex');
+(async function init() {
+    // 1.初始化admin用户
+    let user = await initAdminUser();
+    // 2.初始化root role
+    let rootRole = await initRootRole();
+    // 3.初始化root role access path
+    let rootRoleAccessPath = await initRootRoleAccessPath(rootRole);
+})();
 
-            User.saveUser(adminUser, function(err, user) {
-                if (err) {} else {
-                    logger.info('amdin 用户初始化成功');
-                }
-            });
-        } else {
-            // 已存在admin用户
-            logger.debug('admin 用户已经存在');
-        }
+/**
+ * 初始化admin 用户
+ * @return {Promise} [description]
+ */
+async function initAdminUser() {
+    let user = await User.getUserByLoginName('admin');
+    if (null !== user) {
+        logger.debug('admin 用户已经存在');
+        return user;
     }
-});
-
-function initRootRole() {
-    Role.getRoleByName('root', function(err, role) {
-        if (err) {
-            logger.info('root role 查询失败');
-        } else {
-            if (null === role) {
-                Role.save(rootRole.name, rootRole.description, rootRole.parent, (err, role) => {
-                    if (err) {} else {
-                        logger.debug('root role 创建成功');
-                    }
-                });
-            } else {
-                logger.debug('root role 已经存在');
-            }
-        }
-    });
+    let hmac = crypto.createHmac('sha256', global.thisapp.appConfigYaml.pass_salt);
+    hmac.update(adminUser.pass);
+    adminUser.pass = hmac.digest('hex');
+    user = await User.saveUser(adminUser);
+    logger.info('amdin 用户初始化成功');
+    return user;
 }
 
-initRootRole();
+/**
+ * 初始化root role
+ * @return {Promise} [description]
+ */
+async function initRootRole() {
+    try {
+        let resultRole = await Role.getRoleByName('root');
+        if (null !== resultRole) {
+            // root role 已经存在
+            logger.info('root role 已经存在');
+            return resultRole;
+        }
+        resultRole = await Role.save(rootRole_yaml.name, rootRole_yaml.description, rootRole_yaml.parent);
+
+        return resultRole;
+    } catch (err) {
+        logger.error(err);
+    }
+}
+
+/**
+ * 初始化root role access path
+ * 其实这些方法，如果被调用 肯定是 系统没有被初始化，那么一切方法必然是需要运行的
+ * 但现在在每个方法中都进行了预查询，也是为了提高程序的准确性
+ * @return {Promise} [description]
+ */
+async function initRootRoleAccessPath(rootRole) {
+    try {
+        let rootRoleAccessPath = await RoleAccessPath.getAccessPathByRoleid(rootRole._id);
+        if (null !== rootRoleAccessPath) {
+            return rootRoleAccessPath;
+        }
+        rootRoleAccessPath = await RoleAccessPath.save(rootRole._id, [0], []);
+        return rootRoleAccessPath;
+    } catch (err) {
+        logger.error(err);
+    }
+
+}
 
 async function initAdminUserRole() {
 

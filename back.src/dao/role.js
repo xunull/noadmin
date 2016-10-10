@@ -4,7 +4,6 @@ var logger = global.thisapp.logger;
 
 exports.getRoleByName = function(name, callback) {
     if (undefined === callback) {
-
         return new Promise((resolve, reject) => {
             Role.findOne({
                 'name': name
@@ -27,7 +26,6 @@ exports.getRoleByName = function(name, callback) {
             }
         });
     }
-
 }
 
 /**

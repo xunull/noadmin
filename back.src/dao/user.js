@@ -37,16 +37,31 @@ exports.getUserByLoginName = function(loginname, callback) {
 
 // 直接存储对象，方便使用
 exports.saveUser = function(_user, callback) {
+
     var user = new User();
     _.assign(user, _user);
-    user.save(function(err, user) {
-        if (err) {
-            logger.error(err);
-            callback(err, user);
-        } else {
-            callback(null, user);
-        }
-    });
+
+    if (undefined === callback) {
+        return new Promise((resolve, reject) => {
+            user.save(function(err, user) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(user);
+                }
+            });
+        });
+    } else {
+        user.save(function(err, user) {
+            if (err) {
+
+                callback(err, user);
+            } else {
+                callback(null, user);
+            }
+        });
+    }
+
 };
 
 exports.save = function(username, password, callback) {
