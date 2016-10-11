@@ -1,15 +1,27 @@
-var mongoose  = require('mongoose');
-var Schema    = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var _ = require('lodash');
 
-var MenuSchema = new Schema({
-  name: { type: String },
-  level: { type: Number },
-  menu_icon: { type: String },
-  userid: { type:String },
-  pmenuid: { type:String },
-  create_at: { type: Date, default: Date.now },
-  update_at: { type: Date, default: Date.now },
+var BasicProperty = require('./basic_property');
 
-});
+var Menu = new Schema(_.assign({
+    name: {
+        type: String
+    },
+    uri: {
+        type: String
+    },
+    level: {
+        type: Number
+    },
+    menu_icon: {
+        type: String
+    },
+    pmenuid: {
+        type: String
+    }
+}, BasicProperty));
 
-mongoose.model('Menu', MenuSchema);
+mongoose.model('Menu', Menu);
+
+exports.schema = Menu;

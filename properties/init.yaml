@@ -1,3 +1,37 @@
+basic_menu:
+  -
+    name: '系统设置'
+    level: 0
+    uri: null
+    menu_icon: 'fa fa-th'
+    sub:
+      -
+        name: '菜单设置'
+        uri: '/setting/menu'
+        menu_icon: 'fa fa-th'
+        level: 1
+      -
+        name: '权限设置'
+        uri: '/setting/permission'
+        menu_icon: 'fa fa-th'
+        level: 1
+  -
+    name: '主机监控'
+    level: 0
+    uri: null
+    menu_icon: 'fa fa-th'
+    sub:
+      -
+        name: '服务器监控'
+        uri: '/monitor/server'
+        menu_icon: 'fa fa-th'
+        level: 1
+      -
+        name: '程序监控'
+        uri: '/monitor/program'
+        menu_icon: 'fa fa-th'
+        level: 1
+
 basic_access_path:
   -
     name: '系统设置'

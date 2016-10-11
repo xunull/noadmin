@@ -8,6 +8,7 @@ var uuid = require('node-uuid');
 var basicDao = require('../back.src/dao');
 
 var User = basicDao.User;
+var Menu = basicDao.Menu;
 var UserMenu = basicDao.UserMenu;
 var AccessPath = basicDao.AccessPath;
 var UserAccessPath = basicDao.UserAccessPath;
@@ -17,8 +18,9 @@ var RoleAccessPath = basicDao.RoleAccessPath;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
+let basicMenu = initObj.basic_menu;
 let adminUser = initObj.user_root;
-let basicAccessPaths = initObj.basic_access_path;
+let basicAccessPaths_yaml = initObj.basic_access_path;
 let rootRole_yaml = initObj.role_root;
 
 /**
@@ -35,6 +37,10 @@ let rootRole_yaml = initObj.role_root;
     let adminUserRole = await initAdminUserRole(user, rootRole);
     // 5.初始化access path
     await initAccessPath();
+    // 6.初始化菜单
+    await initMenu();
+    // 7.初始化admin菜单
+    await initAdminMenu();
 })();
 
 /**
@@ -121,7 +127,7 @@ async function initAccessPath() {
         if (0 === allAccessPath.length) {
             logger.info('admin basic access_path is null');
             logger.info('generate admin basic access_path');
-            for (let tempAccessPath of basicAccessPaths) {
+            for (let tempAccessPath of basicAccessPaths_yaml) {
                 generate(tempAccessPath);
             }
         } else {
@@ -157,6 +163,54 @@ async function initAccessPath() {
         }
     }
 
+}
+
+/**
+ * 6.初始化菜单
+ * @return {Promise} [description]
+ */
+async function initMenu() {
+
+    // 只好先读取一下admin的菜单了,如果没有admin的菜单，就还没有初始化过
+    let adminMenu = await UserMenu.getUserMenu('admin');
+    if (null !== adminMenu) {
+        // admin 的menu 都有了，那么可能菜单都已经设置过了
+        return;
+    }
+    for (let menu of basicMenu) {
+        await saveMenu(menu, 0);
+    }
+
+}
+
+async function saveMenu(menu, menupid) {
+    let dbMenu = await Menu.saveMenu(menu.name, menu.level, menu.uri, menu.menu_icon, menupid);
+    if (undefined !== menu.sub) {
+        // 有子菜单
+        for (let subMenu of menu.sub) {
+            await Menu.saveMenu(subMenu.name, subMenu.level, subMenu.uri, subMenu.menu_icon, dbMenu._id);
+        }
+    } else {
+        // 没有子菜单了
+    }
+}
+
+/**
+ * 7.初始化admin 的菜单
+ * @return {Promise} [description]
+ */
+async function initAdminMenu() {
+    let adminMenu = await UserMenu.getUserMenu('admin');
+    if (null !== adminMenu) {
+        // admin 的menu 都有了，那么可能菜单都已经设置过了
+        return;
+    }
+    let allMenus = await Menu.findAllMenu();
+    let menuids = [];
+    for(let menu of allMenus) {
+        menuids.push(menu._id);
+    }
+    await UserMenu.saveUserMenu('admin', menuids);
 }
 
 /**
@@ -197,27 +251,9 @@ function accessPathSort(allAccessPath) {
                     parentMap.get('children').set(tempAccessPath.id, tempMap);
                     generateMap(tempMap.get('children'), level + 1, parentId);
                 } else {}
-
             }
         }
-
     }
-
     return pathSortMap;
 
-}
-
-// 初始化用户的菜单
-async function initAdminMenu() {
-    try {
-        let amdinMenu = await UserMenu.getUserMenu('admin');
-        if (null === amdinMenu) {
-            logger.info('admin menu is not exist');
-            logger.info('generate admin menu');
-        } else {
-            logger.info('amdin menu has exist');
-        }
-    } catch (err) {
-        logger.error(err);
-    }
 }
