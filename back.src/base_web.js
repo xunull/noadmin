@@ -25,6 +25,12 @@ app.use(session({
   }),
   resave: true,
   saveUninitialized: true,
+  cookie:{
+      path:'/',
+      httpOnly:true,
+      maxAge:600000,
+
+  }
 }));
 // express 官方的中间件
 app.use(require('cookie-parser')(config.session_secret));
@@ -65,7 +71,6 @@ app.use(helmet());
 _.extend(app.locals, {
     config: config
 });
-
 
 // router
 // app.use('/', app_router);

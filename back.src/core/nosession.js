@@ -1,4 +1,5 @@
 var uuid = require('node-uuid');
+var nosession_store = require('./nosession_store');
 
 /**
  * 本平台中的session 对象
@@ -6,12 +7,12 @@ var uuid = require('node-uuid');
 class Session {
 
     constructor() {
-        this.id = uuid.v4();
+        this.nosessionid = uuid.v4();
         Object.defineProperty(this, 'map', {
             value: new Map(),
             writable: false
-        })
-        // this.loginUser={};
+        });
+        nosession_store.storeSession(this);
     };
     set(key, value) {
         this.map.set(key, value);
@@ -19,6 +20,12 @@ class Session {
     get(key) {
         return this.map.get(key);
     };
+    keys() {
+        return this.map.keys;
+    };
+    destory() {
+
+    }
 
 }
 

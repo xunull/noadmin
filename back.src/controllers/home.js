@@ -3,7 +3,7 @@ var UserMenu = require('../dao').UserMenu;
 var crypto = require('../basic/crypto');
 var config = global.thisapp.config;
 var logger = global.thisapp.logger;
-var my_session = require('../basic/session');
+var nosession = require('../core/nosession');
 var ClientObj = require('../basic/client_obj');
 
 exports.index = async function(req, res, next) {
@@ -11,17 +11,15 @@ exports.index = async function(req, res, next) {
     if (!session.user) {
         res.redirect('/signin');
     } else {
-      try {
-        userMenu = await UserMenu.getUserMenu('admin');
-        let clientObj = new ClientObj();
-        clientObj.userMenu=userMenu.menuObj;
-        clientObj.loginUser=session.user;
-        res.render('index.ejs',{
-            clientObj:clientObj
-        });
-      } catch(err) {
-        logger.error(err);
-      }
+        try {
+            userMenu = await UserMenu.getUserMenu('admin');
+            let clientObj = new ClientObj();
+            clientObj.userMenu = userMenu.menuObj;
+            clientObj.loginUser = session.user;
+            res.render('index.ejs', {clientObj: clientObj});
+        } catch (err) {
+            logger.error(err);
+        }
     }
 };
 
@@ -36,22 +34,16 @@ exports.userSignin = function(req, res, next) {
 
     User.getUserByLoginName(req.body.username, function(err, user) {
 
-        if (err) {
-
-        } else {
+        if (err) {} else {
             password = crypto.passwordHmac(password);
             if (password == user.pass) {
                 logger.info('密码验证成功');
                 var session = req.session;
                 session.user = user;
-                res.send({
-                    res_code: 200
-                });
+                res.send({res_code: 200});
             } else {
                 logger.info('密码验证失败');
-                res.send({
-                    res_code: 500
-                });
+                res.send({res_code: 500});
             }
         }
     });
@@ -66,9 +58,7 @@ exports.userSignup = function(req, res, next) {
     console.log(req.body.username);
     console.log(req.body.password);
     User.save(req.body.username, req.body.password, function(err, user) {
-        if (err) {
-
-        } else {
+        if (err) {} else {
             logger.info('用户存储成功');
         }
     });
