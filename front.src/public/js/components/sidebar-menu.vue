@@ -16,7 +16,7 @@ var SiderbarSubmenu = Vue.extend({
   <ul class="treeview-menu">
     <li v-for='menu in submenu'>
       <!--<a href="{{menu.url}}">-->
-      <a  v-link="{ path: menu.url }">
+      <a  v-link="{ path: menu.uri }">
       <i class="{{menu.menu_icon}}"></i>{{menu.name}}</a></li>
   </ul>
   `

@@ -60,7 +60,7 @@ exports.getUserMenuForFront = async function(username) {
             parent.push(formatedMenu);
             formatedMenu.menu_icon = currentValue.menu_icon;
             formatedMenu.name = currentValue.name;
-            formatedMenu.url = currentValue.url;
+            formatedMenu.uri = currentValue.uri;
             formatedMenu.sub_menu = [];
             /**
              * currentValue._id.valueOf() 的类型是object
