@@ -184,11 +184,11 @@ async function initMenu() {
 }
 
 async function saveMenu(menu, menupid) {
-    let dbMenu = await Menu.saveMenu(menu.name, menu.level, menu.uri, menu.menu_icon, menupid);
+    let dbMenu = await Menu.saveMenu(menu.name, menu.level,menu.menu_icon, menu.uri,  menupid);
     if (undefined !== menu.sub) {
         // 有子菜单
         for (let subMenu of menu.sub) {
-            await Menu.saveMenu(subMenu.name, subMenu.level, subMenu.uri, subMenu.menu_icon, dbMenu._id);
+            await Menu.saveMenu(subMenu.name, subMenu.level, subMenu.menu_icon, subMenu.uri, dbMenu._id);
         }
     } else {
         // 没有子菜单了

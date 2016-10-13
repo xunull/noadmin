@@ -7,18 +7,25 @@ var nosession = require('../core/nosession');
 var ClientObj = require('../basic/client_obj');
 
 exports.index = async function(req, res, next) {
-    var session = req.session;
-    if (!session.user) {
-        res.redirect('/signin');
-    } else {
-        try {
-            let clientObj = new ClientObj();
-            clientObj.userMenu = req.nosession.get('userMenu');
-            clientObj.loginUser = req.nosession.get('user');
-            res.render('index.ejs', {clientObj: clientObj});
-        } catch (err) {
-            logger.error(err);
+
+    try {
+        var nosession = req.nosession;
+        if (!nosession.get('user')) {
+            res.redirect('/signin');
+            logger.info('用户没有登陆');
+        } else {
+            logger.info('用户已经登陆了');
+            try {
+                let clientObj = new ClientObj();
+                clientObj.userMenu = req.nosession.get('userMenu');
+                clientObj.loginUser = req.nosession.get('user');
+                res.render('index.ejs', {clientObj: clientObj});
+            } catch (err) {
+                logger.error(err);
+            }
         }
+    } catch (err) {
+        logger.error(err);
     }
 
 };
