@@ -2,17 +2,25 @@ var express = require('express');
 var home = require('./controllers/home');
 var menu_router = require('./router/menu_router');
 var setting_router = require('./router/setting_router');
-var nosession = require('./middlewares/nosession');
-var express_app = global.thisapp.express_app;
 
-// 权限验证中间件
-var permission = require('./middlewares/permission');
+var middlewares = require('./middlewares');
+var express_app = global.thisapp.express_app;
+var config = global.thisapp.config;
 
 // 中间件添加的顺序就是中间件执行的顺序
-// 先执行对权限的验证
-express_app.use(permission.userRequired);
 
-express_app.use(nosession.setSession);
+// 权限验证中间件
+// 先执行对权限的验证
+express_app.use(middlewares.permission.userRequired);
+// nosession
+express_app.use(middlewares.nosession.setSession);
+
+express_app.use(middlewares.menu.generateUserMenu);
+
+// 解析debug 参数
+if(config.debug) {
+    express_app.use(middlewares.debug.parse);
+}
 
 // 默认router
 var default_router = express.Router();

@@ -12,15 +12,15 @@ exports.index = async function(req, res, next) {
         res.redirect('/signin');
     } else {
         try {
-            userMenu = await UserMenu.getUserMenu('admin');
             let clientObj = new ClientObj();
-            clientObj.userMenu = userMenu.menuObj;
-            clientObj.loginUser = session.user;
+            clientObj.userMenu = req.nosession.get('userMenu');
+            clientObj.loginUser = req.nosession.get('user');
             res.render('index.ejs', {clientObj: clientObj});
         } catch (err) {
             logger.error(err);
         }
     }
+
 };
 
 exports.signin = function(req, res, next) {
@@ -32,20 +32,27 @@ exports.userSignin = function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
-    User.getUserByLoginName(req.body.username, function(err, user) {
+    // 因为await 在回调方法内，因此需要在这个回调方法前加async
+    // 必须在其第一个外面的方法上加，跨级是不行的
+    User.getUserByLoginName(req.body.username, async function(err, user) {
 
         if (err) {} else {
             password = crypto.passwordHmac(password);
             if (password == user.pass) {
                 logger.info('密码验证成功');
-                var session = req.session;
-                session.user = user;
+
+                // 查询用户的菜单
+                let userMenu = await UserMenu.getUserMenuForFront('admin');
+                logger.info(userMenu);
+                req.nosession.set('user', user);
+                req.nosession.set('userMenu', userMenu);
                 res.send({res_code: 200});
             } else {
                 logger.info('密码验证失败');
                 res.send({res_code: 500});
             }
         }
+
     });
 };
 

@@ -24,14 +24,19 @@ exports.setSession = function(req, res, next) {
         req.nosession = new Nosession();
         req.nosessionid = req.nosession.nosessionid;
         res.cookie('nosessionid', req.nosessionid, defaultCookieOption);
-        req.nosession.set('aaa', 111111);
 
     } else {
-        // 有nosessionid
-        req.nosession = nosession_store.getSession(nosessionid);
-        req.nosessionid = req.nosession.nosessionid;
+        // 有nosessionid,但是本系统中不一定会有
+        // 比如，当服务器重启后，session 已经被清空了
+        if (undefined === nosession_store.getSession(nosessionid)) {
+            req.nosession = new Nosession();
+            req.nosessionid = req.nosession.nosessionid;
+            res.cookie('nosessionid', req.nosessionid, defaultCookieOption);
+        } else {
+            req.nosession = nosession_store.getSession(nosessionid);
+            req.nosessionid = req.nosession.nosessionid;
+        }
 
     }
-
     next();
 }

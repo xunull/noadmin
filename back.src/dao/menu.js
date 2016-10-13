@@ -4,6 +4,30 @@ var uuid = require('uuid');
 
 var logger = global.thisapp.logger;
 
+exports.getMenuByMenuid = function(menuid, callback) {
+
+    return new Promise((resolve, reject) => {
+        Menu.findOne({
+            _id: menuid
+        }, (err, menu) => {
+            if (err) {
+                if (undefined === callback) {
+                    reject(err);
+                } else {
+                    callback(err, null);
+                }
+            } else {
+                if (undefined === callback) {
+                    resolve(menu);
+                } else {
+                    callback(null, menu);
+                }
+            }
+        });
+    });
+
+}
+
 exports.getUserMenu = function(userid) {};
 
 exports.findAllMenu = function(callback) {

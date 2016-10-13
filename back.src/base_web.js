@@ -29,7 +29,6 @@ app.use(session({
       path:'/',
       httpOnly:true,
       maxAge:600000,
-
   }
 }));
 // express 官方的中间件

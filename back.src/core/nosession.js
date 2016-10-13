@@ -26,7 +26,6 @@ class Session {
     destory() {
 
     }
-
 }
 
 module.exports = Session;
