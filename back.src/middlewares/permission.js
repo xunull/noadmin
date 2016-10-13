@@ -11,7 +11,7 @@ exports.userRequired = function(req, res, next) {
       return;
     }
 
-    if (!req.session || !req.session.user) {
+    if (!req.nosession || !req.nosession.get('user')) {
 
         if(whiteList.indexOf(req.path) !== -1 ){
           // 白名单中的路径放行

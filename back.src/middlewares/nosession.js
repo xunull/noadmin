@@ -5,9 +5,10 @@ var cookieParser = require('cookie-parser');
 
 var nosession_store = require('../core/nosession_store');
 
+// nosessionid 不能仅仅是httponly
+// 否则ajax请求携带不了改session会被禁止访问
 let defaultCookieOption = {
     maxAge: 600000, // 十分钟
-    httpOnly: true,
     path: '/',
     signed: true
 }

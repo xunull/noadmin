@@ -9,11 +9,12 @@ var config = global.thisapp.config;
 
 // 中间件添加的顺序就是中间件执行的顺序
 
+// nosession
+express_app.use(middlewares.nosession.setSession);
 // 权限验证中间件
 // 先执行对权限的验证
 express_app.use(middlewares.permission.userRequired);
-// nosession
-express_app.use(middlewares.nosession.setSession);
+
 
 express_app.use(middlewares.menu.generateUserMenu);
 
