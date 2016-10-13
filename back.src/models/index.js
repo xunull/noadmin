@@ -10,6 +10,7 @@ require('./user_access_path');
 require('./role');
 require('./user_role');
 require('./role_access_path');
+require('./role_menu');
 
 exports.User = mongoose.model('User');
 exports.Menu = mongoose.model('Menu');
@@ -19,3 +20,4 @@ exports.UserAccessPath = mongoose.model('UserAccessPath');
 exports.Role = mongoose.model('Role');
 exports.UserRole = mongoose.model('UserRole');
 exports.RoleAccessPath = mongoose.model('RoleAccessPath');
+exports.RoleMenu = mongoose.model('RoleMenu');

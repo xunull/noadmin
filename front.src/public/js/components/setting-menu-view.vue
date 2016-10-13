@@ -22,7 +22,7 @@ export default {
         function getUserAccessPath() {
             return new Promise((resolve, reject) => {
                 $.ajax({
-                    url: 'setting/getUserAccessPath',
+                    url: 'setting/accessPath',
                     type: 'post',
                     dataType: 'json',
                     success: function(data) {
@@ -39,7 +39,7 @@ export default {
 
             return new Promise((resolve, reject) => {
                 $.ajax({
-                    url: 'setting/getAllAccessPath',
+                    url: 'setting/allAccessPath',
                     type: 'post',
                     dataType: 'json',
                     success: function(data) {

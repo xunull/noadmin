@@ -3,7 +3,6 @@ var UserAccessPath = require('../dao').UserAccessPath;
 var config = global.thisapp.config;
 var logger = global.thisapp.logger;
 
-
 exports.getAllAccessPath = async function(req, res, next) {
     let allPath = await AccessPath.getAllAccessPath();
     let userPath = await UserAccessPath.getUserPath(req.params.username);
@@ -19,20 +18,20 @@ exports.getAllAccessPath = async function(req, res, next) {
     res.send(simpleTree);
 }
 
-exports.getUserAccessPath = async function(req, res, next) {
+exports.getAccessPath = async function(req, res, next) {
     try {
 
         let username;
         if (undefined === req.params.username) {
-            username = req.session.user.name;
+            // url中有用户名参数
+            username = req.nosession.get('user').name;
         } else {
+            // 没有用户名的参数,查询自己的
             username = req.params.username;
         }
         let allPath = await AccessPath.getAllAccessPath();
         let userPath = await UserAccessPath.getUserPath(username);
 
-        console.log(username);
-        console.log(req.session.user.name);
         console.log(userPath);
         userPath = userPath.paths;
         let allTree = [];
@@ -51,12 +50,9 @@ exports.getUserAccessPath = async function(req, res, next) {
             allTree.push(temp);
         }
 
-        res.send({
-            allTree: allTree
-        });
+        res.send({allTree: allTree});
     } catch (err) {
         logger.error(err);
     }
-
 
 }

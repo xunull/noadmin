@@ -6,3 +6,4 @@ exports.UserAccessPath = require('./user_access_path');
 exports.Role = require('./role');
 exports.UserRole = require('./user_role');
 exports.RoleAccessPath = require('./role_access_path');
+exports.RoleMenu = require('./role_menu');

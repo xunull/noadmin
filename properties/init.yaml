@@ -1,18 +1,33 @@
 basic_menu:
   -
-    name: '系统设置'
+    name: '系统管理'
     level: 0
     uri: null
-    menu_icon: 'fa fa-th'
+    menu_icon: 'fa fa-user'
     sub:
       -
-        name: '菜单设置'
-        uri: '/setting/menu'
+        name: '用户管理'
+        uri: '/manage/user'
         menu_icon: 'fa fa-th'
         level: 1
       -
-        name: '权限设置'
-        uri: '/setting/permission'
+        name: '角色管理'
+        uri: '/manage/role'
+        menu_icon: 'fa fa-th'
+        level: 1
+      -
+        name: '菜单管理'
+        uri: '/manage/menu'
+        menu_icon: 'fa fa-th'
+        level: 1
+      -
+        name: '权限管理'
+        uri: '/manage/permission'
+        menu_icon: 'fa fa-th'
+        level: 1
+      -
+        name: '路径管理'
+        uri: '/manage/path'
         menu_icon: 'fa fa-th'
         level: 1
   -

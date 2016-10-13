@@ -15,7 +15,6 @@ express_app.use(middlewares.nosession.setSession);
 // 先执行对权限的验证
 express_app.use(middlewares.permission.userRequired);
 
-
 express_app.use(middlewares.menu.generateUserMenu);
 
 // 解析debug 参数
@@ -26,15 +25,17 @@ if(config.debug) {
 // 默认router
 var default_router = express.Router();
 express_app.use('/',default_router);
-
+//****************************主页*************************************
 default_router.get('/', home.index);
+//************************* 登陆登出 ***********************************
+// view
 default_router.get('/signin',home.signin);
 default_router.get('/signup',home.signup);
-// login 等同于 signin
-default_router.get('/login',home.signin);
+default_router.get('/login',home.signin); // login 等同于 signin
+// request
 default_router.post('/signin',home.userSignin);
 default_router.post('/signup',home.userSignup);
-
+//**************************** 系统设置 ********************************
 // 有关菜单操作的路由
 express_app.use('/menu',menu_router);
 // 设置项相关的路由

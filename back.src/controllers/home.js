@@ -50,7 +50,7 @@ exports.userSignin = function(req, res, next) {
 
                 // 查询用户的菜单
                 let userMenu = await UserMenu.getUserMenuForFront('admin');
-                logger.info(userMenu);
+
                 req.nosession.set('user', user);
                 req.nosession.set('userMenu', userMenu);
                 res.send({res_code: 200});
