@@ -1,6 +1,34 @@
 var Role = require('../models').Role;
+var UserRole = require('./user_role');
 
 var logger = global.thisapp.logger;
+
+exports.getRoleByUserId = async function(userid, callback) {
+    let userRole = await UserRole.getUserRoleByUserObjectId(userid);
+    let roles = [];
+    for (let roleid of userRole.roleids) {
+        let result = await exports.getRoleByRoleid(roleid);
+        roles.push(result);
+    }
+
+    return roles;
+}
+
+exports.getRoleByRoleid = function(roleid) {
+    return exports.getRoleByCommand({_id: roleid});
+}
+
+exports.getRoleByCommand = function(command, callback) {
+    return new Promise((resolve, reject) => {
+        Role.find(command, (err, role) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(role);
+            }
+        });
+    });
+}
 
 exports.getRoleByName = function(name, callback) {
     if (undefined === callback) {

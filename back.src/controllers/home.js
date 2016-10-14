@@ -5,7 +5,7 @@ var config = global.thisapp.config;
 var logger = global.thisapp.logger;
 var nosession = require('../core/nosession');
 var ClientObj = require('../basic/client_obj');
-
+var loginLogout = require('../service/login.logout');
 exports.index = async function(req, res, next) {
 
     try {
@@ -47,19 +47,13 @@ exports.userSignin = function(req, res, next) {
             password = crypto.passwordHmac(password);
             if (password == user.pass) {
                 logger.info('密码验证成功');
-
-                // 查询用户的菜单
-                let userMenu = await UserMenu.getUserMenuForFront('admin');
-
-                req.nosession.set('user', user);
-                req.nosession.set('userMenu', userMenu);
+                await loginLogout.login(user, req.nosession);
                 res.send({res_code: 200});
             } else {
                 logger.info('密码验证失败');
                 res.send({res_code: 500});
             }
         }
-
     });
 };
 

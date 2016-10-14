@@ -19,31 +19,19 @@ exports.getUserRoleByUserName = async function(username) {
 
 }
 
-exports.getUserRoleByUserObjectId = function(objectId, callback) {
-    if (undefined === callback) {
-        return new Promise((resolve, reject) => {
-            UserRole.findOne({
-                userid: objectId
-            }, (err, userRole) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(userRole);
-                }
-            });
-        });
-    } else {
+exports.getUserRoleByUserObjectId = async function(objectId, callback) {
+
+    return new Promise((resolve, reject) => {
         UserRole.findOne({
             userid: objectId
         }, (err, userRole) => {
             if (err) {
-                callback(err, null);
+                reject(err);
             } else {
-                callback(null, userRole);
+                resolve(userRole);
             }
         });
-    }
-
+    });
 }
 
 exports.save = function(userid, roleids, callback) {

@@ -15,6 +15,7 @@ var UserAccessPath = basicDao.UserAccessPath;
 var Role = basicDao.Role;
 var UserRole = basicDao.UserRole;
 var RoleAccessPath = basicDao.RoleAccessPath;
+var RoleMenu = basicDao.RoleMenu;
 
 var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
 
@@ -25,6 +26,8 @@ let rootRole_yaml = initObj.role_root;
 
 /**
  * init 主方法
+ * 如果利用上个结果的返回值，那么这些方法都能真正的运行的时候
+ * 才能保证后面的方法也能真正的运行
  */
 (async function init() {
     // 1.初始化admin用户
@@ -38,9 +41,11 @@ let rootRole_yaml = initObj.role_root;
     // 5.初始化access path
     await initAccessPath();
     // 6.初始化菜单
-    await initMenu();
+    let saveMenuResult = await initMenu();
     // 7.初始化admin菜单
     await initAdminMenu();
+    // 8.init root role menu
+    await initRootRoleMenu(rootRole._id, saveMenuResult);
 })();
 
 /**
@@ -177,22 +182,29 @@ async function initMenu() {
         // admin 的menu 都有了，那么可能菜单都已经设置过了
         return;
     }
+    let saveMenuResult = [];
     for (let menu of basicMenu) {
-        await saveMenu(menu, 0);
+        let returnedResult = await saveMenu(menu, 0);
+        saveMenuResult = saveMenuResult.concat(returnedResult);
     }
-
+    return saveMenuResult;
 }
 
+// 目前的写法只能针对两级菜单
 async function saveMenu(menu, menupid) {
-    let dbMenu = await Menu.saveMenu(menu.name, menu.level,menu.menu_icon, menu.uri,  menupid);
+    let saveMenuResult = [];
+    let dbMenu = await Menu.saveMenu(menu.name, menu.level, menu.menu_icon, menu.uri, menupid);
+    saveMenuResult.push(dbMenu);
     if (undefined !== menu.sub) {
         // 有子菜单
         for (let subMenu of menu.sub) {
-            await Menu.saveMenu(subMenu.name, subMenu.level, subMenu.menu_icon, subMenu.uri, dbMenu._id);
+            let thisSaveMenu = await Menu.saveMenu(subMenu.name, subMenu.level, subMenu.menu_icon, subMenu.uri, dbMenu._id);
+            saveMenuResult.push(thisSaveMenu);
         }
     } else {
         // 没有子菜单了
     }
+    return saveMenuResult;
 }
 
 /**
@@ -207,10 +219,37 @@ async function initAdminMenu() {
     }
     let allMenus = await Menu.findAllMenu();
     let menuids = [];
-    for(let menu of allMenus) {
+    for (let menu of allMenus) {
         menuids.push(menu._id);
     }
     await UserMenu.saveUserMenu('admin', menuids);
+}
+
+/**
+ * 8.init root role menu
+ * @return {Promise} [description]
+ */
+async function initRootRoleMenu(rootRoleId, menus) {
+
+    if (menus.length > 0) {
+        try {
+            let rootRoleMenu = await RoleMenu.findMenu(rootRoleId);
+            if (null !== rootRoleMenu) {
+                return rootRoleMenu;
+            }
+            let menuids = [];
+            for (let menu of menus) {
+                menuids.push(menu._id);
+            }
+            let saveResult = await RoleMenu.saveMenu(rootRoleId, menuids);
+            return saveResult;
+        } catch (err) {
+            logger.error(err);
+        }
+    } else {
+        return null;
+    }
+
 }
 
 /**
