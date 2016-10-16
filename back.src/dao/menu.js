@@ -1,6 +1,6 @@
 var models = require('../models');
 var Menu = models.Menu;
-var uuid = require('uuid');
+var uuid = require('node-uuid');
 
 var logger = global.thisapp.logger;
 

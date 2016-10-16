@@ -1,6 +1,6 @@
 var models = require('../models');
 var User = models.User;
-var uuid = require('uuid');
+var uuid = require('node-uuid');
 var _ = require('lodash');
 
 var logger = global.thisapp.logger;

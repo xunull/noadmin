@@ -10,14 +10,15 @@
           </div>
         </div>
       </div>
+      <link rel="stylesheet" href="/libs/zTree/css/metroStyle/metroStyle.css">
   </div>
-  <link rel="stylesheet" href="/libs/zTree/css/metroStyle/metroStyle.css">
+
 </template>
 
 <script>
 export default {
 
-    ready() {
+    mounted() {
 
         function getUserAccessPath() {
             return new Promise((resolve, reject) => {
@@ -53,9 +54,9 @@ export default {
 
         }
 
-        function ztree(userAccessPath,allAccessPath) {
-          console.log(userAccessPath);
-          console.log(allAccessPath);
+        function ztree(userAccessPath, allAccessPath) {
+            console.log(userAccessPath);
+            console.log(allAccessPath);
             var setting = {
                 check: {
                     // 是否显示checkbox，radio
@@ -89,7 +90,7 @@ export default {
             var allAccessPath = await getAllAccessPath().catch(err => {
                 alert(err);
             });
-            ztree(userAccessPath,allAccessPath);
+            ztree(userAccessPath, allAccessPath);
 
         }
 

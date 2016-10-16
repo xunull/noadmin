@@ -13,7 +13,7 @@ var serverStatus = require('../lib/serverstatus');
 
 export default {
 
-    ready() {
+    mounted() {
 
         $(function() {
             var userCpu = [];

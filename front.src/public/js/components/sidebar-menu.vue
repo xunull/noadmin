@@ -1,6 +1,6 @@
 <template lang="html">
   <ul class='sidebar-menu'>
-    <siderbar-menu v-for="menu in menus" track-by="$index" :menu="menu">
+    <siderbar-menu v-for="(menu,index) in menus" track-by="index" :menu="menu">
     </siderbar-menu>
   </ul>
 </template>
@@ -15,9 +15,10 @@ var SiderbarSubmenu = Vue.extend({
   `
   <ul class="treeview-menu">
     <li v-for='menu in submenu'>
-      <!--<a href="{{menu.url}}">-->
-      <a  v-link="{ path: menu.uri }">
-      <i class="{{menu.menu_icon}}"></i>{{menu.name}}</a></li>
+      <!--<a v-bind:href="menu.url">-->
+      <!--<a  v-link="{ path: menu.uri }">-->
+      <router-link to="{ path: menu.uri }"></router-link>
+      <i v-bind:class="menu.menu_icon"></i>{{menu.name}}</a></li>
   </ul>
   `
 });
@@ -29,7 +30,7 @@ var SiderbarMenu = Vue.extend({
     `
     <li class="treeview">
       <a href="#">
-        <i class="{{menu.menu_icon}}"></i> <span>{{menu.name}}</span>
+        <i v-bind:class="menu.menu_icon"></i> <span>{{menu.name}}</span>
         <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
         </span>

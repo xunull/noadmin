@@ -7,19 +7,25 @@ Vue.use(VueRouter);
 
 Vue.config.devtools = true;
 
-var router=new VueRouter();
-router.transitionOnLoad=false;
-
-router.map({
-    '/setting/menu': {
-        component:SettingMenuView
-    },
-    '/setting/permission': {
-        component:SettingMenuView
-    },
-    '/monitor/server':{
-        component:ServerStatusview
-    }
+var router = new VueRouter({
+    routes: [
+        {
+            path: '/setting/menu',
+            component: SettingMenuView
+        }, {
+            path: '/setting/permission',
+            component: SettingMenuView
+        }, {
+            path: '/monitor/server',
+            component: ServerStatusview
+        }
+    ]
 });
 
-router.start(App,'#app');
+new Vue({
+  el: '#app',
+  router: router,
+  components: {
+    App
+  }
+})
