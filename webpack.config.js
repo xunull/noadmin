@@ -36,8 +36,14 @@ module.exports = {
                     "plugins": ['transform-runtime']
                 }
             }, {
-                test: /\.(png|jpg|jpeg|gif)$/,
-                loader: 'url?limit=10000&name=img/[name].[ext]'
+                test: /\.css$/,
+                loader: 'style-loader!css-loader?modules' //添加对样式表的处理
+            }, {
+                test: /\.(png|jpe?g|gif)(\?.*)?$/,
+                loader: 'url?limit=10000'
+            }, {
+                test: /\.(eot|woff|woff2|svg|ttf)(\?.*)$/,
+                loader: "file-loader"
             }
         ]
     }
