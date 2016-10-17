@@ -1,3 +1,6 @@
+var path = require('path')
+var webpack = require('webpack')
+
 module.exports = {
     watch: true,
     // entry point of our application
@@ -6,6 +9,11 @@ module.exports = {
     output: {
         path: './dist/js',
         filename: 'build.js'
+    },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue'
+        }
     },
     module: {
         // `loaders` is an array of loaders to use.
@@ -18,11 +26,12 @@ module.exports = {
                 test: /\.js$/,
                 // excluding some local linked packages.
                 // for normal use cases only node_modules is needed.
-                exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
+                // exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
+                exclude: /node_modules/,
                 loader: 'babel',
                 query: {
                     "presets": [
-                        'es2015', 'stage-0'
+                        'es2015', 'es2017', 'stage-0'
                     ],
                     "plugins": ['transform-runtime']
                 }
@@ -32,4 +41,22 @@ module.exports = {
             }
         ]
     }
+}
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({minimize: true})
+    ])
 }
