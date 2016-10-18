@@ -1,41 +1,27 @@
 <template lang="html">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-2">
-            <form class="form-horizontal" role="form">
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">角色名</label>
-                <div class="col-sm-10">
-                  <input v-model='name' type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">角色描述</label>
-                <div class="col-sm-10">
-                  <input v-model='description' type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">父角色</label>
-                <div class="col-sm-10">
-                    <template>
-                        <el-select v-model="parent">
-                            <el-option
-                                v-for="item in options"
-                                :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-                  </template>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <el-button type="primary" @click.native='saveRole'>
-                        创建角色
-                    </el-button>
-                </div>
-              </div>
-            </form>
+            <el-form ref="form" label-width="80px" @submit.prevent="onSubmit">
+              <el-form-item label="角色名">
+                <el-input v-model='name'></el-input>
+              </el-form-item>
+              <el-form-item label="角色描述">
+                <el-input v-model='description'></el-input>
+              </el-form-item>
+              <el-form-item label="父角色">
+                  <el-select v-model="parent">
+                      <el-option
+                          v-for="item in options"
+                          :label="item.label"
+                          :value="item.value">
+                      </el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click.native='saveRole' type="primary">立即创建</el-button>
+                <el-button @click.native.back='back'>取消</el-button>
+              </el-form-item>
+            </el-form>
         </div>
     </div>
 </template>
@@ -96,6 +82,9 @@ export default {
 
             });
 
+        },
+        back:function() {
+            this.$router.push('/manage/role/roleTable')
         }
     },
     components: {
