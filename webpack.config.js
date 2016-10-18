@@ -7,7 +7,8 @@ module.exports = {
     entry: './front.src/public/js/main.js',
     // where to place the compiled bundle
     output: {
-        path: './dist/js',
+        path: './dist/',
+        publicPath:'/dist/',
         filename: 'build.js'
     },
     resolve: {
@@ -37,13 +38,16 @@ module.exports = {
                 }
             }, {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader?modules' //添加对样式表的处理
+                loader: 'style!css'
+            }, {
+                test: /.(eot|woff|woff2|svg|ttf)(\?.*)?$/,
+                loader: 'file'
             }, {
                 test: /\.(png|jpe?g|gif)(\?.*)?$/,
-                loader: 'url?limit=10000'
-            }, {
-                test: /\.(eot|woff|woff2|svg|ttf)(\?.*)$/,
-                loader: "file-loader"
+                loader: 'file',
+                query: {
+                    name: '[name].[ext]?[hash]'
+                }
             }
         ]
     }

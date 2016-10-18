@@ -1,0 +1,1 @@
+exports.roleController = require('./role');

@@ -1,14 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var _ = require('lodash');
-var OperateRecord = require('./operate_record');
 
+var BasicProperty = require('./basic_property');
 var UserMenu = new Schema(_.assign({
     username: {
         type: String
     },
     menus: []
-}, OperateRecord));
+}, BasicProperty));
 
 UserMenu.index({username: 1});
 

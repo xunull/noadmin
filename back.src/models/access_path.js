@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var _ = require('lodash');
 
-var OperateRecord = require('./operate_record');
+var BasicProperty = require('./basic_property');
 
 var AccessPath = new Schema(_.assign({
     name: String,
@@ -10,7 +10,7 @@ var AccessPath = new Schema(_.assign({
     level:Number,
     id:String,
     dimension:[String],
-},OperateRecord));
+},BasicProperty));
 
 AccessPath.index({
     id: 1
