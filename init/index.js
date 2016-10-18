@@ -150,12 +150,14 @@ async function initAccessPath() {
         if (undefined === parentDimension) {
             // 0 是最上层的根节点
             dimension = [0, id];
+            tempAccessPath.pid = 0;
         } else {
+            tempAccessPath.pid = parentDimension[parentDimension.length - 1];
             dimension.push(id);
         }
         tempAccessPath.id = id;
         tempAccessPath.dimension = dimension;
-        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.uri, tempAccessPath.level, tempAccessPath.id, tempAccessPath.dimension, tempAccessPath.node);
+        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.uri, tempAccessPath.level, tempAccessPath.id,tempAccessPath.pid, tempAccessPath.dimension);
         if (undefined !== tempAccessPath.sub) {
             // 有下层链接
             for (let subAccessPath of tempAccessPath.sub) {

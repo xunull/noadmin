@@ -9,6 +9,7 @@ var AccessPath = new Schema(_.assign({
     uri: String,
     level:Number,
     id:String,
+    pid:String,
     dimension:[String],
 },BasicProperty));
 

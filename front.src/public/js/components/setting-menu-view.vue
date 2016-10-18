@@ -12,7 +12,6 @@
       </div>
       <link rel="stylesheet" href="/libs/zTree/css/metroStyle/metroStyle.css">
   </div>
-
 </template>
 
 <script>

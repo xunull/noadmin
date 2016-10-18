@@ -7,6 +7,7 @@ import ServerStatusview from './components/server-status-view.vue'
 import ManageRoleView from './components/manage-role-view.vue'
 import RoleTableView from './components/manage/role/role-table-view.vue'
 import RoleCreateView from './components/manage/role/role-create-view.vue'
+import PathView from './components/manage/path/path-view.vue';
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
@@ -27,6 +28,9 @@ var router = new VueRouter({
         }, {
             path: '/monitor/server',
             component: ServerStatusview
+        }, {
+            path: '/manage/path',
+            component: PathView
         }, {
             path: '/manage/role',
             component: ManageRoleView,

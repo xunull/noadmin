@@ -3,6 +3,15 @@ var UserAccessPath = require('../dao').UserAccessPath;
 var config = global.thisapp.config;
 var logger = global.thisapp.logger;
 
+exports.getTreeNode = async function(req, res, next) {
+    let pid = '0';
+    if (undefined !== req.params.pid) {
+        pid = req.params.pid;
+    }
+    let accessPaths = await AccessPath.getTreeNode(pid);
+    res.send({ok: true, msg: null, data: accessPaths});
+}
+
 exports.getAllAccessPath = async function(req, res, next) {
     let allPath = await AccessPath.getAllAccessPath();
     let userPath = await UserAccessPath.getUserPath(req.params.username);
