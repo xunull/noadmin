@@ -53,6 +53,8 @@ exports.setSession = function(req, res, next) {
             } else {
                 req.nosession = nosession_store.getSession(nosessionid);
                 req.nosessionid = req.nosession.nosessionid;
+                // 刷新一下cookie中 sessionid 的时间
+                res.cookie('nosessionid', req.nosessionid, defaultCookieOption);
             }
         }
     }
