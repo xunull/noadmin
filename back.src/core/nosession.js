@@ -8,6 +8,9 @@ class Session {
 
     constructor() {
         this.nosessionid = uuid.v4();
+        this.create_time = Date.now();
+        // session 的有效钱是20秒
+        this.expires_on = this.create_time + 1200000;
         Object.defineProperty(this, 'map', {
             value: new Map(),
             writable: false
@@ -24,7 +27,7 @@ class Session {
         return this.map.keys;
     };
     destory() {
-
+        nosession_store.removeSession(this.nosessionid);
     }
 }
 

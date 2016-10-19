@@ -1,3 +1,8 @@
+/**
+ * 只负责提取session
+ * 目前还会判断session 是否过期，如果过期了会自动重新生成一个新的session
+ */
+
 var Nosession = require('../core/nosession');
 var logger = global.thisapp.logger;
 var config = global.thisapp.config;
@@ -6,9 +11,9 @@ var cookieParser = require('cookie-parser');
 var nosession_store = require('../core/nosession_store');
 
 // nosessionid 不能仅仅是httponly
-// 否则ajax请求携带不了改session会被禁止访问
+// 否则ajax请求携带不了该session会被禁止访问
 let defaultCookieOption = {
-    maxAge: 600000, // 十分钟
+    maxAge: 1200000, // 十分钟
     path: '/',
     signed: true
 }
@@ -29,15 +34,27 @@ exports.setSession = function(req, res, next) {
     } else {
         // 有nosessionid,但是本系统中不一定会有
         // 比如，当服务器重启后，session 已经被清空了
-        if (undefined === nosession_store.getSession(nosessionid)) {
+
+        let storedSession = nosession_store.getSession(nosessionid);
+
+        if (undefined === storedSession) {
             req.nosession = new Nosession();
             req.nosessionid = req.nosession.nosessionid;
             res.cookie('nosessionid', req.nosessionid, defaultCookieOption);
         } else {
-            req.nosession = nosession_store.getSession(nosessionid);
-            req.nosessionid = req.nosession.nosessionid;
-        }
+            if (Date.now() > storedSession.expires_on) {
+                // session 已经过期
+                // 销毁上次的session
+                storedSession.destory();
 
+                req.nosession = new Nosession();
+                req.nosessionid = req.nosession.nosessionid;
+                res.cookie('nosessionid', req.nosessionid, defaultCookieOption);
+            } else {
+                req.nosession = nosession_store.getSession(nosessionid);
+                req.nosessionid = req.nosession.nosessionid;
+            }
+        }
     }
     next();
 }
