@@ -5,6 +5,29 @@ var _ = require('lodash');
 
 var logger = global.thisapp.logger;
 
+/**
+ * 查询所有的user,当然 此方法只适合用户少的时候使用
+ * 否则太大的结果集 也不好处理
+ * @return {[type]} [description]
+ */
+exports.getAll = function() {
+    return new Promise((resolve, reject) => {
+        User.find({}, (err, users) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(users);
+            }
+        })
+    });
+}
+
+/**
+ * 根据登陆名 查询用户
+ * @param  {[type]}   loginname [description]
+ * @param  {Function} callback  [description]
+ * @return {[type]}             [description]
+ */
 exports.getUserByLoginName = function(loginname, callback) {
 
     if (undefined === callback) {
@@ -64,6 +87,13 @@ exports.saveUser = function(_user, callback) {
 
 };
 
+/**
+ * 用户名，密码的方式，存储用户
+ * @param  {[type]}   username [description]
+ * @param  {[type]}   password [description]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
 exports.save = function(username, password, callback) {
     var user = new User();
     user.loginname = username;

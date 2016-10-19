@@ -2,7 +2,9 @@ var mongoose  = require('mongoose');
 var Schema    = mongoose.Schema;
 var _ = require('lodash');
 
-var UserSchema = new Schema({
+var BasicProperty = require('./basic_property');
+
+var UserSchema = new Schema(_.assign({
   name: { type: String},
   loginname: { type: String},
   pass: { type: String },
@@ -14,13 +16,11 @@ var UserSchema = new Schema({
   avatar: { type: String },
   is_block: {type: Boolean, default: false},
 
-  create_at: { type: Date, default: Date.now },
-  update_at: { type: Date, default: Date.now },
   level: { type: String },
-  active: { type: Boolean, default: false },
+  active: { type: Boolean, default: true },
 
   accessToken: {type: String},
-});
+},BasicProperty));
 
 UserSchema.index({loginname: 1}, {unique: true});
 // UserSchema.index({email: 1}, {unique: true});

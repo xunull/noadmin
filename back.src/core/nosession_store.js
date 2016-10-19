@@ -6,7 +6,7 @@ var sessionCount = 0;
 exports.storeSession = function(nosession) {
     sessionCount++;
     store.set(nosession.nosessionid, nosession);
-    store.set(nosession.nosessionid, nosession.expires_on);
+    storeExpireTime.set(nosession.nosessionid, nosession.expires_on);
 }
 
 // 获取一个session

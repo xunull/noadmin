@@ -8,6 +8,8 @@ import ManageRoleView from './components/manage-role-view.vue'
 import RoleTableView from './components/manage/role/role-table-view.vue'
 import RoleCreateView from './components/manage/role/role-create-view.vue'
 import PathView from './components/manage/path/path-view.vue';
+import AuthorityView from './components/manage/authority/authority-view.vue'
+import ManageUserView from './components/manage/user/user-view.vue'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
@@ -20,10 +22,13 @@ Vue.config.devtools = true;
 var router = new VueRouter({
     routes: [
         {
+            path: '/manage/user',
+            component: ManageUserView
+        }, {
             path: '/manage/menu',
             component: SettingMenuView
         }, {
-            path: '/manage/permission',
+            path: '/manage/authority',
             component: SettingMenuView
         }, {
             path: '/monitor/server',
@@ -31,6 +36,9 @@ var router = new VueRouter({
         }, {
             path: '/manage/path',
             component: PathView
+        }, {
+            path: '/manage/authority',
+            component: AuthorityView
         }, {
             path: '/manage/role',
             component: ManageRoleView,

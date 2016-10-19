@@ -8,7 +8,7 @@ basic_menu:
       -
         name: '用户管理'
         uri: '/manage/user'
-        menu_icon: 'fa fa-th'
+        menu_icon: 'fa fa-user'
         level: 1
       -
         name: '角色管理'
@@ -22,7 +22,7 @@ basic_menu:
         level: 1
       -
         name: '权限管理'
-        uri: '/manage/permission'
+        uri: '/manage/authority'
         menu_icon: 'fa fa-th'
         level: 1
       -
