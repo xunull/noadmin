@@ -1,10 +1,10 @@
-var yaml = require('js-yaml');
 var fs = require('fs');
 var path = require('path');
 var crypto = require('crypto');
 var logger = global.thisapp.logger;
+var config = global.thisapp.config;
 var uuid = require('node-uuid');
-
+const yaml = global.thisapp.common.yaml;
 var basicDao = require('../back.src/dao');
 
 var User = basicDao.User;
@@ -17,7 +17,9 @@ var UserRole = basicDao.UserRole;
 var RoleAccessPath = basicDao.RoleAccessPath;
 var RoleMenu = basicDao.RoleMenu;
 
-var initObj = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '../properties/init.yaml')));
+let initYamlPath = config.init.initYamlPath;
+
+var initObj = require('js-yaml').safeLoad(fs.readFileSync(initYamlPath));
 
 let basicMenu = initObj.basic_menu;
 let adminUser = initObj.user_root;
@@ -30,22 +32,40 @@ let rootRole_yaml = initObj.role_root;
  * 才能保证后面的方法也能真正的运行
  */
 (async function init() {
-    // 1.初始化admin用户
-    let user = await initAdminUser();
-    // 2.初始化root role
-    let rootRole = await initRootRole();
-    // 3.初始化root role access path
-    let rootRoleAccessPath = await initRootRoleAccessPath(rootRole);
-    // 4.初始化admin用户 角色为root
-    let adminUserRole = await initAdminUserRole(user, rootRole);
-    // 5.初始化access path
-    await initAccessPath();
-    // 6.初始化菜单
-    let saveMenuResult = await initMenu();
-    // 7.初始化admin菜单
-    await initAdminMenu();
-    // 8.init root role menu
-    await initRootRoleMenu(rootRole._id, saveMenuResult);
+    try {
+        if (undefined === initObj.initOver) {
+            logger.info('开始初始化');
+            // 1.初始化admin用户
+            let user = await initAdminUser();
+            // 2.初始化root role
+            let rootRole = await initRootRole();
+            // 3.初始化root role access path
+            let rootRoleAccessPath = await initRootRoleAccessPath(rootRole);
+            // 4.初始化admin用户 角色为root
+            let adminUserRole = await initAdminUserRole(user, rootRole);
+            // 5.初始化access path
+            await initAccessPath();
+            // 6.初始化菜单
+            let saveMenuResult = await initMenu();
+            // 7.初始化admin菜单
+            await initAdminMenu();
+            // 8.init root role menu
+            await initRootRoleMenu(rootRole._id, saveMenuResult);
+
+            if (config.initBuiltinBusiness) {
+                require('./initBuiltinBusiness');
+            }
+            initObj.initOver = true;
+            yaml.safeDumpFile(initObj, initYamlPath);
+        } else {
+            // 已经初始化一次了
+            logger.info('已经初始化过');
+        }
+
+    } catch (err) {
+        logger.info(err);
+    }
+
 })();
 
 /**
@@ -157,7 +177,7 @@ async function initAccessPath() {
         }
         tempAccessPath.id = id;
         tempAccessPath.dimension = dimension;
-        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.uri, tempAccessPath.level, tempAccessPath.id,tempAccessPath.pid, tempAccessPath.dimension);
+        let accessPath = await AccessPath.saveAccessPath(tempAccessPath.name, tempAccessPath.uri, tempAccessPath.level, tempAccessPath.id, tempAccessPath.pid, tempAccessPath.dimension);
         if (undefined !== tempAccessPath.sub) {
             // 有下层链接
             for (let subAccessPath of tempAccessPath.sub) {

@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
     watch: true,
     // entry point of our application
-    entry: './front.src/public/js/main.js',
+    entry: './front.src/public/main/main.js',
     // where to place the compiled bundle
     output: {
         path: './dist/',

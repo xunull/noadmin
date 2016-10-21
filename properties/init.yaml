@@ -1,86 +1,103 @@
 basic_menu:
-  -
-    name: '系统管理'
+  - name: 系统管理
     level: 0
     uri: null
-    menu_icon: 'fa fa-user'
+    menu_icon: fa fa-user
     sub:
-      -
-        name: '用户管理'
-        uri: '/manage/user'
-        menu_icon: 'fa fa-user'
+      - name: 用户管理
+        uri: /manage/user
+        menu_icon: fa fa-user
         level: 1
-      -
-        name: '角色管理'
-        uri: '/manage/role'
-        menu_icon: 'fa fa-th'
+      - name: 角色管理
+        uri: /manage/role
+        menu_icon: fa fa-th
         level: 1
-      -
-        name: '菜单管理'
-        uri: '/manage/menu'
-        menu_icon: 'fa fa-th'
+      - name: 菜单管理
+        uri: /manage/menu
+        menu_icon: fa fa-th
         level: 1
-      -
-        name: '权限管理'
-        uri: '/manage/authority'
-        menu_icon: 'fa fa-th'
+      - name: 权限管理
+        uri: /manage/authority
+        menu_icon: fa fa-th
         level: 1
-      -
-        name: '路径管理'
-        uri: '/manage/path'
-        menu_icon: 'fa fa-th'
+      - name: 路径管理
+        uri: /manage/path
+        menu_icon: fa fa-th
         level: 1
-  -
-    name: '主机监控'
+  - name: 主机监控
     level: 0
     uri: null
-    menu_icon: 'fa fa-th'
+    menu_icon: fa fa-th
     sub:
-      -
-        name: '服务器监控'
-        uri: '/monitor/server'
-        menu_icon: 'fa fa-th'
+      - name: 服务器监控
+        uri: /monitor/server
+        menu_icon: fa fa-th
         level: 1
-      -
-        name: '程序监控'
-        uri: '/monitor/program'
-        menu_icon: 'fa fa-th'
+      - name: 程序监控
+        uri: /monitor/program
+        menu_icon: fa fa-th
         level: 1
-
 basic_access_path:
-  -
-    name: '系统设置'
+  - name: 系统设置
     level: 0
     uri: null
     sub:
-      -
-        name: '菜单设置'
-        uri: '/setting/menu'
+      - name: 菜单设置
+        uri: /setting/menu
         level: 1
-      -
-        name: '权限设置'
-        uri: '/setting/permission'
+        pid: 1b08f2f6-f726-4d73-b62c-442b87ca2806
+        id: 0f352267-6312-429b-bab3-df0535507e78
+        dimension:
+          - 0
+          - 1b08f2f6-f726-4d73-b62c-442b87ca2806
+          - 0f352267-6312-429b-bab3-df0535507e78
+      - name: 权限设置
+        uri: /setting/permission
         level: 1
-  -
-    name: '主机监控'
+        pid: 1b08f2f6-f726-4d73-b62c-442b87ca2806
+        id: 36af3f7b-1309-48b9-9b3e-6ca8ebd774ae
+        dimension:
+          - 0
+          - 1b08f2f6-f726-4d73-b62c-442b87ca2806
+          - 36af3f7b-1309-48b9-9b3e-6ca8ebd774ae
+    pid: 0
+    id: 1b08f2f6-f726-4d73-b62c-442b87ca2806
+    dimension:
+      - 0
+      - 1b08f2f6-f726-4d73-b62c-442b87ca2806
+  - name: 主机监控
     level: 0
     uri: null
     sub:
-      -
-        name: '服务器监控'
-        uri: '/monitor/server'
+      - name: 服务器监控
+        uri: /monitor/server
         level: 1
-      -
-        name: '程序监控'
-        uri: '/monitor/program'
+        pid: d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
+        id: 3acc895b-71c9-49f1-9f01-b4bbb08711ea
+        dimension:
+          - 0
+          - d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
+          - 3acc895b-71c9-49f1-9f01-b4bbb08711ea
+      - name: 程序监控
+        uri: /monitor/program
         level: 1
-
+        pid: d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
+        id: 86f32c19-207c-4c56-bbea-e854ac9a3e5f
+        dimension:
+          - 0
+          - d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
+          - 86f32c19-207c-4c56-bbea-e854ac9a3e5f
+    pid: 0
+    id: d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
+    dimension:
+      - 0
+      - d0e5ebb1-80a7-45fe-a807-e6e805d9cc3f
 user_root:
-  name: 'admin'
-  loginname: 'admin'
-  pass: '123456'
-
+  name: admin
+  loginname: admin
+  pass: 4b490c682f2baf82af4bb4c19a2a6f8c4199fbd2b758ba4d1cc792a6b2040b88
 role_root:
-  name: 'root'
-  description: 'root administrator'
+  name: root
+  description: root administrator
   parent: null
+initOver: true
