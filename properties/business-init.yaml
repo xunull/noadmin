@@ -1,14 +1,37 @@
+builtin_business:
+  - name: 聊天应用
+    description: 一个聊天应用
+  - name: 数据秀
+    description: 数据库连接，展示，sql执行
+  - name: 日志查看
+    description: 日志查看系统，可以查看本系统日志，可以接入其他系统日志
+  - name: markdown编辑
+    description: markdown编辑，保存
+
 business_menu:
-  - name: 系统管理
+  - name: 内建业务
     level: 0
     uri: null
     menu_icon: fa fa-user
     sub:
-      - name: 用户管理
-        uri: /manage/user
-        menu_icon: fa fa-user
+      - name: 聊天应用
+        uri: /builtinBusiness/chat
+        menu_icon: fa fa-wechat
         level: 1
-      - name: 角色管理
+      - name: 数据秀
         uri: /manage/role
-        menu_icon: fa fa-th
+        menu_icon: fa fa-database
         level: 1
+      - name: 日志查看
+        uri: /builtinBusiness/logwatch
+        menu_icon: fa-flickr
+        level: 1
+      - name: markdown
+        uri: /builtinBusiness/markdown
+        menu_icon: fa-bookmark
+        level: 1
+
+role_builtinBusiness:
+  name: builtinBusiness
+  description: 内建业务所有角色
+  parent: null

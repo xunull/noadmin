@@ -52,14 +52,16 @@ let rootRole_yaml = initObj.role_root;
             // 8.init root role menu
             await initRootRoleMenu(rootRole._id, saveMenuResult);
 
-            if (config.initBuiltinBusiness) {
-                require('./initBuiltinBusiness');
-            }
+
             initObj.initOver = true;
             yaml.safeDumpFile(initObj, initYamlPath);
         } else {
             // 已经初始化一次了
             logger.info('已经初始化过');
+        }
+
+        if (config.initBuiltinBusiness) {
+            require('./initBuiltinBusiness');
         }
 
     } catch (err) {
