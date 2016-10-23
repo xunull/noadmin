@@ -1,5 +1,6 @@
 var path = require('path');
 var config = {
+    b:1,
     hostname: '127.0.0.1',
     debug: true,
     port: 5000,
@@ -24,5 +25,8 @@ var config = {
         initBusinessYamlPath: path.resolve(__dirname, '../properties/business-init.yaml')
     }
 };
+
+config.b+=1;
+
 
 module.exports = config;
