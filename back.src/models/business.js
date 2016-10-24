@@ -1,3 +1,8 @@
+/**
+ * 对业务进行区分是为了对资源的整合
+ * 也是对某个领域的归纳
+ * @type {[type]}
+ */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 

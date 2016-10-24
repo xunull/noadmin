@@ -16,7 +16,6 @@ const yaml = global.thisapp.common.yaml;
 
 (async function init() {
     try {
-
         var initObj = await yaml.safeLoadFile(initBusinessYamlPath);
         if (undefined === initObj.initOver) {
             logger.info('built in business has not init');
@@ -31,10 +30,11 @@ const yaml = global.thisapp.common.yaml;
 
             // 3.初始化业务的菜单
             let businessMenus = initObj.business_menu;
-            await initMenu(businessMenus);
-
+            let businessMenusResult = await initMenu(businessMenus);
+            // 4.给root用户添加业务的菜单
+            await addMenuToRoot(businessMenusResult);
             initObj.initOver = true;
-            // yaml.safeDumpFile(initObj, initBusinessYamlPath);
+            yaml.safeDumpFile(initObj, initBusinessYamlPath);
         } else {
             logger.info('内建业务逻辑已经初始化过');
         }
@@ -48,7 +48,7 @@ const yaml = global.thisapp.common.yaml;
  * 1.创建一个内建业务的角色
  * @return {Promise} [description]
  */
-async function initBuiltInBusinessRole({name,description,parent}) {
+async function initBuiltInBusinessRole({name, description, parent}) {
     let role = await Role.save(name, description, parent);
     logger.info(role);
     return role;
@@ -58,8 +58,10 @@ async function initBuiltInBusinessRole({name,description,parent}) {
  * 2.创建内建业务记录
  * @return {Promise} [description]
  */
-async function initBusinessRecord() {
-
+async function initBusinessRecord(business) {
+    for (let value of business) {
+        await Business.save(value);
+    }
 }
 
 /**
@@ -74,6 +76,19 @@ async function initMenu(businessMenus) {
         saveMenuResult = saveMenuResult.concat(returnedResult);
     }
     return saveMenuResult;
+}
+
+/**
+ * 4.给root用户添加内建业务的菜单
+ * @return {Promise} [description]
+ */
+async function addMenuToRoot(businessMenusResult) {
+    let rootMenu = await RoleMenu.findMenuByRoleName('root');
+    for (let result of businessMenusResult) {
+        rootMenu.menus.push(result._id);
+    }
+    rootMenu.save((err, rootMenu) => {});
+
 }
 
 // 目前的写法只能针对两级菜单

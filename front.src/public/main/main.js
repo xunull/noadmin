@@ -108,12 +108,21 @@ var router = new VueRouter({
                     component: RoleCreateView,
                     meta: {
                         breadcrumbName: [
-                            '主页', '系统管理', '角色管理','角色创建'
+                            '主页', '系统管理', '角色管理', '角色创建'
                         ],
-                        breadcrumbUrl: ['/', '', '/manage/role','/manage/role/roleCreate']
+                        breadcrumbUrl: ['/', '', '/manage/role', '/manage/role/roleCreate']
                     }
                 }
             ]
+        }, {
+            path: '/builtinBusiness/repl',
+            component: ManageRoleView,
+            meta: {
+                breadcrumbName: [
+                    '主页', '业务系统', 'repl'
+                ],
+                breadcrumbUrl: ['/', '', '/builtinBusiness/repl']
+            }
         }
     ]
 });

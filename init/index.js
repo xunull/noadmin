@@ -80,7 +80,9 @@ async function initAdminUser() {
         logger.debug('admin 用户已经存在');
         return user;
     }
+
     let hmac = crypto.createHmac('sha256', global.thisapp.appConfigYaml.pass_salt);
+    // pass 必须是string 或者 buffer 数字是不可以的
     hmac.update(adminUser.pass);
     adminUser.pass = hmac.digest('hex');
     user = await User.saveUser(adminUser);

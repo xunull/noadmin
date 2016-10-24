@@ -1,4 +1,53 @@
 var RoleMenu = require('../models').RoleMenu;
+var RoleDao = require('./role');
+var MenuDao = require('./menu');
+var logger = global.thisapp.logger;
+
+exports.getRoleMenuForFront = async function(roleName) {
+    try {
+        let userMenuids = await exports.findMenuByRoleName(roleName);
+
+        let dbmenus = [];
+        for (let menuid of userMenuids.menus) {
+            let tempMenu = await MenuDao.getMenuByMenuid(menuid);
+            dbmenus.push(tempMenu);
+        }
+        // 返回的menu结果
+        let resultMenu = [];
+
+        generateMenu(resultMenu, '0', dbmenus);
+        return resultMenu;
+    } catch (err) {
+        logger.error(err);
+    }
+
+    function generateMenu(parent, pid, dbmenus) {
+
+        let childrenMenu = dbmenus.filter((element, index, array) => {
+
+            if (pid === element.pmenuid) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        childrenMenu.forEach(function(currentValue, index, array) {
+            let formatedMenu = {};
+            parent.push(formatedMenu);
+            formatedMenu.menu_icon = currentValue.menu_icon;
+            formatedMenu.name = currentValue.name;
+            formatedMenu.uri = currentValue.uri;
+            formatedMenu.sub_menu = [];
+            /**
+             * currentValue._id.valueOf() 的类型是object
+             * currentValue._id.valueOf().toString() 才是字符串
+             */
+            generateMenu(formatedMenu.sub_menu, currentValue._id.valueOf().toString(), dbmenus);
+        });
+    }
+
+}
 
 /**
  * 为mongoose 对象的save 方法的代理
@@ -23,6 +72,12 @@ exports.save = function(roleMenu, callback) {
             }
         });
     });
+}
+
+exports.findMenuByRoleName = async function(roleName) {
+
+    let role = await RoleDao.getRoleByName(roleName);
+    return exports.findMenu(role._id);
 }
 
 exports.findMenu = function(roleid, callback) {
