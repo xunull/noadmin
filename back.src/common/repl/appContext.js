@@ -1,88 +1,58 @@
 /**
- * 使用外部系统的context的repl
+ * 使用宿主系统的context的repl
  * 是系统中集成的repl
  */
 var stream = require('stream');
 var repl = require('repl');
 var Writable = stream.Writable;
 var Readable = stream.Readable;
+var EventEmitter = require('events');
+var REPLEmitter = new EventEmitter();
+var logger = require('../logger');
 
 var replWrite = new Writable({
     write(chunk, encoding, callback) {
-        console.log('replWrite._writev');
-        console.log('out= ' + chunk.toString());
+        REPLEmitter.emit('output', chunk.toString());
         callback();
     },
     writev(chunks, callback) {
-        console.log('replWrite._writev');
-        console.log('out= ' + chunk.toString());
+        REPLEmitter.emit('output', chunk.toString());
         callback();
     }
 });
 
 replWrite.on('error', (error) => {
-    console.log(error);
+    logger.error('appContext REPL write has error');
+    logger.error(error);
 });
 
-// var replReadable = new Readable({
-//     // read(size) {
-//     //     console.log(size);
-//     //     console.log('11111111111');
-//     //     return Buffer.from('11111\n', 'utf8');
-//     // }
-// });
+var replReadable = new Readable({read(size) {}});
 
-var replReadable = new Readable();
-
-replReadable._read = function() {
-    console.log('11111111111');
-    console.log(replReadable._readableState.buffer);
-    // return Buffer.from('11111\n', 'utf8');
-}
-
-replReadable.on('readable', function() {
-    // there is some data to read now
-    console.log('there is some data to read now');
-});
+replReadable.on('readable', function() {});
 
 replReadable.on('error', (error) => {
-    console.log(error);
+    logger.error('appContext REPL read has error');
+    logger.error(error);
 });
 
-// replReadable.on('data', (data) => {
-//     console.log('data is ', data.toString());
-// });
-
 function myWriter(output) {
-    console.log('myWriter= ', output);
+    // console.log('myWriter= ', output);
     // console.log(replWrite._writableState.getBuffer());
     return output;
 }
 
 exports.start = function() {
-    repl.start({
-        prompt: '^-^ ', writer: myWriter,
-        // terminal: false,
-        useGlobal: true,
-        input: replReadable,
-        output: replWrite
-    });
-    var tempBuffer = Buffer.from('var a=1234;console.log(a)\n', 'utf8');
-    replReadable.push(tempBuffer);
-    // replReadable.push('var a=1\n');
-    // replReadable.push(null);
-    // replReadable.resume();
+    repl.start({writer: myWriter, useGlobal: true, input: replReadable, output: replWrite});
 }
 
-// setInterval(input, 5000);
-
-var aaaa = 1;
-
-function input() {
-    aaaa++;
-    let tempBuffer = Buffer.from('' + aaaa + '\n', 'utf8');
+/**
+ * repl的input
+ * @param  {[type]} sentence [description]
+ * @return {[type]}          [description]
+ */
+exports.input = function(sentence) {
+    let tempBuffer = Buffer.from('' + sentence + '\n', 'utf8');
     replReadable.push(tempBuffer);
-    // replReadable.push('var a=1\n');
-    // replReadable.push(null);
-    // replReadable.resume();
 }
+
+exports.REPLEmitter = REPLEmitter;
