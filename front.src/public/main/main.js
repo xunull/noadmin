@@ -17,6 +17,8 @@ import ManageUserView from './components/manage/user/user-view.vue'
 import UserTable from './components/manage/user/user-table.vue'
 import UserCreate from './components/manage/user/user-create.vue'
 
+import ReplView from '../business/repl/repl-view.vue'
+
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
 Vue.use(Element);
@@ -116,7 +118,7 @@ var router = new VueRouter({
             ]
         }, {
             path: '/builtinBusiness/repl',
-            component: ManageRoleView,
+            component: ReplView,
             meta: {
                 breadcrumbName: [
                     '主页', '业务系统', 'repl'

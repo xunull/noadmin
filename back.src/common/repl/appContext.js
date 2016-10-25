@@ -11,8 +11,14 @@ var REPLEmitter = new EventEmitter();
 var logger = require('../logger');
 
 var replWrite = new Writable({
+    objectMode: true,
+    decodeStrings: false,
     write(chunk, encoding, callback) {
-        REPLEmitter.emit('output', chunk.toString());
+
+        // console.log(chunk.toString());
+        // REPLEmitter.emit('output', chunk.toString());
+
+        REPLEmitter.emit('output', chunk);
         callback();
     },
     writev(chunks, callback) {
@@ -36,13 +42,21 @@ replReadable.on('error', (error) => {
 });
 
 function myWriter(output) {
-    // console.log('myWriter= ', output);
-    // console.log(replWrite._writableState.getBuffer());
-    return output;
+    // console.log('myWriter ', output);
+    // TODO
+    // write(chunk, encoding, callback)
+    // 这个方法,比如调用thisapp.config 的时候
+    // chunk的值 会是[object Object] 目前没有找到原因
+    // objectMode: true,
+    // decodeStrings: false, 这两个参数并不能解决掉这个问题
+    // 因此在写入之前 先将对象序列化
+    return JSON.stringify(output,null,4);
 }
 
 exports.start = function() {
     repl.start({writer: myWriter, useGlobal: true, input: replReadable, output: replWrite});
+
+    // repl.start({useGlobal: true});
 }
 
 /**
