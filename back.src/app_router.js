@@ -18,6 +18,8 @@ express_app.use(middlewares.permission.userRequired);
 
 express_app.use(middlewares.menu.generateUserMenu);
 
+express_app.use(middlewares.resEnhance.addReply);
+
 // 解析debug 参数
 if (config.debug) {
     express_app.use(middlewares.debug.parse);
