@@ -2,6 +2,16 @@ const fs = require('fs');
 const path = require('path');
 
 /**
+ * 判断一个路径是否以../开头
+ * 这样开头的路径 会回退到上级目录
+ * @param  {[type]}  arg_path [description]
+ * @return {Boolean}          [description]
+ */
+exports.isReturnPrefix = function(arg_path) {
+    return arg_path.startsWith('../');
+}
+
+/**
  * 保存内容到文件
  * @param  {[type]} data     [description]
  * @param  {[type]} arg_path [description]
@@ -57,7 +67,7 @@ exports.readFile = function(arg_path, option) {
  * @param  {[type]}  arg_path [description]
  * @return {Boolean}          [description]
  */
-exports.isDir =async function(arg_path) {
+exports.isDir = async function(arg_path) {
     isAbsolute(arg_path);
     let stats = await exports.stat(arg_path);
     return stats.isDirectory();
@@ -68,7 +78,7 @@ exports.isDir =async function(arg_path) {
  * @param  {[type]}  arg_path [description]
  * @return {Boolean}          [description]
  */
-exports.isFile =async function(arg_path) {
+exports.isFile = async function(arg_path) {
     isAbsolute(arg_path);
     let stats = await exports.stat(arg_path);
     return stats.isFile();
