@@ -1,4 +1,8 @@
-var config = require('../../config/app.config');
+/**
+ * 使用log4js 的logger 实现
+ * @type {[type]}
+ */
+var config = require('../../../config/app.config');
 
 var env = process.env.NODE_ENV || "development";
 
@@ -8,7 +12,7 @@ log4js.configure({
     type: 'console'
   }, {
     type: 'file',
-    filename: config.logFile,
+    filename: config.logger.logFile,
     category: 'noadmin'
   }],
   // 不替换node 自己的console

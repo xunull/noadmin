@@ -15,17 +15,19 @@ var config = {
         otherDir: path.resolve(__dirname, '../bower_components'),
         distDir: path.resolve(__dirname, '../dist')
     },
-    logFile: path.resolve(__dirname, '../logs/log.log'),
     otherBusinessPath: path.resolve(__dirname, '../business'),
     initBuiltinBusiness: true,
     // 初始化相关的配置
     init: {
         initYamlPath: path.resolve(__dirname, '../properties/init.yaml'),
         initBusinessYamlPath: path.resolve(__dirname, '../properties/business-init.yaml')
-    }
+    },
+    logger: {
+        logFile: path.resolve(__dirname, '../logs/log.log'),
+        errorFile: path.resolve(__dirname, '../logs/error.log'),
+        level: 'debug'
+    },
+    appConfigYaml: path.join(__dirname, '../properties/app_config.yaml')
 };
-
-config.b+=1;
-
 
 module.exports = config;

@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
-var logger = global.thisapp.logger;
-var config = global.thisapp.config;
+var logger = require('../back.src/common/logger');
+var config = require('../config/app.config');
 var uuid = require('node-uuid');
 
 var basicDao = require('../back.src/dao');
@@ -12,7 +12,7 @@ var Role = basicDao.Role;
 var UserRole = basicDao.UserRole;
 var RoleMenu = basicDao.RoleMenu;
 var Business = basicDao.Business;
-const yaml = global.thisapp.common.yaml;
+const yaml = require('../back.src/common/utils/yaml');
 
 (async function init() {
     try {

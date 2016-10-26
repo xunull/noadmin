@@ -7,10 +7,12 @@
  */
 exports.file = require('./file');
 
-// exports.logger = require('./logger');
+exports.logger = require('./logger');
 
 exports.yaml = require('./utils/yaml');
 
 exports.nodeOs = require('./utils/node-os');
 
 exports.repl = require('./repl');
+
+exports.shell = require('./shell');

@@ -9,8 +9,16 @@ builtin_business:
     description: markdown编辑，保存
   - name: 系统repl
     description: 运行环境repl
+  - name: kshell
+    description: 浏览器shell终端
   - name: 配置文件查询
     description: server 上常用软件的配置文件查询
+  - name: 文件资源管理器
+    description: 文件资源管理器
+  - name: 渔网爬虫
+    description: 网络爬虫
+  - name: whois
+    description: whois 信息查询
 business_menu:
   - name: 内建业务
     level: 0
@@ -27,19 +35,35 @@ business_menu:
         level: 1
       - name: 日志查看
         uri: /builtinBusiness/logwatch
-        menu_icon: fa-flickr
+        menu_icon: fa fa-flickr
         level: 1
       - name: markdown
         uri: /builtinBusiness/markdown
-        menu_icon: fa-bookmark
+        menu_icon: fa fa-bookmark
         level: 1
       - name: configfile
         uri: /builtinBusiness/configfile
-        menu_icon: fa-bookmark
+        menu_icon: fa fa-bookmark
         level: 1
-      - name: repl
+      - name: REPL
         uri: /builtinBusiness/repl
-        menu_icon: fa-bookmark
+        menu_icon: fa fa-bookmark
+        level: 1
+      - name: KShell
+        uri: /builtinBusiness/kshell
+        menu_icon: fa linux
+        level: 1
+      - name: Explorer
+        uri: /builtinBusiness/explorer
+        menu_icon: fa file
+        level: 1
+      - name: 渔网
+        uri: /builtinBusiness/yuwang
+        menu_icon: fa file
+        level: 1
+      - name: whois
+        uri: /builtinBusiness/whois
+        menu_icon: fa file
         level: 1
 role_builtinBusiness:
   name: builtinBusiness

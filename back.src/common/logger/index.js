@@ -1,4 +1,5 @@
-var wiston = require('wiston');
-var logger = require('./logger');
+var winstonLogger = require('./winston');
 
-exports.logger = logger;
+var log4jsLogger = require('./log4js');
+
+module.exports = log4jsLogger;

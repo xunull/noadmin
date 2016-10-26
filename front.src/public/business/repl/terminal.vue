@@ -83,6 +83,7 @@ export default {
         color:green;
         overflow:auto;
         border: 0 none;
+        width: 100%;
     }
 
     .terminal {
