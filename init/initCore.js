@@ -52,8 +52,8 @@ let rootRole_yaml = initObj.role_root;
             // 8.init root role menu
             await initRootRoleMenu(rootRole._id, saveMenuResult);
 
-            initObj.initOver = true;
-            yaml.safeDumpFile(initObj, initYamlPath);
+            // initObj.initOver = true;
+            // yaml.safeDumpFile(initObj, initYamlPath);
         } else {
             // 已经初始化一次了
             logger.info('核心内容已经初始化过');

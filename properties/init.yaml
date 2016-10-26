@@ -95,9 +95,8 @@ basic_access_path:
 user_root:
   name: admin
   loginname: admin
-  pass: 4b490c682f2baf82af4bb4c19a2a6f8c4199fbd2b758ba4d1cc792a6b2040b88
+  pass: '123456'
 role_root:
   name: root
   description: root administrator
   parent: null
-initOver: true

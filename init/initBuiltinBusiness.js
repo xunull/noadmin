@@ -33,8 +33,8 @@ const yaml = require('../back.src/common/utils/yaml');
             let businessMenusResult = await initMenu(businessMenus);
             // 4.给root用户添加业务的菜单
             await addMenuToRoot(businessMenusResult);
-            initObj.initOver = true;
-            yaml.safeDumpFile(initObj, initBusinessYamlPath);
+            // initObj.initOver = true;
+            // yaml.safeDumpFile(initObj, initBusinessYamlPath);
         } else {
             logger.info('内建业务逻辑已经初始化过');
         }

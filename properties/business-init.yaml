@@ -51,22 +51,21 @@ business_menu:
         level: 1
       - name: KShell
         uri: /builtinBusiness/kshell
-        menu_icon: fa linux
+        menu_icon: fa fa-linux
         level: 1
       - name: Explorer
         uri: /builtinBusiness/explorer
-        menu_icon: fa file
+        menu_icon: fa fa-file
         level: 1
       - name: 渔网
         uri: /builtinBusiness/yuwang
-        menu_icon: fa file
+        menu_icon: fa fa-file
         level: 1
       - name: whois
         uri: /builtinBusiness/whois
-        menu_icon: fa file
+        menu_icon: fa fa-file
         level: 1
 role_builtinBusiness:
   name: builtinBusiness
   description: 内建业务所有角色
   parent: null
-initOver: true
