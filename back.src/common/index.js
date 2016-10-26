@@ -13,6 +13,8 @@ exports.yaml = require('./utils/yaml');
 
 exports.nodeOs = require('./utils/node-os');
 
+exports.path = require('./utils/path');
+
 exports.repl = require('./repl');
 
 exports.shell = require('./shell');
