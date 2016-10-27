@@ -18,6 +18,10 @@ import UserTable from './components/manage/user/user-table.vue'
 import UserCreate from './components/manage/user/user-create.vue'
 
 import ReplView from '../business/repl/repl-view.vue'
+import ShellView from '../business/remoteShell/shell-view.vue'
+
+import KshellTerminal from '../business/remoteShell/terminal.vue'
+import KshellLogin from '../business/remoteShell/login.vue'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
@@ -125,6 +129,39 @@ var router = new VueRouter({
                 ],
                 breadcrumbUrl: ['/', '', '/builtinBusiness/repl']
             }
+        }, {
+            path: '/builtinBusiness/kshell',
+            component: ShellView,
+            children: [
+                {
+                    path: '',
+                    component: KshellLogin,
+                    meta: {
+                        breadcrumbName: [
+                            '主页', '业务系统', 'kshell', '用户登陆'
+                        ],
+                        breadcrumbUrl: ['/', '', '/builtinBusiness/kshell']
+                    }
+                }, {
+                    path: 'login',
+                    component: KshellLogin,
+                    meta: {
+                        breadcrumbName: [
+                            '主页', '业务系统', 'kshell', '用户登陆'
+                        ],
+                        breadcrumbUrl: ['/', '', '/builtinBusiness/kshell', '/builtinBusiness/kshell/login']
+                    }
+                }, {
+                    path: 'terminal',
+                    component: KshellTerminal,
+                    meta: {
+                        breadcrumbName: [
+                            '主页', '业务系统', 'kshell', '终端窗口'
+                        ],
+                        breadcrumbUrl: ['/', '', '/builtinBusiness/kshell', '/builtinBusiness/kshell/terminal']
+                    }
+                }
+            ]
         }
     ]
 });

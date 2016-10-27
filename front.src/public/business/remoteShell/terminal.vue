@@ -2,13 +2,13 @@
     <div class="col-sm-12 terminal" >
             <!-- pre标签中的内容会保持原本格式输出 -->
             <pre class="terminal-content">
-欢迎使用repl终端
+欢迎使用kshell终端
 <span class='prompt'>> </span><input @keyup.enter.stop='inputEnter' class="input">
 </pre>
 </template>
 
 <script>
-var replEmitter = require('./lib/replsocketio');
+var kshellEmitter = require('./lib/kshellSocketio').kshellEmitter;
 
 export default {
     data() {
@@ -16,7 +16,7 @@ export default {
     },
     computed: {},
     mounted() {
-        replEmitter.on('output', (data) => {
+        kshellEmitter.on('output', (data) => {
             // 对于undefined 需要特殊处理
             if ('undefined' === data) {
                 $(".prompt").before('undefined' + '<br>');
@@ -37,7 +37,7 @@ export default {
         inputEnter(event) {
             var sentence = $('.input').val();
             $(".prompt").before('> ' + sentence + '<br>');
-            replEmitter.emit('input', sentence);
+            kshellEmitter.emit('input', sentence);
             $('.input').val('');
             this.inputFocus();
         },

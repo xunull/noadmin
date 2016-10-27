@@ -1,0 +1,1 @@
+var toFrontEmitter = require('./shellSocketio');

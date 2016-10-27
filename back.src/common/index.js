@@ -18,3 +18,5 @@ exports.path = require('./utils/path');
 exports.repl = require('./repl');
 
 exports.shell = require('./shell');
+
+exports.crypto = require('./crypto');

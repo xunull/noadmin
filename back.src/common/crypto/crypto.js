@@ -1,6 +1,5 @@
 var crypto = require('crypto');
 var ursa = require('ursa');
-var Q = require('q');
 var fs = require('fs');
 
 /**

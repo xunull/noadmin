@@ -1,6 +1,5 @@
 <template lang="html">
         <terminal></terminal>
-
 </template>
 
 <script>
