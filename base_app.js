@@ -8,17 +8,28 @@ var path = require('path');
 var appConfigYaml = yaml.safeLoad(fs.readFileSync(path.join(__dirname, './properties/app_config.yaml')));
 
 var thisapp = {
-    common:common,
+    common: common,
     logger: logger,
     config: config,
     appConfigYaml: appConfigYaml
 };
 
 /**
+ * thisapp 对象加固
+ */
+common.define.reinforceObject(thisapp);
+
+/**
  * 该对象持有app中一些配置的引用
+ *
  * @type {Object}
  */
 global.thisapp = thisapp;
+
+/**
+ * global thisapp 加固
+ */
+common.define.reinforceObjectOneObject(global,'thisapp');
 
 module.exports = global.thisapp;
 
