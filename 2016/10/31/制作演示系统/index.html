@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>noadmin</title>
+  <title>制作演示系统 | noadmin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="noadmin">
-<meta property="og:type" content="website">
-<meta property="og:title" content="noadmin">
-<meta property="og:url" content="http://xunull.io/noadmin/index.html">
+  <meta name="description" content="思考如何制作一个演示系统搭建一个演示系统，使不同的用户登陆后都可以随意的使用网站的功能而不会产生影响。通过docker？这个实现方式可能会代价比较大，资源使用的会很大
+或者可以通过为每一个进来的session 都创建出一个账户，该账户可以所以使用，并且会为该账户创建出一套独立的数据库，使其对数据库的操作不会影响其他人
+但是有些东西怎么处理 比如repl,比如对文件的处理等，或者说这些操作可以不让用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="制作演示系统">
+<meta property="og:url" content="http://xunull.io/noadmin/2016/10/31/制作演示系统/index.html">
 <meta property="og:site_name" content="noadmin">
-<meta property="og:description" content="noadmin">
+<meta property="og:description" content="思考如何制作一个演示系统搭建一个演示系统，使不同的用户登陆后都可以随意的使用网站的功能而不会产生影响。通过docker？这个实现方式可能会代价比较大，资源使用的会很大
+或者可以通过为每一个进来的session 都创建出一个账户，该账户可以所以使用，并且会为该账户创建出一套独立的数据库，使其对数据库的操作不会影响其他人
+但是有些东西怎么处理 比如repl,比如对文件的处理等，或者说这些操作可以不让用">
+<meta property="og:updated_time" content="2016-10-31T02:40:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="noadmin">
-<meta name="twitter:description" content="noadmin">
+<meta name="twitter:title" content="制作演示系统">
+<meta name="twitter:description" content="思考如何制作一个演示系统搭建一个演示系统，使不同的用户登陆后都可以随意的使用网站的功能而不会产生影响。通过docker？这个实现方式可能会代价比较大，资源使用的会很大
+或者可以通过为每一个进来的session 都创建出一个账户，该账户可以所以使用，并且会为该账户创建出一套独立的数据库，使其对数据库的操作不会影响其他人
+但是有些东西怎么处理 比如repl,比如对文件的处理等，或者说这些操作可以不让用">
   
     <link rel="alternate" href="/atom.xml" title="noadmin" type="application/atom+xml">
   
@@ -66,9 +73,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-制作演示系统" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-制作演示系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/noadmin/2016/10/31/制作演示系统/" class="article-date">
   <time datetime="2016-10-31T02:34:04.000Z" itemprop="datePublished">2016-10-31</time>
@@ -81,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/noadmin/2016/10/31/制作演示系统/">制作演示系统</a>
+    <h1 class="article-title" itemprop="name">
+      制作演示系统
     </h1>
   
 
@@ -103,55 +108,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/noadmin/2016/10/30/hello-world/" class="article-date">
-  <time datetime="2016-10-30T14:50:34.000Z" itemprop="datePublished">2016-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/noadmin/2016/10/30/hello-world/">Hello World</a>
-    </h1>
+    <a href="/noadmin/2016/10/30/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://xunull.io/noadmin/noadmin/2016/10/30/hello-world/" data-id="ciuxgk0m600003zs6oxxt4lnz" class="article-share-link">Delen</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
