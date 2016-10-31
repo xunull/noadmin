@@ -10,7 +10,9 @@
  * @return {[type]}     [description]
  */
 exports.reinforceObject = function(obj) {
-    for (let key in obj) {
+
+    let keys = Object.getOwnPropertyNames(obj);
+    for (let key of keys) {
         Object.defineProperty(obj, key, {
             value: obj[key],
             enumerable: true,
