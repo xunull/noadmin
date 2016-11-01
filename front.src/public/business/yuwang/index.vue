@@ -1,0 +1,51 @@
+<template lang="html">
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-2">
+            <el-form ref="form" label-width="80px">
+              <el-form-item label="网址">
+                <el-input v-model='website' placeholder='请输入目标网址'></el-input>
+              </el-form-item>
+              <el-form-item label="拉取内容">
+                  <el-checkbox-group v-model="checkList">
+                    <el-checkbox label='html'>html</el-checkbox>
+                    <el-checkbox label='js'>js</el-checkbox>
+                    <el-checkbox label='picture'>picture</el-checkbox>
+                    <el-checkbox label='css' >css</el-checkbox>
+                    <el-checkbox label='other' >字体等</el-checkbox>
+                  </el-checkbox-group>
+              </el-form-item>
+
+              <el-form-item>
+                <el-button @click.native='start' type="primary">开始</el-button>
+              </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+
+        return {
+            website: null,
+            checkList: ['html', 'js', 'picture', 'css', 'other']
+        }
+
+    },
+    methods: {
+        start: function() {
+
+            this.$http.post('/yuwang/start', this.$data).then(function(response) {
+                console.log(response);
+            }, function(response) {
+                console.log(response);
+            });
+
+        }
+    },
+}
+</script>
+
+<style lang="css">
+</style>

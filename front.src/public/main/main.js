@@ -23,6 +23,8 @@ import ShellView from '../business/remoteShell/shell-view.vue'
 import KshellTerminal from '../business/remoteShell/terminal.vue'
 import KshellLogin from '../business/remoteShell/login.vue'
 
+import YuwangIndex from '../business/yuwang/index.vue'
+
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
 Vue.use(Element);
@@ -66,6 +68,15 @@ var router = new VueRouter({
                     }
                 }
             ]
+        }, {
+            path: '/builtinBusiness/yuwang',
+            component: YuwangIndex,
+            meta: {
+                breadcrumbName: [
+                    '主页', '业务系统', '渔网'
+                ],
+                breadcrumbUrl: ['/', '', '/builtinBusiness/yuwang']
+            }
         }, {
             path: '/manage/menu',
             component: SettingMenuView

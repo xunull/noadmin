@@ -23,4 +23,15 @@ log4js.configure({
 var logger = log4js.getLogger('noadmin');
 logger.setLevel(config.debug && env !== 'test' ? 'DEBUG' : 'ERROR');
 
+/**
+ * 此方法调试的时候使用
+ * @param  {[type]} obj [description]
+ * @return {[type]}     [description]
+ */
+logger.focus=function(obj) {
+    logger.info('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
+    logger.info(obj);
+    logger.info('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
+}
+
 module.exports = logger;

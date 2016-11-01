@@ -41,6 +41,8 @@ async function requireManifest(businessRoot) {
      * 因此router存在，又保证书写文件夹名的合理
      * 因此保留使用router文件夹的方式，不使用router.js
      * 因此业务目录下的router 都必须以一个router文件夹的方式引入
+     *
+     * 当然了 也可以指定require('xxx/index.js') 加上后缀也是可以的
      */
 
     let hasRouterDir = await findFile(businessRoot, 'router');
