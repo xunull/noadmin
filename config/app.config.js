@@ -27,7 +27,10 @@ var config = {
         errorFile: path.resolve(__dirname, '../logs/error.log'),
         level: 'debug'
     },
-    appConfigYaml: path.join(__dirname, '../properties/app_config.yaml')
+    appConfigYaml: path.join(__dirname, '../properties/app_config.yaml'),
+    // 业务产生的数据的存放目录
+    businessDataFolder:path.resolve(__dirname,'../data')
+
 };
 
 module.exports = config;

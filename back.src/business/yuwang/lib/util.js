@@ -48,7 +48,9 @@ exports.grabFile = function(resouceUrl) {
                 if (404 === err.status) {
                     logger.info('抓取' + resouceUrl + '路径出错,错误码是 is 404');
                 } else {
+
                     logger.info('抓取' + resouceUrl + '路径出错,错误码是 is ' + err.status);
+                    logger.error(err);
                 }
                 reject(err);
             } else {
