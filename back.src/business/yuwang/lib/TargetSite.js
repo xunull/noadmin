@@ -3,13 +3,25 @@ const logger = global.thisapp.logger;
 const yuwangUtil = require('./util');
 const Resource = require('./Resource');
 var executeQueue = require('./executeQueue');
+const Regular = require('./Regular');
 
 /**
  * 拉取纯静态的网站是比较好的,vue,react,angular这种前端渲染的网站现在没法做到
  */
 class GetSite {
-    constructor(siteUrl) {
+    constructor(siteUrl, savePath, urlPattern, all, checkList,isSingle) {
+        this.savePath = savePath;
+        this.urlPattern = urlPattern;
+        this.all = all;
+        this.checkList = checkList;
         this.siteUrl = siteUrl;
+        this.isSingle = isSingle;
+        if (all) {
+            this.regular = new Regular(urlPattern,null,true,isSingle);
+        } else {
+            this.regular = new Regular(urlPattern,checkList,false,isSingle);
+        }
+
         // 保存目录的名字
         this.rootDir = yuwangUtil.getWebsiteName(siteUrl);
         this.isDone = false;
@@ -27,7 +39,7 @@ class GetSite {
         this.allPaths.push(siteUrl);
     }
     start() {
-        let indexResource = new Resource('/', null, this, true);
+        let indexResource = new Resource('/', null, this, true,'a',this.regular);
         indexResource.grab();
     }
     /**

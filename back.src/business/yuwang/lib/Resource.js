@@ -21,7 +21,7 @@ class Resource {
      * (此资源如果是页面可以继续分析页面上是否有其他资源,
      * 如果是一些css文件等，就不需要继续分析了,目前以这种方式实现)
      */
-    constructor(path, belongPath, targetSite, isPage = false, type = 'html') {
+    constructor(path, belongPath, targetSite, isPage = false, type = 'a',regular) {
         this.path = path;
         // basePath是该资源所在的页面,比如说js链接所在的html页面的路径
         this.belongPath = belongPath;
@@ -30,6 +30,7 @@ class Resource {
         this.targetSite = targetSite;
         this.isdone = false;
         this.type = type;
+        this.regular = regular;
     }
 
     grab() {
@@ -48,7 +49,7 @@ class Resource {
         $('a').each(function(i, elem) {
             var href = $(this).attr('href');
             if (undefined !== href) {
-                let resource = new Resource(href, belongPath, that.targetSite, true, 'html');
+                let resource = new Resource(href, belongPath, that.targetSite, true, 'a',that.regular);
                 pageResource.push(resource);
             }
         });
@@ -71,7 +72,7 @@ class Resource {
             // cheerio 的each 方法的 this 指代的是当前的element
             var href = $(this).attr('href');
             if (undefined !== href) {
-                let resource = new Resource(href, belongPath, that.targetSite, false, 'css');
+                let resource = new Resource(href, belongPath, that.targetSite, false, 'link',that.regular);
                 assetsResource.push(resource);
             }
         });
@@ -79,18 +80,20 @@ class Resource {
         $('script').each(function(i, elem) {
             var src = $(this).attr('src');
             if (undefined !== src) {
-                let resource = new Resource(src, belongPath, that.targetSite, false, 'script');
+                let resource = new Resource(src, belongPath, that.targetSite, false, 'script',that.regular);
                 assetsResource.push(resource);
             }
         });
 
-        $('img').each(function(i, elem) {
-            var src = $(this).attr('src');
-            if (undefined !== src) {
-                let resource = new Resource(src, belongPath, that.targetSite, false, 'img');
-                assetsResource.push(resource);
-            }
-        });
+        if(this.regular.testType('img')) {
+            $('img').each(function(i, elem) {
+                var src = $(this).attr('src');
+                if (undefined !== src) {
+                    let resource = new Resource(src, belongPath, that.targetSite, false, 'img',that.regular);
+                    assetsResource.push(resource);
+                }
+            });
+        }
         return assetsResource;
     }
 
@@ -173,6 +176,17 @@ class Resource {
         return path.join(rootDir, localFileName);
 
     }
+    // 保存文件的方法
+    saveFile(data) {
+        // 这步判断主要是为了判断是不是html
+        // 比如当只拉取img的使用，html还是会被拉取，但是这种时候不需要保存html
+        // if(this.regular.testType(this.type)){
+
+            let localFileName = this.obtainLocalFile();
+            // 在这里保存文件的方法应该不是需要await
+            fileUtils.saveNewFile(localFileName, data);
+        // }
+    }
 
     // 给执行队列调用的方法
     async run() {
@@ -201,39 +215,44 @@ class Resource {
             // 请求不成功的时候res 是undefined
             // TODO 请求不成功的是否记录
             if (undefined !== res) {
-                let localFileName = this.obtainLocalFile();
+                this.saveFile(res.text);
+                try {
+                    let $ = cheerio.load(res.text);
 
-                await fileUtils.saveNewFile(localFileName, res.text);
-                let $ = cheerio.load(res.text);
+                    if (this.isPage) {
 
-                if (this.isPage) {
+                        let assetsResource = this.extractAssetsResource($, this.path);
+                        assetsResource = assetsResource.filter(function(value) {
 
-                    let assetsResource = this.extractAssetsResource($, this.path);
-                    let pageResource = this.extractPageResource($, this.path);
+                            return this.analysePath(value);
+                        }, this);
+                        assetsResource.forEach(function(value) {
+                            value.grab();
+                        });
+                        // 这个地方其实只应该第一个运行的resouce需要判断这个，
+                        // 不是每一个都需要判断
+                        if(!this.regular.isSingle) {
+                            let pageResource = this.extractPageResource($, this.path);
+                            pageResource = pageResource.filter(function(value) {
+                                return this.analysePath(value);
+                            }, this);
+                            pageResource.forEach(function(value) {
+                                value.grab();
+                            });
+                        }
 
-                    assetsResource = assetsResource.filter(function(value) {
 
-                        return this.analysePath(value);
-                    }, this);
-
-                    pageResource = pageResource.filter(function(value) {
-                        return this.analysePath(value);
-                    }, this);
-
-                    assetsResource.forEach(function(value) {
-                        value.grab();
-                    });
-
-                    pageResource.forEach(function(value) {
-                        value.grab();
-                    });
-                } else {
-                    // 不是page的就不用继续拉取了
-                    // cheerio也没法分析这种文件
-                    // 不过这些文件中还是有可能含有其他的资源文件的
-                    // 比如css 中会有图片的引用
-                    // 目前还没有分析这种文件
+                    } else {
+                        // 不是page的就不用继续拉取了
+                        // cheerio也没法分析这种文件
+                        // 不过这些文件中还是有可能含有其他的资源文件的
+                        // 比如css 中会有图片的引用
+                        // 目前还没有分析这种文件
+                    }
+                } catch(err) {
+                    logger.info(requestUrl,' cheerio解析出错');
                 }
+
             }
 
         } catch (err) {
