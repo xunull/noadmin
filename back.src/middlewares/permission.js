@@ -12,18 +12,19 @@ exports.userRequired = function(req, res, next) {
     if (!config.permission) {
         // 没有启用权限验证,全部放行
         next();
-        return;
+    } else {
+        if (!req.nosession || !req.nosession.get('user')) {
+
+            if (whiteList.indexOf(req.path) !== -1) {
+                // 白名单中的路径放行
+                next();
+
+            } else {
+                res.status(403).send('forbidden!');
+            }
+        } else {
+            next();
+        }
     }
 
-    if (!req.nosession || !req.nosession.get('user')) {
-
-        if (whiteList.indexOf(req.path) !== -1) {
-            // 白名单中的路径放行
-            next();
-            return;
-        }
-
-        res.status(403).send('forbidden!');
-    } else {}
-    next();
 };
