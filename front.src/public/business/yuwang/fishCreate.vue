@@ -11,6 +11,12 @@
             <el-form-item label='保存位置'>
                 <el-input v-model='savePath' placeholder='请输入保存地址'></el-input>
             </el-form-item>
+            <el-form-item label='拉取图片'>
+                <el-radio-group v-model="grabImg">
+                    <el-radio-button v-bind:label='1' >是</el-radio-button>
+                    <el-radio-button v-bind:label='0' >否</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item label='拉取全部'>
                 <el-radio-group v-model="all">
                     <el-radio-button :label='1'>是</el-radio-button>
@@ -29,13 +35,12 @@
                     <el-checkbox-group v-model="checkList">
                       <el-checkbox label='a'>html</el-checkbox>
                       <el-checkbox label='script'>js</el-checkbox>
-                      <el-checkbox label='img'>picture</el-checkbox>
+                      <el-checkbox label='img'>img</el-checkbox>
                       <el-checkbox label='link' >css</el-checkbox>
                       <el-checkbox label='other' >字体等</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </div>
-
 
               <el-form-item>
                 <el-button @click.native='start' type="primary">开始</el-button>
@@ -54,6 +59,7 @@ export default {
             savePath: null,
             urlPattern: null,
             all: 1,
+            grabImg:1,
             singlePage:0,
             checkList: ['a', 'script', 'img', 'link', 'other']
         }

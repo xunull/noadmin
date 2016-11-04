@@ -9,17 +9,19 @@ const Regular = require('./Regular');
  * 拉取纯静态的网站是比较好的,vue,react,angular这种前端渲染的网站现在没法做到
  */
 class GetSite {
-    constructor(siteUrl, savePath, urlPattern, all, checkList,isSingle) {
+    constructor(siteUrl, savePath, urlPattern, all, checkList,isSingle,grabImg) {
         this.savePath = savePath;
         this.urlPattern = urlPattern;
         this.all = all;
         this.checkList = checkList;
         this.siteUrl = siteUrl;
         this.isSingle = isSingle;
+        this.grabImg = grabImg;
+        
         if (all) {
-            this.regular = new Regular(urlPattern,null,true,isSingle);
+            this.regular = new Regular(urlPattern,null,true,isSingle,grabImg);
         } else {
-            this.regular = new Regular(urlPattern,checkList,false,isSingle);
+            this.regular = new Regular(urlPattern,checkList,false,isSingle,grabImg);
         }
 
         // 保存目录的名字

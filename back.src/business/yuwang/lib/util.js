@@ -54,7 +54,7 @@ exports.grabFile = function(resouceUrl) {
                 }
                 reject(err);
             } else {
-                logger.info('抓取', resouceUrl, '路径成功');
+                // logger.info('抓取', resouceUrl, '路径成功');
                 resolve(res);
             }
         });

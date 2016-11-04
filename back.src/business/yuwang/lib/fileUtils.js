@@ -27,7 +27,7 @@ exports.saveNewFile = function(path, content) {
                     logger.info(path + '文件保存失败');
                     reject(err);
                 } else {
-                    logger.info(path + '文件保存成功');
+                    // logger.info(path + '文件保存成功');
                     resolve();
                 }
             });

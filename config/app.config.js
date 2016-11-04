@@ -8,7 +8,7 @@ var config = {
     redis_host: '127.0.0.1',
     redis_port: 12312,
     redis_password: 123456,
-    permission: true, //是否启用权限验证
+    permission: false, //是否启用权限验证
     directory_config: {
         view: path.resolve(__dirname, '..', 'front.src/views'),
         publicDir: path.resolve(__dirname, '..', 'front.src/public'),

@@ -1,7 +1,7 @@
 const EventEmitter = require('events');
 const queueEmitter = new EventEmitter();
 
-const logger = global.thisapp.logger;
+const logger = thisapp.logger;
 
 // 正在等待执行的队列
 var waitingQueue = [];
@@ -41,11 +41,17 @@ queueEmitter.on('add', function(obj) {
 });
 
 queueEmitter.on('go', function() {
+    logger.focus('go 方法运行了');
     if (currentRunning < maxConcurrency) {
         var obj = waitingQueue.shift();
         if (undefined !== obj) {
             currentRunning += 1;
-            obj.run();
+            try {
+                obj.run();
+            } catch(err) {
+                logger.error(err);
+            }
+
         }
     } else {
         // 运行对列已满,什么都不做

@@ -4,12 +4,16 @@
  */
 const superagent = require('superagent');
 const cheerio = require('cheerio');
-var executeQueue = require('./executeQueue');
+// 这个是默认的队列
+var defaultExecuteQueue = require('./executeQueue');
+
+var ImgExecuteQueue = require('./imgExecuteQueue');
+
 var fileUtils = require('./fileUtils');
 const yuwangUtil = require('./util');
 const url = require('url');
 const logger = global.thisapp.logger;
-const _path = require('path');
+const nodePath = require('path');
 
 class Resource {
 
@@ -21,7 +25,7 @@ class Resource {
      * (此资源如果是页面可以继续分析页面上是否有其他资源,
      * 如果是一些css文件等，就不需要继续分析了,目前以这种方式实现)
      */
-    constructor(path, belongPath, targetSite, isPage = false, type = 'a',regular) {
+    constructor(path, belongPath, targetSite, isPage = false, type = 'a', regular) {
         this.path = path;
         // basePath是该资源所在的页面,比如说js链接所在的html页面的路径
         this.belongPath = belongPath;
@@ -31,10 +35,15 @@ class Resource {
         this.isdone = false;
         this.type = type;
         this.regular = regular;
+        if (this.regular.grabImg) {
+            this.executeQueue = new ImgExecuteQueue();
+        } else {
+            this.executeQueue = defaultExecuteQueue;
+        }
     }
 
     grab() {
-        executeQueue.push(this);
+        this.executeQueue.push(this);
     }
 
     extractPageResource($, belongPath) {
@@ -49,7 +58,7 @@ class Resource {
         $('a').each(function(i, elem) {
             var href = $(this).attr('href');
             if (undefined !== href) {
-                let resource = new Resource(href, belongPath, that.targetSite, true, 'a',that.regular);
+                let resource = new Resource(href, belongPath, that.targetSite, true, 'a', that.regular);
                 pageResource.push(resource);
             }
         });
@@ -72,7 +81,7 @@ class Resource {
             // cheerio 的each 方法的 this 指代的是当前的element
             var href = $(this).attr('href');
             if (undefined !== href) {
-                let resource = new Resource(href, belongPath, that.targetSite, false, 'link',that.regular);
+                let resource = new Resource(href, belongPath, that.targetSite, false, 'link', that.regular);
                 assetsResource.push(resource);
             }
         });
@@ -80,16 +89,16 @@ class Resource {
         $('script').each(function(i, elem) {
             var src = $(this).attr('src');
             if (undefined !== src) {
-                let resource = new Resource(src, belongPath, that.targetSite, false, 'script',that.regular);
+                let resource = new Resource(src, belongPath, that.targetSite, false, 'script', that.regular);
                 assetsResource.push(resource);
             }
         });
 
-        if(this.regular.testType('img')) {
+        if (this.regular.testType('img')) {
             $('img').each(function(i, elem) {
                 var src = $(this).attr('src');
                 if (undefined !== src) {
-                    let resource = new Resource(src, belongPath, that.targetSite, false, 'img',that.regular);
+                    let resource = new Resource(src, belongPath, that.targetSite, false, 'img', that.regular);
                     assetsResource.push(resource);
                 }
             });
@@ -111,7 +120,14 @@ class Resource {
             //     // 还是属于目标网址下
             //     return true;
             // }
-            return false;
+            if('img' === this.type) {
+                // 图片资源是可以拉取其他网站的
+                // 但是可能有保存目录的问题
+                return true;
+            } else {
+                return false;
+            }
+
         }
 
         if (path.startsWith("/")) {
@@ -142,14 +158,21 @@ class Resource {
     }
 
     obtainLocalFile() {
-
         let localFileName = this.path;
+
+        // 对于外链的处理
+        if(this.path.startsWith('http')) {
+            logger.focus('保存一个img文件');
+            let rootDir = yuwangUtil.getWebsiteName(this.path);
+            let pathName = url.parse(this.path).pathname;
+            return nodePath.join(rootDir, pathName);
+        }
 
         if ('' === this.path || '/' === this.path) {
             // 这些路径的文件后缀添加index.html
-            localFileName = path.resolve(localFileName, 'index.html');
+            localFileName = nodePath.resolve(localFileName, 'index.html');
         }
-        if (_path.extname(this.path) === '') {
+        if (nodePath.extname(this.path) === '') {
             // 没有扩展名的情况
             // 正常来说没有扩展名的一般都是网页
             // css js img 这些很少会有没有扩展名的情况，除非这些请求地址是程序生成的返回内容
@@ -172,8 +195,8 @@ class Resource {
 
         let rootDir = this.targetSite.rootDir;
 
-        localFileName = path.resolve(this.belongPath, localFileName);
-        return path.join(rootDir, localFileName);
+        localFileName = nodePath.resolve(this.belongPath, localFileName);
+        return nodePath.join(rootDir, localFileName);
 
     }
     // 保存文件的方法
@@ -182,22 +205,20 @@ class Resource {
         // 比如当只拉取img的使用，html还是会被拉取，但是这种时候不需要保存html
         // if(this.regular.testType(this.type)){
 
-            let localFileName = this.obtainLocalFile();
-            // 在这里保存文件的方法应该不是需要await
-            fileUtils.saveNewFile(localFileName, data);
+        let localFileName = this.obtainLocalFile();
+        // 在这里保存文件的方法应该不是需要await
+        fileUtils.saveNewFile(localFileName, data);
         // }
     }
 
     // 给执行队列调用的方法
     async run() {
-
         try {
-
             let requestUrl = this.targetSite.siteUrl + this.path;
 
             if (this.targetSite.existPath(requestUrl)) {
                 // 已经记录过的不会被再次拉取了,否则就会无止尽的循环了
-                executeQueue.done();
+                this.executeQueue.done(this);
                 return;
             } else {
                 this.targetSite.recordPath(requestUrl);
@@ -210,7 +231,7 @@ class Resource {
             //使用了executeQueue队列就必须调用这个方法
             //使用这个队列主要就是为了防止非常集中的访问网站导致网址封锁ip
             //因此访问完网站后就可以调用这个方法了
-            executeQueue.done();
+            this.executeQueue.done(this);
 
             // 请求不成功的时候res 是undefined
             // TODO 请求不成功的是否记录
@@ -231,7 +252,7 @@ class Resource {
                         });
                         // 这个地方其实只应该第一个运行的resouce需要判断这个，
                         // 不是每一个都需要判断
-                        if(!this.regular.isSingle) {
+                        if (!this.regular.isSingle) {
                             let pageResource = this.extractPageResource($, this.path);
                             pageResource = pageResource.filter(function(value) {
                                 return this.analysePath(value);
@@ -241,7 +262,6 @@ class Resource {
                             });
                         }
 
-
                     } else {
                         // 不是page的就不用继续拉取了
                         // cheerio也没法分析这种文件
@@ -249,8 +269,8 @@ class Resource {
                         // 比如css 中会有图片的引用
                         // 目前还没有分析这种文件
                     }
-                } catch(err) {
-                    logger.info(requestUrl,' cheerio解析出错');
+                } catch (err) {
+                    logger.info(requestUrl, ' cheerio解析出错');
                 }
 
             }
