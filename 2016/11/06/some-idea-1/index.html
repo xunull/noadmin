@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>一些待解决的问题 | noadmin</title>
+  <title>some idea | noadmin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一些待解决的问题
-钩子方法解决菜单预定义
-业务逻辑所需类库的加载
-其他的业务逻辑是托管还是散养">
+  <meta name="description" content="some idea关于node 实现web容器式的应用加载方式
+首先要有个约定俗成的加载方式，尽量做到约定大于配置
+business 应该也是可以设置些生命周期方法，对于某些方法比如init，容器可能会有默认的实现方式，当然应用也可以通过重新，加入自己的代码
+还有个问题是，依赖的处理，每个业务逻辑都可能有自己的依赖包，如果不进行依赖的相关处理，比如说仅仅当运行程序发现报错，是依赖的问题时，这个时候">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一些待解决的问题">
-<meta property="og:url" content="http://xunull.io/noadmin/2016/10/31/一些待解决的问题/index.html">
+<meta property="og:title" content="some idea">
+<meta property="og:url" content="http://xunull.io/noadmin/2016/11/06/some-idea-1/index.html">
 <meta property="og:site_name" content="noadmin">
-<meta property="og:description" content="一些待解决的问题
-钩子方法解决菜单预定义
-业务逻辑所需类库的加载
-其他的业务逻辑是托管还是散养">
-<meta property="og:updated_time" content="2016-10-31T13:54:45.000Z">
+<meta property="og:description" content="some idea关于node 实现web容器式的应用加载方式
+首先要有个约定俗成的加载方式，尽量做到约定大于配置
+business 应该也是可以设置些生命周期方法，对于某些方法比如init，容器可能会有默认的实现方式，当然应用也可以通过重新，加入自己的代码
+还有个问题是，依赖的处理，每个业务逻辑都可能有自己的依赖包，如果不进行依赖的相关处理，比如说仅仅当运行程序发现报错，是依赖的问题时，这个时候">
+<meta property="og:updated_time" content="2016-11-06T13:29:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一些待解决的问题">
-<meta name="twitter:description" content="一些待解决的问题
-钩子方法解决菜单预定义
-业务逻辑所需类库的加载
-其他的业务逻辑是托管还是散养">
+<meta name="twitter:title" content="some idea">
+<meta name="twitter:description" content="some idea关于node 实现web容器式的应用加载方式
+首先要有个约定俗成的加载方式，尽量做到约定大于配置
+business 应该也是可以设置些生命周期方法，对于某些方法比如init，容器可能会有默认的实现方式，当然应用也可以通过重新，加入自己的代码
+还有个问题是，依赖的处理，每个业务逻辑都可能有自己的依赖包，如果不进行依赖的相关处理，比如说仅仅当运行程序发现报错，是依赖的问题时，这个时候">
   
     <link rel="alternate" href="/atom.xml" title="noadmin" type="application/atom+xml">
   
@@ -76,10 +76,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-一些待解决的问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-some-idea-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/noadmin/2016/10/31/一些待解决的问题/" class="article-date">
-  <time datetime="2016-10-31T13:49:56.000Z" itemprop="datePublished">2016-10-31</time>
+    <a href="/noadmin/2016/11/06/some-idea-1/" class="article-date">
+  <time datetime="2016-11-06T12:44:13.000Z" itemprop="datePublished">2016-11-06</time>
 </a>
     
   </div>
@@ -90,7 +90,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      一些待解决的问题
+      some idea
     </h1>
   
 
@@ -98,16 +98,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一些待解决的问题"><a href="#一些待解决的问题" class="headerlink" title="一些待解决的问题"></a>一些待解决的问题</h1><ul>
-<li>钩子方法解决菜单预定义</li>
-<li>业务逻辑所需类库的加载</li>
-<li>其他的业务逻辑是托管还是散养</li>
-</ul>
+        <h1 id="some-idea"><a href="#some-idea" class="headerlink" title="some idea"></a>some idea</h1><p>关于node 实现web容器式的应用加载方式</p>
+<p>首先要有个约定俗成的加载方式，尽量做到约定大于配置</p>
+<p>business 应该也是可以设置些生命周期方法，对于某些方法比如init，容器可能会有默认的实现方式，当然应用也可以通过重新，加入自己的代码</p>
+<p>还有个问题是，依赖的处理，每个业务逻辑都可能有自己的依赖包，如果不进行依赖的相关处理，比如说仅仅当运行程序发现报错，是依赖的问题时，这个时候npm install，这样的解决方式显然不够好</p>
+<p>或者说像是tomcat的处理方式，把业务依赖的包放到lib中<br>如果想要像这种方式处理，那么需要使容器自身的依赖和业务的依赖分离<br>同时各个业务见的依赖也都需要分离</p>
+<p>可以尝试使用fork子进程的方式运行各个业务，那么需要将http通知到相关的业务中</p>
+<p>这应该是一个可以实现的解决方式</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xunull.io/noadmin/noadmin/2016/10/31/一些待解决的问题/" data-id="civ6oewrs0003vd9kgmu2jjai" class="article-share-link">Share</a>
+      <a data-url="http://xunull.io/noadmin/noadmin/2016/11/06/some-idea-1/" data-id="civ6oewrb0001vd9kr5dtcwif" class="article-share-link">Share</a>
       
       
     </footer>
@@ -116,19 +118,10 @@
     
 <nav id="article-nav">
   
-    <a href="/noadmin/2016/11/06/some-idea/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          some idea
-        
-      </div>
-    </a>
   
-  
-    <a href="/noadmin/2016/10/31/制作演示系统/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/noadmin/2016/11/06/some-idea/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">制作演示系统</div>
+      <div class="article-nav-title">some idea</div>
     </a>
   
 </nav>
