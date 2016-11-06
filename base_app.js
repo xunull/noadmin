@@ -40,7 +40,8 @@ module.exports = global.thisapp;
  * @return {[type]}                     [description]
  */
 process.on('uncaughtException', function(err) {
-    logger.error(err);
+    console.log(err);
+// logger.error(err);
 });
 
 var mongoose = require('./back.src/common/mongoose');
