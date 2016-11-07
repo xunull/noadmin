@@ -22,9 +22,10 @@ var config = {
         initYamlPath: path.resolve(__dirname, '../properties/init.yaml'),
         initBusinessYamlPath: path.resolve(__dirname, '../properties/business-init.yaml')
     },
+    logFileDir:path.resolve(__dirname,'../logs'),
     logger: {
-        logFile: path.resolve(__dirname, '../logs/log.log'),
-        errorFile: path.resolve(__dirname, '../logs/error.log'),
+        logFileName: 'log.log',
+        errorFileName: 'error.log',
         level: 'debug'
     },
     appConfigYaml: path.join(__dirname, '../properties/app_config.yaml'),

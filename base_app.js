@@ -1,5 +1,5 @@
 var common = require('./back.src/common');
-var logger = require('./back.src/common/logger');
+var logger = require('./back.src/common/logger').logger;
 var config = require('./config/app.config');
 var yaml = require('js-yaml');
 var fs = require('fs');

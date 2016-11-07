@@ -80,8 +80,7 @@ global.thisapp.express_app=app;
 require('./app_router');
 // 加载相关服务，有些服务并不是依赖于request的
 require('./service');
-// 加载业务逻辑
-require('./business');
+
 
 /**
  * 全局404
