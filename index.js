@@ -12,4 +12,4 @@ var base_app = require('./base_app');
 // 运行服务端
 require('./back.src/node_modules');
 
-require('./back.src/node_modules/ocket.io');
+require('./back.src/node_modules/socketIo');

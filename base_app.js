@@ -1,5 +1,5 @@
-var common = require('./back.src/common');
-var logger = require('./back.src/common/logger').logger;
+var common = require('./back.src/node_modules/common');
+var logger = require('./back.src/node_modules/common/logger').logger;
 var config = require('./config/app.config');
 var yaml = require('js-yaml');
 var fs = require('fs');
@@ -44,5 +44,5 @@ process.on('uncaughtException', function(err) {
 // logger.error(err);
 });
 
-var mongoose = require('./back.src/common/mongoose');
-var redis = require('./back.src/common/redis');
+var mongoose = require('./back.src/node_modules/common/mongoose');
+var redis = require('./back.src/node_modules/common/redis');
