@@ -8,7 +8,7 @@
  */
 var fs = require('fs');
 
-var logger = global.thisapp.logger;
+var logger = thisapp.getLogger('yuwang');
 
 exports.saveNewFile = function(path, content) {
 
@@ -27,7 +27,7 @@ exports.saveNewFile = function(path, content) {
                     logger.info(path + '文件保存失败');
                     reject(err);
                 } else {
-                    // logger.info(path + '文件保存成功');
+                    logger.info(path + '文件保存成功');
                     resolve();
                 }
             });

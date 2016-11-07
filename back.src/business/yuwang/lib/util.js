@@ -3,7 +3,7 @@
  */
 const url = require('url');
 const superagent = require('superagent');
-const logger = global.thisapp.logger;
+const logger = thisapp.getLogger('yuwang');
 
 /**
  * 验证url是否合法
@@ -48,13 +48,12 @@ exports.grabFile = function(resouceUrl) {
                 if (404 === err.status) {
                     logger.info('抓取' + resouceUrl + '路径出错,错误码是 is 404');
                 } else {
-
                     logger.info('抓取' + resouceUrl + '路径出错,错误码是 is ' + err.status);
                     logger.error(err);
                 }
                 reject(err);
             } else {
-                // logger.info('抓取', resouceUrl, '路径成功');
+                logger.info('抓取', resouceUrl, '路径成功');
                 resolve(res);
             }
         });

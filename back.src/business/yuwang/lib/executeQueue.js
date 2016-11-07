@@ -41,7 +41,6 @@ queueEmitter.on('add', function(obj) {
 });
 
 queueEmitter.on('go', function() {
-    logger.focus('go 方法运行了');
     if (currentRunning < maxConcurrency) {
         var obj = waitingQueue.shift();
         if (undefined !== obj) {
