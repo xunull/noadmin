@@ -1,10 +1,10 @@
 var fs = require('fs');
 var path = require('path');
-var logger = require('../back.src/common/logger');
+var logger = thisapp.logger;
 var config = require('../config/app.config');
 var uuid = require('node-uuid');
 
-var basicDao = require('../back.src/dao');
+var basicDao = require('../back.src/node_modules/dao');
 var initBusinessYamlPath = config.init.initBusinessYamlPath;
 
 var Menu = basicDao.Menu;
@@ -12,7 +12,7 @@ var Role = basicDao.Role;
 var UserRole = basicDao.UserRole;
 var RoleMenu = basicDao.RoleMenu;
 var Business = basicDao.Business;
-const yaml = require('../back.src/common/utils/yaml');
+const yaml = require('../back.src/node_modules/common/utils/yaml');
 
 (async function init() {
     try {
@@ -20,8 +20,8 @@ const yaml = require('../back.src/common/utils/yaml');
         if (undefined === initObj.initOver) {
             logger.info('built in business has not init');
             // 内建业务所有角色的yaml 初始化对象
-            // 1.初始化一个 内建业务所属的角色
             let initRole = initObj.role_builtinBusiness;
+            // 1.初始化一个 内建业务所属的角色
             let storedRole = await initBuiltInBusinessRole(initRole);
 
             // 2.初始化内建业务

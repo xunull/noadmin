@@ -19,6 +19,8 @@ builtin_business:
     description: 网络爬虫
   - name: whois
     description: whois 信息查询
+  - name: codeS
+    description: 代码统计工具
 business_menu:
   - name: 内建业务
     level: 0
@@ -64,6 +66,10 @@ business_menu:
       - name: whois
         uri: /builtinBusiness/whois
         menu_icon: fa fa-file
+        level: 1
+      - name: codeS
+        uri: /builtinBusiness/codeS
+        menu_icon: fa fa-area-chart
         level: 1
 role_builtinBusiness:
   name: builtinBusiness

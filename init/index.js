@@ -1,7 +1,10 @@
-require("babel-core/register");
+require("babel-core/register")({
+    only:/(back.src)|(init)/
+});
+
 global.thisapp = {
     config: require('../config/app.config'),
-    logger: require('../back.src/common/logger')
+    logger: require('../back.src/node_modules/common/logger/log4js')
 };
 
 const initArg = process.argv[2];

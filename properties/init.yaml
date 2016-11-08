@@ -45,26 +45,9 @@ basic_access_path:
       - name: 菜单设置
         uri: /setting/menu
         level: 1
-        pid: 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
-        id: b0d81559-bdae-4bff-8a1a-be1528abbfdb
-        dimension:
-          - 0
-          - 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
-          - b0d81559-bdae-4bff-8a1a-be1528abbfdb
       - name: 权限设置
         uri: /setting/permission
         level: 1
-        pid: 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
-        id: 583aa19d-020b-4537-8216-ab71998b6524
-        dimension:
-          - 0
-          - 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
-          - 583aa19d-020b-4537-8216-ab71998b6524
-    pid: 0
-    id: 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
-    dimension:
-      - 0
-      - 25db0594-d2cf-4dac-89e9-f3a4983aa7a0
   - name: 主机监控
     level: 0
     uri: null
@@ -72,26 +55,9 @@ basic_access_path:
       - name: 服务器监控
         uri: /monitor/server
         level: 1
-        pid: c613cd60-e84e-402d-87ca-e1df48523c6b
-        id: 605b9fa2-ca0a-44c6-86d7-246dcd8ec500
-        dimension:
-          - 0
-          - c613cd60-e84e-402d-87ca-e1df48523c6b
-          - 605b9fa2-ca0a-44c6-86d7-246dcd8ec500
       - name: 程序监控
         uri: /monitor/program
         level: 1
-        pid: c613cd60-e84e-402d-87ca-e1df48523c6b
-        id: 648e3214-4a2f-402d-9c52-d4be9b99c89d
-        dimension:
-          - 0
-          - c613cd60-e84e-402d-87ca-e1df48523c6b
-          - 648e3214-4a2f-402d-9c52-d4be9b99c89d
-    pid: 0
-    id: c613cd60-e84e-402d-87ca-e1df48523c6b
-    dimension:
-      - 0
-      - c613cd60-e84e-402d-87ca-e1df48523c6b
 user_root:
   name: admin
   loginname: admin

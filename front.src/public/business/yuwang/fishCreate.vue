@@ -11,26 +11,16 @@
             <el-form-item label='保存位置'>
                 <el-input v-model='savePath' placeholder='请输入保存地址'></el-input>
             </el-form-item>
-            <el-form-item label='拉取图片'>
-                <el-radio-group v-model="grabImg">
-                    <el-radio-button v-bind:label='1' >是</el-radio-button>
-                    <el-radio-button v-bind:label='0' >否</el-radio-button>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label='拉取全部'>
-                <el-radio-group v-model="all">
-                    <el-radio-button :label='1'>是</el-radio-button>
-                    <el-radio-button :label='0'>否</el-radio-button>
-                  </el-radio-group>
-            </el-form-item>
-            <el-form-item label='拉取单页'>
-                <el-radio-group v-model="singlePage">
-                    <el-radio-button v-bind:label='1' >是</el-radio-button>
-                    <el-radio-button v-bind:label='0' >否</el-radio-button>
+            <el-form-item label='拉取内容'>
+                <el-radio-group v-model="grabContent">
+                    <el-radio-button label='img' >图片</el-radio-button>
+                    <el-radio-button label='article' >文章</el-radio-button>
+                    <el-radio-button label='single' >单页</el-radio-button>
+                    <el-radio-button label='custom' >自定义</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
-            <div v-if="!all">
+            <div v-if="custom">
                 <el-form-item label="拉取内容">
                     <el-checkbox-group v-model="checkList">
                       <el-checkbox label='a'>html</el-checkbox>
@@ -58,12 +48,19 @@ export default {
             websiteUrl: null,
             savePath: null,
             urlPattern: null,
-            all: 1,
-            grabImg:1,
-            singlePage:0,
+            grabContent:'img',
             checkList: ['a', 'script', 'img', 'link', 'other']
         }
 
+    },
+    computed:{
+        custom:function() {
+            if('custom'===this.grabContent) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
     methods: {
         start: function() {

@@ -1,11 +1,14 @@
 var fs = require('fs');
 var path = require('path');
 var crypto = require('crypto');
-var logger = require('../back.src/common/logger');
+var logger = thisapp.logger;
 var config = require('../config/app.config');
 var uuid = require('node-uuid');
-const yaml = require('../back.src/common/utils/yaml');
-var basicDao = require('../back.src/dao');
+const yaml = require('../back.src/node_modules/common/utils/yaml');
+
+var mongoose = require('../back.src/node_modules/common/mongoose');
+var models = require('../back.src/node_modules/models');
+var basicDao = require('../back.src/node_modules/dao');
 
 var User = basicDao.User;
 var Menu = basicDao.Menu;
