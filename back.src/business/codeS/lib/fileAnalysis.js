@@ -154,7 +154,7 @@ function obtainEndLine(filename) {
             break;
         }
     }
-    return nCount + rCount - rnCount;
+    return nCount + rCount - rnCount*2;
 
 }
 
@@ -174,5 +174,6 @@ function obtainFileNum(filename) {
         rl.on('close', function() {
             resolve(count);
         });
+        
     });
 }

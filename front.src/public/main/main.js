@@ -27,6 +27,8 @@ import YuwangIndex from '../business/yuwang/index.vue'
 import FishList from '../business/yuwang/fishList.vue'
 import FishCreate from '../business/yuwang/fishCreate.vue'
 
+import WhoisIndex from '../business/whois/index.vue'
+
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
 
@@ -76,7 +78,7 @@ var router = new VueRouter({
             component: YuwangIndex,
             meta: {
                 breadcrumbName: [
-                    '主页', '业务系统', '渔网',
+                    '主页', '业务系统', '渔网'
                 ],
                 breadcrumbUrl: ['/', '', '/builtinBusiness/yuwang']
             }
@@ -142,6 +144,15 @@ var router = new VueRouter({
                     '主页', '业务系统', 'repl'
                 ],
                 breadcrumbUrl: ['/', '', '/builtinBusiness/repl']
+            }
+        }, {
+            path: '/builtinBusiness/whois',
+            component: WhoisIndex,
+            meta: {
+                breadcrumbName: [
+                    '主页', '业务系统', 'Whois'
+                ],
+                breadcrumbUrl: ['/', '', '/builtinBusiness/whois']
             }
         }, {
             path: '/builtinBusiness/kshell',
