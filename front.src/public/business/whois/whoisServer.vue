@@ -47,12 +47,11 @@ export default {
     data(){
         var serverData = [];
 
-        this.$http.get('/whois/getwhois').then(response => {
+        this.$http.get('/whois/getWhoisAllServer').then(response => {
 
-                console.log(response.body);
-            // if (response.body.ok) {
-            //     console.log(response.body);
-            // }
+            if (response.body.ok) {
+                this.$data.serverData=response.body.data;
+            }
 
         }, response => {
 

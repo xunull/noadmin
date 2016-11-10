@@ -3,10 +3,10 @@ const basicController = require('../controllers').basic;
 
 
 router.use(function timeLog(req, res, next) {
-  console.log('这里是whois 的use ');
   next();
 });
 
 router.get('/getwhois',basicController.getwhois);
+router.get('/getWhoisAllServer',basicController.getWhoisAllServer);
 
 module.exports = router;
