@@ -29,6 +29,8 @@ import FishCreate from '../business/yuwang/fishCreate.vue'
 
 import WhoisIndex from '../business/whois/index.vue'
 
+import WriteMD from '../business/writeMD/index.vue'
+
 import Element from 'element-ui'
 import 'element-ui/lib/theme-default/index.css';
 
@@ -153,6 +155,15 @@ var router = new VueRouter({
                     '主页', '业务系统', 'Whois'
                 ],
                 breadcrumbUrl: ['/', '', '/builtinBusiness/whois']
+            }
+        }, {
+            path: '/builtinBusiness/writeMD',
+            component: WriteMD,
+            meta: {
+                breadcrumbName: [
+                    '主页', '业务系统', 'writeMD'
+                ],
+                breadcrumbUrl: ['/', '', '/builtinBusiness/writeMD']
             }
         }, {
             path: '/builtinBusiness/kshell',

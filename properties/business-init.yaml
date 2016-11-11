@@ -21,6 +21,8 @@ builtin_business:
     description: whois 信息查询
   - name: codeS
     description: 代码统计工具
+  - name: writeMD
+    description: markdown 编写
 business_menu:
   - name: 内建业务
     level: 0
@@ -70,6 +72,10 @@ business_menu:
       - name: codeS
         uri: /builtinBusiness/codeS
         menu_icon: fa fa-area-chart
+        level: 1
+      - name: writeMD
+        uri: /builtinBusiness/writeMD
+        menu_icon: fa fa-pencil-square
         level: 1
 role_builtinBusiness:
   name: builtinBusiness
