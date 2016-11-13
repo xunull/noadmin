@@ -15,7 +15,7 @@
 <meta property="og:description" content="think在编写代码的过程中，有时会遇到一些问题，对于这些问题有时有一些想法或者说是解决办法的说明等等，常用的做法就是写注释了，但是可能在未来的时刻，这些注释会被删除掉了，那么当初的那些小想法就消失了，所以希望在这里将这些内容记录下来。对于之前的内容就不补充了，历史先不去回忆了。
 不过希望将来的想来都可以被记录到此
 原本是像做一个程序，可以每天抽取出文件中的一些关键注释的，不过一直没有实践，先暂时">
-<meta property="og:updated_time" content="2016-11-09T02:56:25.000Z">
+<meta property="og:updated_time" content="2016-11-13T06:33:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="think">
 <meta name="twitter:description" content="think在编写代码的过程中，有时会遇到一些问题，对于这些问题有时有一些想法或者说是解决办法的说明等等，常用的做法就是写注释了，但是可能在未来的时刻，这些注释会被删除掉了，那么当初的那些小想法就消失了，所以希望在这里将这些内容记录下来。对于之前的内容就不补充了，历史先不去回忆了。
@@ -99,7 +99,13 @@
 <p>不过希望将来的想来都可以被记录到此</p>
 <p>原本是像做一个程序，可以每天抽取出文件中的一些关键注释的，不过一直没有实践，先暂时这样处理吧，不过那个程序早晚要将其实现了。</p>
 <hr>
-<h2 id="20161109"><a href="#20161109" class="headerlink" title="20161109"></a>20161109</h2><h3 id="business-加载reouter的问题"><a href="#business-加载reouter的问题" class="headerlink" title="business 加载reouter的问题"></a>business 加载reouter的问题</h3><p> 查找router 文件夹的说明<br> 如果目录下有个router.js 文件和一个router文件夹<br> 那么 该router.js 使用require(‘./router’) 是引用不到文件夹的</p>
+<h1 id="20161113"><a href="#20161113" class="headerlink" title="20161113"></a>20161113</h1><h2 id="修改核心的router"><a href="#修改核心的router" class="headerlink" title="修改核心的router"></a>修改核心的router</h2><p>基本系统的router，所有以管理为目的的接口，都放置在admin 路径下</p>
+<p>admin路径是为了以管理员身份登陆的，可以进行网站的管理的这一些操作</p>
+<h2 id="业务的启动"><a href="#业务的启动" class="headerlink" title="业务的启动"></a>业务的启动</h2><p>目前的内建业务都是在server运行的时候就被自动加载了，但是这样做不到对其的管理，如果想要在管理，就需要有table保存这些设置，这样当server启动的时候去读取，然后按需加载业务</p>
+<hr>
+<h1 id="20161111"><a href="#20161111" class="headerlink" title="20161111"></a>20161111</h1><h2 id="业务-数据目录权限的问题"><a href="#业务-数据目录权限的问题" class="headerlink" title="业务 数据目录权限的问题"></a>业务 数据目录权限的问题</h2><p>后台会给各个业务初始化一个存放数据的data目录，目前仅仅是创建了目录，但是并没有对有做 目录权限管理的操作，比如说yuwang业务只能查看自己业务data目录的权限，其没有权限查看其他业务的data目录。目前并没有处理这个问题。 </p>
+<h2 id="20161109"><a href="#20161109" class="headerlink" title="20161109"></a>20161109</h2><h3 id="处理404的问题"><a href="#处理404的问题" class="headerlink" title="处理404的问题"></a>处理404的问题</h3><p>今天发现 我的挂载路由中的get方法全部不起作用，一只在找原因，找了很久，后来发现是我在app的文件中，绑定了一个get * ，实现这个是为了避免出现 Cannot GET xxxxx 这个页面，并且可以自定义404,这个绑定在所有的路由的前面，因此get方法都直接进入到了此方法中 （这个方法还是一个处理404的方法），因此其他的get方法都不起作用了。。。<br>这真是一个很严重的错误。</p>
+<h3 id="business-加载reouter的问题"><a href="#business-加载reouter的问题" class="headerlink" title="business 加载reouter的问题"></a>business 加载reouter的问题</h3><p> 查找router 文件夹的说明<br> 如果目录下有个router.js 文件和一个router文件夹<br> 那么 该router.js 使用require(‘./router’) 是引用不到文件夹的</p>
 <p> 但一般来说，存在router文件夹可能是常见的，业务稍微复杂一些的 router可能就会很多<br> 因此router存在，又保证书写文件夹名的合理<br> 因此保留使用router文件夹的方式，不使用router.js<br> 因此业务目录下的router 都必须以一个router文件夹的方式引入</p>
 <p> 当然了 也可以指定require(‘xxx/index.js’) 加上后缀也是可以的</p>
 <hr>
@@ -126,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://xunull.io/noadmin/noadmin/2016/11/06/think/" data-id="civ941rn20000scs6p9pxk833" class="article-share-link">Share</a>
+      <a data-url="http://xunull.io/noadmin/noadmin/2016/11/06/think/" data-id="civb2j44b0004q99kjakmejw5" class="article-share-link">Share</a>
       
       
     </footer>
