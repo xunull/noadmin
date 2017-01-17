@@ -17,6 +17,8 @@ import ManageUserView from './components/manage/user/user-view.vue'
 import UserTable from './components/manage/user/user-table.vue'
 import UserCreate from './components/manage/user/user-create.vue'
 
+import BusinessManageIndex from './components/manage/business/index.vue'
+
 import ReplView from '../business/repl/repl-view.vue'
 import ShellView from '../business/remoteShell/shell-view.vue'
 
@@ -101,6 +103,15 @@ var router = new VueRouter({
                     '主页', '系统管理', '路径管理'
                 ],
                 breadcrumbUrl: ['/', '', '/manage/path']
+            }
+        },{
+            path: '/manage/business',
+            component: BusinessManageIndex,
+            meta: {
+                breadcrumbName: [
+                    '主页', '系统管理', '业务管理'
+                ],
+                breadcrumbUrl: ['/', '', '/manage/business']
             }
         }, {
             path: '/manage/authority',

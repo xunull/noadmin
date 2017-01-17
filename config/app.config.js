@@ -2,7 +2,7 @@ var path = require('path');
 var config = {
     hostname: '127.0.0.1',
     debug: true,
-    port: 5000,
+    port: 5100,
     mongodb: 'mongodb://127.0.0.1/noadmin',
     session_secret: 'lafdjslx-sdfjxsfsd-xs',
     redis_host: '127.0.0.1',

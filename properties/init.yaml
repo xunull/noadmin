@@ -24,6 +24,10 @@ basic_menu:
         uri: /manage/path
         menu_icon: fa fa-th
         level: 1
+      - name: 业务管理
+        uri: /manage/business
+        menu_icon: fa fa-wrench
+        level: 1
   - name: 主机监控
     level: 0
     uri: null
